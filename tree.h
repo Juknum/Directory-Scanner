@@ -6,34 +6,34 @@
 
 
 /**
- * @brief 
- * 
- * @param child 
- * @param parent 
- * @return int 
+ * @brief
+ *
+ * @param child
+ * @param parent
+ * @return int
  */
 int append_subdir(s_directory *child, s_directory *parent);
 
 /**
- * @brief 
- * 
- * @param child 
- * @param parent 
- * @return int 
+ * @brief
+ *
+ * @param child
+ * @param parent
+ * @return int
  */
 int append_file(s_file *child, s_directory *parent);
 
 /**
- * @brief 
- * 
- * @param parent 
+ * @brief
+ *
+ * @param parent
  */
 void clear_files(s_directory *parent);
 
 /**
- * @brief 
- * 
- * @param parent 
+ * @brief
+ *
+ * @param parent
  */
 void clear_subdirs(s_directory *parent);
 

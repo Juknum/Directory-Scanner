@@ -1,16 +1,22 @@
 #ifndef STRUCTURE_HEADER
 #define STRUCTURE_HEADER
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <dirent.h>
 #include <sys/types.h>
 #include <openssl/md5.h>
 #include <linux/limits.h>
+#include <errno.h>
+#include <string.h>
+#include <time.h>
 
 
 typedef enum {DIRECTORY, REGULAR_FILE, OTHER_TYPE} e_type;
 
 /**
- * @brief 
- * 
+ * @brief
+ *
  */
 typedef struct _file {
     e_type file_type; //!<
@@ -23,8 +29,8 @@ typedef struct _file {
 
 
 /**
- * @brief 
- * 
+ * @brief
+ *
  */
 typedef struct _directory {
     char name[NAME_MAX+1]; //!<
@@ -34,4 +40,4 @@ typedef struct _directory {
     struct _directory *next_dir; //!<
 } s_directory;
 
-#endif 
+#endif

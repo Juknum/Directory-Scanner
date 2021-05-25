@@ -34,8 +34,8 @@ void clear_files(s_directory *parent)
 void clear_subdirs(s_directory *parent)
 {
   while(parent->subdirs != NULL)
-    clear_subdirs(parent->next_dir);
+    clear_subdirs(parent->subdirs->next_dir);
 
   clear_files(parent);
-  free(parent);
+  free(parent->subdirs);
 }
