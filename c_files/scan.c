@@ -3,7 +3,7 @@
 
 s_directory *process_dir(char *path)
 {
-    s_directory* mainDir = NULL;
+    s_directory* mainDir = (s_directory*)malloc(sizeof(s_directory));
     s_file* files = NULL;
     struct dirent* file = NULL;
 
@@ -19,8 +19,10 @@ s_directory *process_dir(char *path)
       if(strcmp(file->d_name,".") != 0 && strcmp(file->d_name,"..") != 0)
       {
         char* p = catPath(path,file->d_name);
-        files = insert_file(files,process_file(p));
+        s_file* tmpfile = process_file(p);
+        files = insert_file(files,tmpfile);
         mainDir = add_files(mainDir,files);
+        free(tmpfile);
       }
 
     }
@@ -32,9 +34,11 @@ s_directory *process_dir(char *path)
 
 s_file *process_file(char *path)
 {
-  s_file* files = NULL;
+  s_file* files = (s_file*)malloc(sizeof(s_file));
   struct dirent* file = NULL;
   DIR* dir = opendir(path);
+
+  if(!dir) return NULL;
 
   while( (file = readdir(dir)) != NULL)
   {

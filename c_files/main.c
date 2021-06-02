@@ -1,5 +1,3 @@
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "../include/save.h"
@@ -11,6 +9,8 @@
 
 int main(int argc, char* argv[]){
 
+    s_directory* test = process_dir(argv[1]);
 
+    free(test);
     return EXIT_SUCCESS;
 }
