@@ -1,7 +1,5 @@
 
-
-#include <stdio.h>
-#include <stdlib.h>
+#include "../include/structures.h"
 #include "../include/save.h"
 #include "../include/md5sum.h"
 #include "../include/tree.h"

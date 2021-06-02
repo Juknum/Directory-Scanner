@@ -13,4 +13,12 @@
  */
 int save_to_file(s_directory *root, char *path_to_target);
 
+
+void write_files(s_file* files,FILE* fichier, int tabs);
+
+
+void write_directories(s_directory* directories, FILE* fichier, int tabs);
+
+void print_tabs(int tabs,FILE* fichier);
+
 #endif

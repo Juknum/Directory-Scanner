@@ -7,9 +7,12 @@
 #include <sys/types.h>
 #include <openssl/md5.h>
 #include <linux/limits.h>
+#include <unistd.h>
 #include <errno.h>
 #include <string.h>
 #include <time.h>
+#include <sys/stat.h>
+#include <stdbool.h>
 
 
 typedef enum {DIRECTORY, REGULAR_FILE, OTHER_TYPE} e_type;

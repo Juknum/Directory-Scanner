@@ -21,10 +21,11 @@ s_directory *process_dir(char *path);
 s_file *process_file(char *path);
 
 /**
- * @brief
- *
- * @param path
- * @return s_file*
+ * @brief 
+ * 
+ * @param givenPath 
+ * @param fileName 
+ * @return char* 
  */
 char* catPath(char* givenPath,char* fileName);
 
