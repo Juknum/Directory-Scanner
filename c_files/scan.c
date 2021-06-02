@@ -4,6 +4,8 @@
 s_directory *process_dir(char *path)
 {
     s_directory* mainDir = (s_directory*)malloc(sizeof(s_directory));
+    strcpy(mainDir->name,path);
+
     s_file* files = NULL;
     struct dirent* file = NULL;
 
@@ -14,18 +16,34 @@ s_directory *process_dir(char *path)
       return NULL;
     }
 
+    char* tmpPath = (char*)malloc(strlen(path+1)*sizeof(char));
+    strcpy(tmpPath,path);
+    files = process_file(path);
+    add_files(mainDir,files);
+
     while( (file = readdir(dir)) != NULL)
     {
-      if(strcmp(file->d_name,".") != 0 && strcmp(file->d_name,"..") != 0)
+
+      if((int)file->d_type == 4 && strcmp(file->d_name,".") != 0 && strcmp(file->d_name,"..") != 0)
       {
-        char* p = catPath(path,file->d_name);
-        s_file* tmpfile = process_file(p);
-        files = insert_file(files,tmpfile);
-        mainDir = add_files(mainDir,files);
-        free(tmpfile);
+        s_file* tmpfile = NULL;
+        s_directory* newDir = (s_directory*)malloc(sizeof(s_directory));
+        strcpy(newDir->name,file->d_name);
+
+        char* p = catPath(tmpPath,file->d_name);
+        tmpPath = realloc(tmpPath,strlen(p+1)*sizeof(char));
+        strcpy(tmpPath,p);
+        tmpfile = process_file(tmpPath);
+        add_files(newDir,tmpfile);
+        add_dir(mainDir,newDir);
+
+
+        free(p);
       }
 
     }
+
+    free(tmpPath);
     closedir(dir);
     return mainDir;
 }
@@ -34,7 +52,7 @@ s_directory *process_dir(char *path)
 
 s_file *process_file(char *path)
 {
-  s_file* files = (s_file*)malloc(sizeof(s_file));
+  s_file* files = NULL;
   struct dirent* file = NULL;
   DIR* dir = opendir(path);
 
@@ -42,10 +60,14 @@ s_file *process_file(char *path)
 
   while( (file = readdir(dir)) != NULL)
   {
-    strcpy(files->name,file->d_name);
-    if((int)file->d_type == 4) files->file_type = DIRECTORY;
-    if((int)file->d_type == 8) files->file_type = REGULAR_FILE;
-    if((int)file->d_type == 10)files->file_type = OTHER_TYPE;
+
+    if(strcmp(file->d_name,".") != 0 && strcmp(file->d_name,"..") != 0)
+    {
+      files = insert_file(files,file->d_name);
+      if((int)file->d_type == 4) files->file_type = DIRECTORY;
+      if((int)file->d_type == 8) files->file_type = REGULAR_FILE;
+      if((int)file->d_type == 10)files->file_type = OTHER_TYPE;
+    }
   }
 
   closedir(dir);
@@ -54,19 +76,22 @@ s_file *process_file(char *path)
 
 /******************************************/
 
-s_file* insert_file(s_file* currFile,s_file* newFile)
+s_file* insert_file(s_file* files,char* name)
 {
-  s_file* tmp = currFile;
+  s_file* tmp = files;
+  s_file* f = (s_file*)malloc(sizeof(s_file));
+  strcpy(f->name,name);
+  f->next_file = NULL;
 
-  if(!currFile) currFile = newFile;
+  if(!files) files = f;
   else{
     while(tmp->next_file != NULL){
       tmp = tmp->next_file;
     }
-    tmp->next_file = newFile;
+    tmp->next_file = f;
   }
 
-  return currFile;
+  return files;
 }
 
 /******************************************/
@@ -88,17 +113,33 @@ s_directory* add_files(s_directory* dir,s_file* files)
 
 /******************************************/
 
-char* catPath(char* givenPath,char* fileName)
+char* catPath(char* dir,char* file)
 {
-  int length1 = strlen(givenPath);
-  int length2 = strlen(fileName);
-  char* res = (char*)malloc((length1 + length2 + 1) * sizeof(char));
+  char* path = (char*)malloc( (strlen(dir)) + strlen(file) + 2);
+  strcpy(path,dir);
+  strcat(path,"/");
+  strcat(path,file);
+  path[strlen(path)] = '\0';
+  return path;
+}
 
-  strcpy(res,givenPath); //Adding first string to the result
+/******************************************/
 
-  for(int i = length1,j = 0; (i < (length1 + length2)) && (j<length2);++i, ++j) //Adding second string
-    res[i] = fileName[j];
-  res[length1 + length2] = '\0'; //Final char
+s_directory* add_dir(s_directory* mainDir,s_directory* newDir)
+{
+  s_directory* tmp = mainDir;
 
-  return res;
+  newDir->next_dir = NULL;
+  newDir->subdirs = NULL;
+
+  if(!mainDir->subdirs) mainDir->subdirs = newDir;
+  else{
+    while(tmp->subdirs->next_dir != NULL){
+      tmp->subdirs = tmp->subdirs->next_dir;
+    }
+    tmp->subdirs->next_dir = newDir;
+  }
+
+  return mainDir;
+
 }
