@@ -47,4 +47,13 @@ s_directory* add_files(s_directory* dir,s_file* to_add,char* name);
  * @return s_file*
  */
 s_directory* add_dir(s_directory* mainDir,s_directory* newDir);
+
+/**
+ * @brief
+ *
+ * @param path
+ * @return s_file*
+ */
+char* getRelativePath(char* path);
+
 #endif

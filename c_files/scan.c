@@ -3,10 +3,13 @@
 
 s_directory *process_dir(char *path)
 {
-
   s_directory* mainDir = (s_directory*)malloc(sizeof(s_directory));
-  strcpy(mainDir->name,path);
+  mainDir->subdirs = NULL;
+  mainDir->next_dir = NULL;
 
+  char* res = getRelativePath(path);
+  strcpy(mainDir->name,res);
+  free(res);
   struct dirent* file = NULL;
 
   DIR* dir = opendir(path);
@@ -16,32 +19,29 @@ s_directory *process_dir(char *path)
       return NULL;
   }
 
-    char* tmpPath = (char*)malloc(strlen(path+1)*sizeof(char));
-    strcpy(tmpPath,path);
-
+    char* tmpPath = NULL;
 
     while( (file = readdir(dir)) != NULL)
     {
-      strcpy(tmpPath,path);
-      char* p = catPath(tmpPath,file->d_name);
-      tmpPath = realloc(tmpPath,strlen(p+1)*sizeof(char));
-      strcpy(tmpPath,p);
       s_file* f = NULL;
-
       if(strcmp(file->d_name,".") != 0 && strcmp(file->d_name,"..") != 0)
       {
+        tmpPath = catPath(path,file->d_name);
         f = process_file(tmpPath);
-        add_files(mainDir,f,file->d_name);
+        mainDir = add_files(mainDir,f,file->d_name);
+
         if((int)file->d_type == 4)
         {
           s_directory* newDir = process_dir(tmpPath);
-          add_dir(mainDir,newDir);
+          mainDir = add_dir(mainDir,newDir);
         }
+        free(tmpPath);
+        tmpPath = NULL;
       }
 
     }
 
-    free(tmpPath);
+
     closedir(dir);
     return mainDir;
 }
@@ -72,10 +72,10 @@ s_directory* add_files(s_directory* dir,s_file* to_add,char* name)
   if(!dir->files) dir->files = to_add;
   else
   {
-    s_directory* tmp = dir;
-    while(tmp->files->next_file != NULL)
-      tmp->files = tmp->files->next_file;
-    tmp->files->next_file = to_add;
+    s_file* tmp = dir->files;
+    while(tmp->next_file != NULL)
+      tmp = tmp->next_file;
+    tmp->next_file = to_add;
   }
 
   return dir;
@@ -97,19 +97,37 @@ char* catPath(char* dir,char* file)
 
 s_directory* add_dir(s_directory* mainDir,s_directory* newDir)
 {
-  s_directory* tmp = mainDir;
-
-  newDir->next_dir = NULL;
-  newDir->subdirs = NULL;
-
-  if(!mainDir->subdirs) mainDir->subdirs = newDir;
+  if(!mainDir->subdirs)
+  {
+    mainDir->subdirs = newDir;
+  }
   else{
-    while(tmp->subdirs->next_dir != NULL){
-      tmp->subdirs = tmp->subdirs->next_dir;
-    }
-    tmp->subdirs->next_dir = newDir;
+    s_directory* tmp = mainDir->subdirs;
+    while(tmp->next_dir != NULL)
+      tmp = tmp->next_dir;
+    tmp->next_dir = newDir;
+  }
+  return mainDir;
+}
+
+/******************************************/
+
+char* getRelativePath(char* path)
+{
+  char* p = (char*)malloc(strlen(path)+1);
+  strcpy(p,path);
+
+  char * strToken = strtok ( p, "/" );
+  char* newPath = (char*)malloc(strlen(strToken)+1);
+  strcpy(newPath ,strToken);
+
+  while ( strToken != NULL )
+  {
+    newPath = realloc(newPath,strlen(strToken));
+    strcpy(newPath,strToken);
+    strToken = strtok ( NULL, "/" );
   }
 
-  return mainDir;
-
+  free(p);
+  return newPath;
 }

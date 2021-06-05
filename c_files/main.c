@@ -20,26 +20,17 @@ int main(int argc, char* argv[]){
 
 void read_s_directory(s_directory* dir)
 {
-  while(dir->next_dir != NULL) read_s_directory(dir->next_dir);
-
-  printf("/**********Files of %s*********/ \n",dir->name);
-  while(dir->files != NULL)
-  {
-    printf("%s\n",dir->files->name);
-    dir->files = dir->files->next_file;
-  }
-  printf("\n");
-
-  while(dir->subdirs != NULL)
-  {
-    printf("/**********Files of %s*********/ \n",dir->subdirs->name);
-    while(dir->subdirs->files != NULL)
+    printf("/**********Files of %s*********/ \n",dir->name);
+    while(dir->files != NULL)
     {
-      printf("%s\n",dir->subdirs->files->name);
-      dir->subdirs->files = dir->subdirs->files->next_file;
+      printf("%s\n",dir->files->name);
+      dir->files = dir->files->next_file;
     }
     printf("\n");
-    dir->subdirs = dir->subdirs->next_dir;
-  }
 
+    while(dir->subdirs)
+    {
+      read_s_directory(dir->subdirs);
+      dir->subdirs = dir->subdirs->next_dir;
+    }
 }
