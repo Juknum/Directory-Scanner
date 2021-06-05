@@ -3,42 +3,40 @@
 
 s_directory *process_dir(char *path)
 {
-    s_directory* mainDir = (s_directory*)malloc(sizeof(s_directory));
-    strcpy(mainDir->name,path);
 
-    s_file* files = NULL;
-    struct dirent* file = NULL;
+  s_directory* mainDir = (s_directory*)malloc(sizeof(s_directory));
+  strcpy(mainDir->name,path);
 
-    DIR* dir = opendir(path);
-    if(!dir)
-    {
+  struct dirent* file = NULL;
+
+  DIR* dir = opendir(path);
+  if(!dir)
+  {
       perror("ERROR");
       return NULL;
-    }
+  }
 
     char* tmpPath = (char*)malloc(strlen(path+1)*sizeof(char));
     strcpy(tmpPath,path);
-    files = process_file(path);
-    add_files(mainDir,files);
+
 
     while( (file = readdir(dir)) != NULL)
     {
+      strcpy(tmpPath,path);
+      char* p = catPath(tmpPath,file->d_name);
+      tmpPath = realloc(tmpPath,strlen(p+1)*sizeof(char));
+      strcpy(tmpPath,p);
+      s_file* f = NULL;
 
-      if((int)file->d_type == 4 && strcmp(file->d_name,".") != 0 && strcmp(file->d_name,"..") != 0)
+      if(strcmp(file->d_name,".") != 0 && strcmp(file->d_name,"..") != 0)
       {
-        s_file* tmpfile = NULL;
-        s_directory* newDir = (s_directory*)malloc(sizeof(s_directory));
-        strcpy(newDir->name,file->d_name);
-
-        char* p = catPath(tmpPath,file->d_name);
-        tmpPath = realloc(tmpPath,strlen(p+1)*sizeof(char));
-        strcpy(tmpPath,p);
-        tmpfile = process_file(tmpPath);
-        add_files(newDir,tmpfile);
-        add_dir(mainDir,newDir);
-
-
-        free(p);
+        f = process_file(tmpPath);
+        add_files(mainDir,f,file->d_name);
+        if((int)file->d_type == 4)
+        {
+          s_directory* newDir = process_dir(tmpPath);
+          add_dir(mainDir,newDir);
+        }
       }
 
     }
@@ -52,60 +50,32 @@ s_directory *process_dir(char *path)
 
 s_file *process_file(char *path)
 {
-  s_file* files = NULL;
-  struct dirent* file = NULL;
-  DIR* dir = opendir(path);
+  s_file* files = (s_file*)malloc(sizeof(s_file));
 
-  if(!dir) return NULL;
+  struct stat buf;
+  stat(path, &buf);
 
-  while( (file = readdir(dir)) != NULL)
+  if(S_ISDIR(buf.st_mode)) files->file_type = DIRECTORY;
+  else if(S_ISREG(buf.st_mode)) files->file_type = REGULAR_FILE;
+  else files->file_type = OTHER_TYPE;
+
+  return files;
+}
+
+/******************************************/
+
+s_directory* add_files(s_directory* dir,s_file* to_add,char* name)
+{
+  strcpy(to_add->name,name);
+  to_add->next_file = NULL;
+
+  if(!dir->files) dir->files = to_add;
+  else
   {
-
-    if(strcmp(file->d_name,".") != 0 && strcmp(file->d_name,"..") != 0)
-    {
-      files = insert_file(files,file->d_name);
-      if((int)file->d_type == 4) files->file_type = DIRECTORY;
-      if((int)file->d_type == 8) files->file_type = REGULAR_FILE;
-      if((int)file->d_type == 10)files->file_type = OTHER_TYPE;
-    }
-  }
-
-  closedir(dir);
-  return files;
-}
-
-/******************************************/
-
-s_file* insert_file(s_file* files,char* name)
-{
-  s_file* tmp = files;
-  s_file* f = (s_file*)malloc(sizeof(s_file));
-  strcpy(f->name,name);
-  f->next_file = NULL;
-
-  if(!files) files = f;
-  else{
-    while(tmp->next_file != NULL){
-      tmp = tmp->next_file;
-    }
-    tmp->next_file = f;
-  }
-
-  return files;
-}
-
-/******************************************/
-
-s_directory* add_files(s_directory* dir,s_file* files)
-{
-  s_directory* tmp = dir;
-
-  if(!dir->files) dir->files = files;
-  else{
-    while(tmp->files->next_file != NULL){
+    s_directory* tmp = dir;
+    while(tmp->files->next_file != NULL)
       tmp->files = tmp->files->next_file;
-    }
-    tmp->files->next_file = files;
+    tmp->files->next_file = to_add;
   }
 
   return dir;

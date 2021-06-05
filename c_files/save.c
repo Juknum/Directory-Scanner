@@ -3,6 +3,7 @@
 int save_to_file(s_directory *root, char *path_to_target){
     bool isCreated = true;
     isCreated = mkdir("~/.filescanner",0755);
+    if(!isCreated) fprintf(stderr,"le fixhier n'a pas été créé");
     FILE *fichier = NULL;
 
     fichier = fopen("~/lol.txt", "w");
@@ -29,7 +30,7 @@ void write_files(s_file* files,FILE* fichier, int tabs){
         print_tabs(tabs, fichier);
         fprintf(fichier,"%d\t%ld\t%lu\t%s\t%s\n",files->file_type,files->mod_time,files->file_size,files->md5sum,files->name);
         write_files(files->next_file, fichier, tabs);
-    } 
+    }
 }
 
 void write_directories(s_directory* directories, FILE* fichier, int tabs){
