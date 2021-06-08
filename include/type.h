@@ -8,6 +8,8 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#define MAX_HANDLED_PATH_LENGTH 4096
+
 typedef enum {DIRECTORY, REGULAR_FILE, OTHER_TYPE} e_type;
 
 typedef struct _file {
