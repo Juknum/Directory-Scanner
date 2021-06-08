@@ -61,8 +61,7 @@ s_file *process_file(char *path)
 
   if(S_ISDIR(buf.st_mode)){
    files->file_type = DIRECTORY;
-   strftime(buffer, 50, "%d/%m/%Y %H:%M:%S",localtime(&buf.st_mtime) );
-  	printf("last modification %s\n",buffer);
+   
    }
   else if(S_ISREG(buf.st_mode)){
    	files->file_type = REGULAR_FILE;
