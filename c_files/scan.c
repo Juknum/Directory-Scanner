@@ -51,6 +51,7 @@ s_directory *process_dir(char *path)
 s_file *process_file(char *path)
 {
   s_file* files = (s_file*)malloc(sizeof(s_file));
+  char buffer[100];
   char* name = getRelativePath(path);
   strcpy(files->name,name);
   free(name);
@@ -58,9 +59,21 @@ s_file *process_file(char *path)
   struct stat buf;
   stat(path, &buf);
 
-  if(S_ISDIR(buf.st_mode)) files->file_type = DIRECTORY;
-  else if(S_ISREG(buf.st_mode)) files->file_type = REGULAR_FILE;
+  if(S_ISDIR(buf.st_mode)){
+   files->file_type = DIRECTORY;
+   strftime(buffer, 50, "%d/%m/%Y %H:%M:%S",localtime(&buf.st_mtime) );
+  	printf("last modification %s\n",buffer);
+   }
+  else if(S_ISREG(buf.st_mode)){
+   	files->file_type = REGULAR_FILE;
+   	strftime(buffer, 50, "%d/%m/%Y %H:%M:%S",localtime(&buf.st_mtime) );
+  	printf("last modification %s\n",buffer);
+   }
   else files->file_type = OTHER_TYPE;
+  double taille =buf.st_size;
+  printf("%.01lf \n",taille);
+
+
 
   return files;
 }
