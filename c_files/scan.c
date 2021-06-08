@@ -60,17 +60,19 @@ s_file *process_file(char *path)
   stat(path, &buf);
 
   if(S_ISDIR(buf.st_mode)){
-   files->file_type = DIRECTORY;
-   
+	files->file_type = DIRECTORY;
+	
    }
   else if(S_ISREG(buf.st_mode)){
    	files->file_type = REGULAR_FILE;
+   	printf("%s\n",files ->name);
    	strftime(buffer, 50, "%d/%m/%Y %H:%M:%S",localtime(&buf.st_mtime) );
   	printf("last modification %s\n",buffer);
+  	double taille =buf.st_size;
+	printf("%.01lf \n",taille);
    }
   else files->file_type = OTHER_TYPE;
-  double taille =buf.st_size;
-  printf("%.01lf \n",taille);
+  
 
 
 
