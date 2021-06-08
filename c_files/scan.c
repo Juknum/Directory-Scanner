@@ -24,11 +24,11 @@ s_directory *process_dir(char *path)
     while( (file = readdir(dir)) != NULL)
     {
       s_file* f = NULL;
-      if(strcmp(file->d_name,".") != 0 && strcmp(file->d_name,"..") != 0)
+      if(strcmp(file->d_name,".") != 0 && strcmp(file->d_name,"..") != 0 && strcmp(file->d_name,".git") != 0)
       {
         tmpPath = catPath(path,file->d_name);
         f = process_file(tmpPath);
-        mainDir = add_files(mainDir,f,file->d_name);
+        mainDir = add_files(mainDir,f);
 
         if((int)file->d_type == 4)
         {
@@ -51,6 +51,9 @@ s_directory *process_dir(char *path)
 s_file *process_file(char *path)
 {
   s_file* files = (s_file*)malloc(sizeof(s_file));
+  char* name = getRelativePath(path);
+  strcpy(files->name,name);
+  free(name);
 
   struct stat buf;
   stat(path, &buf);
@@ -64,9 +67,8 @@ s_file *process_file(char *path)
 
 /******************************************/
 
-s_directory* add_files(s_directory* dir,s_file* to_add,char* name)
+s_directory* add_files(s_directory* dir,s_file* to_add)
 {
-  strcpy(to_add->name,name);
   to_add->next_file = NULL;
 
   if(!dir->files) dir->files = to_add;
