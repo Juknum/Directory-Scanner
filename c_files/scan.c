@@ -4,6 +4,7 @@
 s_directory *process_dir(char *path)
 {
   s_directory* mainDir = (s_directory*)malloc(sizeof(s_directory));
+  mainDir->files = NULL;
   mainDir->subdirs = NULL;
   mainDir->next_dir = NULL;
 
@@ -28,7 +29,7 @@ s_directory *process_dir(char *path)
       {
         tmpPath = catPath(path,file->d_name);
         f = process_file(tmpPath);
-        mainDir = add_files(mainDir,f);
+        mainDir->files = add_files(mainDir,f);
 
         if((int)file->d_type == 4)
         {
@@ -41,8 +42,10 @@ s_directory *process_dir(char *path)
 
     }
 
-
-    closedir(dir);
+    if(dir){
+      closedir(dir);
+    }
+    
     return mainDir;
 }
 
@@ -51,8 +54,11 @@ s_directory *process_dir(char *path)
 s_file *process_file(char *path)
 {
   s_file* files = (s_file*)malloc(sizeof(s_file));
+  files->next_file = NULL;
   char buffer[100];
-  char* name = getRelativePath(path);
+  char* name = (char*) malloc(sizeof(char)*(strlen(basename(path))+1));
+  strcpy(name,basename(path));
+  name[strlen(basename(path))] = '\0';
   strcpy(files->name,name);
   free(name);
 
@@ -79,21 +85,37 @@ s_file *process_file(char *path)
 
 /******************************************/
 
-s_directory* add_files(s_directory* dir,s_file* to_add)
+s_file* add_files(s_directory* dir,s_file* to_add)
 {
+  /*
   to_add->next_file = NULL;
-
-  if(!dir->files) dir->files = to_add;
+  
+  if(dir->files == NULL){
+    dir->files = to_add;
+  }
   else
   {
+    
     s_file* tmp = dir->files;
     while(tmp->next_file != NULL)
       tmp = tmp->next_file;
     tmp->next_file = to_add;
+    
+    
+    while(dir->files->next_file != NULL)
+      dir->files = dir->files->next_file;
+    dir->files->next_file = to_add;
+    
+    to_add->next_file = dir->files;
+    
   }
+  */
+  to_add->next_file = dir->files;
+  
 
-  return dir;
+  return to_add;
 }
+
 
 /******************************************/
 
@@ -137,11 +159,12 @@ char* getRelativePath(char* path)
 
   while ( strToken != NULL )
   {
-    newPath = realloc(newPath,strlen(strToken));
+    free(newPath);
+    newPath = malloc(sizeof(char)*(strlen(strToken)+1));
+    //newPath = realloc(newPath,strlen(strToken));
     strcpy(newPath,strToken);
     strToken = strtok ( NULL, "/" );
   }
-
   free(p);
   return newPath;
 }

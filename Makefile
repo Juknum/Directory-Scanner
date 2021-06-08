@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Werror -pedantic -ansi -lcrypto -g -std=c99 -Du_char="unsigned char"
+CFLAGS =   -ansi -lcrypto -g -std=c99 -Du_char="unsigned char" #-pedantic -Wall -Werror
 TARGET = arborescence_displayer
 STRUCT_FILE = structures.h
 OBJ_DIR = objects

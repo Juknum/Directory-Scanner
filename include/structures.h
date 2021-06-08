@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <dirent.h>
+#include <libgen.h>
 #include <sys/types.h>
 #include <openssl/md5.h>
 #include <linux/limits.h>

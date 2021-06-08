@@ -38,7 +38,7 @@ char* catPath(char* dir,char* file);
  * @param path
  * @return s_file*
  */
-s_directory* add_files(s_directory* dir,s_file* to_add);
+s_file* add_files(s_directory* dir,s_file* to_add);
 
 /**
  * @brief
