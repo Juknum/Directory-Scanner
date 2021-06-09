@@ -2,11 +2,6 @@
 #define MD5SUM_HEADER
 #include <stdbool.h>
 #include <stdio.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <inttypes.h>
 #include <openssl/md5.h>
 
 //Generates the MD5 sum of a file and store it in a buffer
