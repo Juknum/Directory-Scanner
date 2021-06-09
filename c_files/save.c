@@ -30,17 +30,23 @@ int save_to_file(s_directory *root, char *path_to_target){
 }
 
 void write_files(s_file* files,FILE* fichier, int tabs){
+    char buffer[50];
     if(files != NULL){
         print_tabs(tabs, fichier);
-        fprintf(fichier,"%d\t%ld\t%lu\t%s\t%s\n",files->file_type,files->mod_time,files->file_size,files->md5sum,files->name);
+        fprintf(fichier,"%d\t",files->file_type);
+        strftime(buffer, 50, "%d/%m/%Y %H:%M:%S",localtime(&files->mod_time) );
+        fprintf(fichier,"\t%lu\t%2s\t%s\n",files->file_size,files->md5sum,files->name);
         write_files(files->next_file, fichier, tabs);
     }
 }
 
 void write_directories(s_directory* directories, FILE* fichier, int tabs){
+    char buffer[50];
     if(directories != NULL){
         print_tabs(tabs, fichier);
-        fprintf(fichier,"0\t%ld\t%s\n",directories->mod_time,directories->name);
+        fprintf(fichier,"0\t");
+        strftime(buffer, 50, "%d/%m/%Y %H:%M:%S",localtime(&directories->mod_time) );
+        fprintf(fichier,"\t%s\n",directories->name);
         write_files(directories->files,fichier, tabs+1);
         write_directories(directories->subdirs,fichier,tabs+1);
         write_directories(directories->next_dir,fichier,tabs);

@@ -1,7 +1,6 @@
 #include "../include/md5sum.h"
 
 int compute_md5(char *path, unsigned char buffer[]){
-    int ch_buffer;
     char sentence[512];
     ssize_t bytes;
     MD5_CTX current_char;
