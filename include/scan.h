@@ -2,6 +2,7 @@
 #define SCAN
 
 #include "type.h"
+#include "tree.h"
 #include <stdio.h>
 #include <sys/types.h>
 #include <dirent.h>

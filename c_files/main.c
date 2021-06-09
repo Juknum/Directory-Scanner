@@ -1,3 +1,5 @@
+#include "type.h"
+
 int main(int argc, char *argv[]) {
 	if (argc == 2) {
 		scan(argv[1]);

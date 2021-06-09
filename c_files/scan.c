@@ -12,7 +12,12 @@ void scan(char *dir_name) {
 			if (snprintf(new_path, MAX_HANDLED_PATH_LENGTH, "%s/%s", dir_name, current_entry->d_name) < MAX_HANDLED_PATH_LENGTH) {
 				if (lstat(new_path, &current_stat) != -1) {
 					if (S_ISDIR(current_stat.st_mode)) {
+						append_subdir(new_path,dir_name);
 						scan(new_path);
+						clear_subdirs(new_path);
+					}else{
+						append_file(new_path,dir_name);
+						clear_files(new_path);
 					}
 				}
 			}
