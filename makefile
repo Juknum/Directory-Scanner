@@ -1,47 +1,24 @@
-SOURCES_DIR = sources
-HEADERS_DIR = headers
-
-BUILD_DIR   = build
-BIN_DIR     = $(BUILD_DIR)/bin
-OBJECTS_DIR = ${BUILD_DIR}/objects
-
-EXEC = projet
-
 CC      = gcc
-CFLAGS  = -I./$(HEADERS_DIR) -std=c11 -Wall -pedantic
+CFLAGS  = -W -Wall -ansi -pedantic
 LDFLAGS =
-LIBS    = -lm
 
-ifdef OPENSSL_MD5
-CFLAGS += -DOPENSSL_MD5
-LIBS   += -lcrypto
-else
-CFLAGS += -DBSD_MD5
-LIBS   += -lbsd
-endif
+EXEC = results
 
-# Get sources
-SOURCES = $(notdir $(wildcard $(SOURCES_DIR)/*.c))
-SOURCES_BLACKLISTED = 
+SRC = $(wildcard sources/*.c)
+OBJ = $(SRC: .c = .o)
 
-# Filtering
-SOURCES := $(filter-out $(SOURCES_BLACKLISTED), $(SOURCES))
-OBJECTS  = $(SOURCES: %.c = $(OBJECTS_DIR)/%.o)
+results: $(OBJ)
+	$(CC) -o $@ $^ $(LDFLAGS)
 
-.PHONY: clean clean-all
+main.o: $(wildcard headers/*.h)
 
-all: $(BIN_DIR)/$(EXEC)
+%.o: %.c
+	$(CC) -o $@ -c $< $(CFLAGS)
 
-$(BIN_DIR)/$(EXEC): $(OBJECTS)
-	[ -d $(BIN_DIR) ] || mkdir -p $(BIN_DIR)
-	$(CC) $(LDFLAGS) -o $(BIN_DIR)/$(EXEC) $^ $(LIBS)
-
-$(OBJECTS): $(OBJECTS_DIR)/%.o : $(SOURCES_DIR)/%.c
-	[ -d $(OBJECTS_DIR) ] || mkdir -p $(OBJECTS_DIR)
-	$(CC) $(CFLAGS) -c -o $@ $<
+.PHONY: clean mrproper
 
 clean:
-	rm -rf $(OBJECTS_DIR)
+	@rm -rf *.o
 
-clean-all: clean
-	rm -rf $(BIN_DIR)
+mrproper: clean
+	@rm -rf $(EXEC)

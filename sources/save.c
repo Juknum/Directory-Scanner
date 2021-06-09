@@ -3,8 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include <save.h>
-#include <definitions.h>
+#include "../headers/save.h"
 
 int save_to_file(s_directory *root, char *path_to_target, int nb_tabs, char *path_to_current_dir) {
   FILE *f = fopen(path_to_target, "a");

@@ -1,6 +1,8 @@
 #ifndef SAVE_H
 #define SAVE_H
 
+#include "./definitions.h"
+
 /**
  * Ouvre le fichier donné par "path_to_target", écris l'arborescence depuis le dossier "root"
  * @author Julien
