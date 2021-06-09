@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS =   -ansi -lcrypto -g -std=c99 -Du_char="unsigned char" #-pedantic -Wall -Werror
+CFLAGS =   -ansi -lcrypto -g -std=c99 -Du_char="unsigned char" -pedantic -Wall -Werror
 TARGET = arborescence_displayer
 STRUCT_FILE = structures.h
 OBJ_DIR = objects
@@ -34,7 +34,7 @@ clean:
 	$(RM) -r $(BIN_DIR)
 
 run: all
-	./$(BIN_DIR)/$(TARGET)
+	./$(BIN_DIR)/$(TARGET) ~
 
 debug: all
 	gdb ./$(BIN_DIR)/$(TARGET)

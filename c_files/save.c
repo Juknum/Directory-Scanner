@@ -5,8 +5,12 @@ int save_to_file(s_directory *root, char *path_to_target){
     isCreated = mkdir("~/.filescanner",0755);
     if(!isCreated) fprintf(stderr,"le fichier n'a pas été créé");
     FILE *fichier = NULL;
-
-    fichier = fopen("~/lol.txt", "w");
+    if(strcmp(path_to_target,"stdout")==0){
+        fichier = stdout;
+    } else {
+        fichier = fopen("~/lol.txt", "w");
+    }
+    
 
     if (fichier != NULL) {
         printf("possible d'ouvrir le fichier sauvegharde.txt\n");
@@ -40,11 +44,14 @@ void write_directories(s_directory* directories, FILE* fichier, int tabs){
         write_files(directories->files,fichier, tabs+1);
         write_directories(directories->subdirs,fichier,tabs+1);
         write_directories(directories->next_dir,fichier,tabs);
+    } else{
+        print_tabs(tabs, fichier);
+        printf("------------------------------\n");
     }
 }
 
 void print_tabs(int tabs,FILE* fichier){
     for(int i=0;i<tabs;i++){
-        fprintf(fichier,"\t");
+        fprintf(fichier,"|  ");
     }
 }

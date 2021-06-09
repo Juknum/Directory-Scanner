@@ -14,8 +14,9 @@ int main(int argc, char* argv[]){
     }
 
     s_directory* test = process_dir(argv[1]);
-    if(test) read_s_directory(test);
+    //if(test) read_s_directory(test);
 
+    save_to_file(test,"stdout");
     clear_subdirs(test);
     if(!test->subdirs)
     {
