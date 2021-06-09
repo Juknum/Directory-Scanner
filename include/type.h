@@ -7,6 +7,8 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <unistd.h>
+#include <stdbool.h>
 
 #define MAX_HANDLED_PATH_LENGTH 4096
 
@@ -28,3 +30,8 @@ typedef struct _directory {
     s_file *files;
     struct _directory *next_dir;
 } s_directory;
+
+//global variables linked to our options
+bool specific_save_file;
+bool md5_sum_computing;
+bool specific_directory;
