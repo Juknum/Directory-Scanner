@@ -26,9 +26,21 @@ int append_file(s_file *child, s_directory *parent);
 void clear_files(s_directory *parent);
 
 /*
+ *  Function that recursivly removes the files from the memory
+ *  s_directory *parent - file to clear
+ */
+void erase_file_data(s_file *parent);
+
+/*
  *  Function that clears the memory of the subdirectories
  *  s_directory *parent - pointer to clear
  */
 void clear_subdirs(s_directory *parent);
+
+/*
+ *  Function that recursivly removes the directories from the memory
+ *  s_directory *parent - file to clear
+ */
+void erase_dir_data(s_directory *parent);
 
 #endif
