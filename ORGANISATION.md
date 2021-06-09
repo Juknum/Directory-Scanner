@@ -1,7 +1,7 @@
 # Organisation du projet
 
 ## Fonctions
-> Etat de l'avancer du projet
+> Etat de l'avancée du projet
 
 - [ ] `s_directory *process_dir(char *path);`  
     - [ ] Need review
@@ -45,7 +45,7 @@ git status # check s'il y a des changements
 ```C
 /**
  * Description de la fonction
- * @authors la ou les personnes qui ont codés la fonction
+ * @authors la ou les personnes qui ont codé la fonction
  * @param {TypeDuParametre} nom_du_parametre description du paramettre
  * @return {TypeDuRetour} description de la valeur retournée (ne pas mettre cette ligne si void)
  */
