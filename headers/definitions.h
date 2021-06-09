@@ -5,9 +5,9 @@
 #include <time.h>
 
 #ifndef OPENSSL_MD5
-    #include "openssl/md5.h"
+  #include "../openssl/md5.h"
 #else
-    #error NO MD5 LIBRARY
+  #error NO MD5 LIBRARY
 #endif
 
 enum type {
@@ -16,6 +16,8 @@ enum type {
   OTHER_TYPE
 };
 typedef enum type e_type;
+
+#define NAME_MAX 128
 
 struct _file {
   e_type   file_type;

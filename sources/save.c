@@ -11,7 +11,7 @@ int save_to_file(s_directory *root, char *path_to_target, int nb_tabs, char *pat
 
   // ajout du nombre de tabulation nécessaire (indentation)
   char tabs[nb_tabs + 2];
-  for (size_t i = 0; i < nb_tabs, i++) tabs[i] = '\t';
+  for (size_t i = 0; i < nb_tabs; i++) tabs[i] = '\t';
   tabs[nb_tabs] = '\0';
 
   // ajout des info du dossier actuel
@@ -63,7 +63,8 @@ void string_builder_of_dir(char *buffer, s_directory dir, char *path_to_parent_d
 void string_builder_of_file(char *buffer, s_file file, char *path_to_parent_dir) {
   char time[32];
 
-  strcpy(buffer, file.file_type); // file e_type
+  if (file.file_type == REGULAR_FILE) strcpy(buffer, "1"); // file e_type
+  else strcpy(buffer, "2");
   strcat(buffer, "\t");
 
   strftime(time, 32, "%Y-%m-%d-%H:%M:%S", localtime(&file.mod_time));
