@@ -6,7 +6,7 @@ int save_to_file(s_directory *root, char *path_to_target){
 		return 0;
 	}
 
-	FILE *f = fopen(path_to_target, "w"); // Open in text mode, for writing
+	FILE *f = fopen(path_to_target, "a"); // Open in text mode, for writing
     if (!f){
     	printf("Could not open the save file!");
     	return 0;
@@ -54,7 +54,7 @@ int write_files(s_file *file, char *path_to_target){
 		return 0;
 	}
 
-	FILE *f = fopen(path_to_target, "w"); // Open in text mode, for writing
+	FILE *f = fopen(path_to_target, "a"); // Open in text mode, for writing
     if (!f){ //error should not happen at this point but still checking juuuuuuust in case you know
     	return 0;
     }
@@ -94,7 +94,7 @@ int write_directories(s_directory *dir, char *path_to_target){
 		return 0;
 	}
 
-	FILE *f = fopen(path_to_target, "w"); // Open in text mode, for writing
+	FILE *f = fopen(path_to_target, "a"); // Open in text mode, for writing
     if (!f){ //error should not happen at this point but still checking juuuuuuust in case you know
     	return 0;
     }
