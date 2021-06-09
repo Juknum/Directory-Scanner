@@ -2,8 +2,9 @@
 
 int compute_md5(char *path, unsigned char buffer[]){
     int ch_buffer;
-    unsigned char* sentence = NULL;
-    int size = 0;;
+    char sentence[512];
+    ssize_t bytes;
+    MD5_CTX current_char;
     FILE* f = NULL;
 
     f = fopen(path,"r");
@@ -12,25 +13,15 @@ int compute_md5(char *path, unsigned char buffer[]){
         return EXIT_FAILURE;
     }
 
-    do{
-        ch_buffer = fgetc(f);
-        if(ch_buffer != EOF){
-            if(size == 0){
-                sentence = malloc(sizeof(char)*1);
-            } else {
-                sentence = realloc(sentence, sizeof(char)*(size+1));
-            }
-            
-            if(ch_buffer == '\n'){
-                sentence[size] = '\0';
-            } else {
-                sentence[size]= ch_buffer;
-            }
-            size++;
-        }
-    } while(ch_buffer != EOF);
-    size++;
-    buffer = MD5(sentence,size,buffer);
+    MD5_Init(&current_char);
+    do
+    {
+        bytes=fread(sentence, 1, 512, f);
+        MD5_Update(&current_char, sentence, bytes);
+    }while(bytes > 0);
+    
+    for(int n=0; n<MD5_DIGEST_LENGTH; n++) printf("%02x", buffer[n]);
+    MD5_Final(buffer, &current_char);
 
     return EXIT_SUCCESS;
 }
