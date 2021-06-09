@@ -10,7 +10,7 @@
     - [ ] Need review
     - [ ] Done
 - [ ] `int save_to_file(s_directory *root, char *path_to_target);`  
-    - [ ] Need review
+    - [x] Need review
     - [ ] Done
 - [ ] `int append_subdir(s_directory *child, s_directory *parent);`  
     - [ ] Need review
@@ -46,8 +46,8 @@ git status # check s'il y a des changements
 /**
  * Description de la fonction
  * @authors la ou les personnes qui ont codé la fonction
- * @param {TypeDuParametre} nom_du_parametre description du paramettre
- * @return {TypeDuRetour} description de la valeur retournée (ne pas mettre cette ligne si void)
+ * @param nom_du_parametre description du paramettre
+ * @return description de la valeur retournée (ne pas mettre cette ligne si void)
  */
 TypeDuRetour nom_de_la_fonction(TypeDuParametre nom_du_paramatre) {
   return 4;
