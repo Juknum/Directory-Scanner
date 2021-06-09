@@ -3,6 +3,7 @@
 
 #include "structures.h"
 #include "tree.h"
+#include "md5sum.h"
 typedef enum {FALSE,TRUE} Bool;
 
 /**

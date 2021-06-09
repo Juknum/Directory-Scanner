@@ -6,14 +6,14 @@ int append_subdir(s_directory *child, s_directory *parent)
 {
     child->next_dir = parent->subdirs;
     parent->subdirs = child;
-    return 1;
+    return EXIT_SUCCESS;
 }
 
 int append_file(s_file *child, s_directory *parent)
 {
     child->next_file = parent->files;
     parent->files = child;
-    return 1;
+    return EXIT_SUCCESS;
 }
 
 void clear_files(s_directory *parent)

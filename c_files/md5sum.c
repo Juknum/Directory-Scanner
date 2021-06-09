@@ -1,7 +1,7 @@
 #include "../include/md5sum.h"
 
 int compute_md5(char *path, unsigned char buffer[]){
-    char sentence[512];
+    char* sentence = calloc(sizeof(char),512);
     ssize_t bytes;
     MD5_CTX current_char;
     FILE* f = NULL;
@@ -18,9 +18,9 @@ int compute_md5(char *path, unsigned char buffer[]){
         bytes=fread(sentence, 1, 512, f);
         MD5_Update(&current_char, sentence, bytes);
     }while(bytes > 0);
-    
-    for(int n=0; n<MD5_DIGEST_LENGTH; n++) printf("%02x", buffer[n]);
+    free(sentence);
     MD5_Final(buffer, &current_char);
-
+    fclose(f);
     return EXIT_SUCCESS;
 }
+

@@ -7,6 +7,7 @@ s_directory *process_dir(char *path)
   mainDir->files = NULL;
   mainDir->subdirs = NULL;
   mainDir->next_dir = NULL;
+  
 
   char* res = getRelativePath(path);
   strcpy(mainDir->name,res);
@@ -52,7 +53,7 @@ s_file *process_file(char *path)
 {
   s_file* files = (s_file*)malloc(sizeof(s_file));
   files->next_file = NULL;
-  char buffer[100];
+  //char buffer[100];
 
   char* name = getRelativePath(path);
   strcpy(files->name,name);
@@ -62,12 +63,18 @@ s_file *process_file(char *path)
   stat(path, &buf);
 
   if(S_ISDIR(buf.st_mode)) files->file_type = DIRECTORY;
-  else if(S_ISREG(buf.st_mode)) files->file_type = REGULAR_FILE;
-  else files->file_type = OTHER_TYPE;
-
+  else if(S_ISREG(buf.st_mode)){
+    files->file_type = REGULAR_FILE;
+    compute_md5(path, files->md5sum);
+  }  else{
+    files->file_type = OTHER_TYPE;
+    compute_md5(path, files->md5sum);
+  } 
+  
+  
   files->file_size = buf.st_size;
   files->mod_time = buf.st_mtime;
-  strftime(buffer, 50, "%d/%m/%Y %H:%M:%S",localtime(&buf.st_mtime) );
+  //strftime(buffer, 50, "%d/%m/%Y %H:%M:%S",localtime(&buf.st_mtime) );
 
   return files;
 }

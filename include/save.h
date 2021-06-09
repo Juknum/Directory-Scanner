@@ -21,4 +21,6 @@ void write_directories(s_directory* directories, FILE* fichier, int tabs);
 
 void print_tabs(int tabs,FILE* fichier);
 
+void print_md5sum(unsigned char buffer[], FILE* fichier);
+
 #endif
