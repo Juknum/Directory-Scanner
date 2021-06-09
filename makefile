@@ -2,12 +2,12 @@ CC      = gcc
 CFLAGS  = -W -Wall -ansi -pedantic
 LDFLAGS =
 
-EXEC = results
+EXEC = projet.exe
 
 SRC = $(wildcard sources/*.c)
 OBJ = $(SRC: .c = .o)
 
-results: $(OBJ)
+projet.exe: $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 main.o: $(wildcard headers/*.h)

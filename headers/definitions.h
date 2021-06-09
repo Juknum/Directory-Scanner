@@ -17,8 +17,6 @@ enum type {
 };
 typedef enum type e_type;
 
-#define NAME_MAX 128
-
 struct _file {
   e_type   file_type;
   char     name[NAME_MAX + 1];
