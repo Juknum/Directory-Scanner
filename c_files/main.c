@@ -7,15 +7,22 @@
 void read_s_directory(s_directory* dir);
 
 int main(int argc, char* argv[]){
-    if(argc < 2){
+    if(argc < 2)
+    {
       fprintf(stderr,"Not enough argument to the function\n");
       return EXIT_FAILURE;
     }
-    s_directory* test = process_dir(argv[1]);
 
+    s_directory* test = process_dir(argv[1]);
     if(test) read_s_directory(test);
 
-    free(test);
+    clear_subdirs(test);
+    if(!test->subdirs)
+    {
+      free(test);
+      printf("Successefully cleared subdirs\n");
+    }
+
     return EXIT_SUCCESS;
 }
 

@@ -2,6 +2,7 @@
 #define SCAN_HEADER
 
 #include "structures.h"
+#include "tree.h"
 typedef enum {FALSE,TRUE} Bool;
 
 /**
@@ -30,23 +31,6 @@ s_file *process_file(char *path);
  */
 char* catPath(char* dir,char* file);
 
-
-
-/**
- * @brief
- *
- * @param path
- * @return s_file*
- */
-s_file* add_files(s_directory* dir,s_file* to_add);
-
-/**
- * @brief
- *
- * @param path
- * @return s_file*
- */
-s_directory* add_dir(s_directory* mainDir,s_directory* newDir);
 
 /**
  * @brief

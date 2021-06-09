@@ -4,19 +4,15 @@
 
 int append_subdir(s_directory *child, s_directory *parent)
 {
-  s_directory* tmp = parent;
-  while(tmp->subdirs != NULL)
-    tmp = tmp->subdirs->next_dir;
-  tmp->subdirs->next_dir = child;
+    child->next_dir = parent->subdirs;
+    parent->subdirs = child;
     return 1;
 }
 
 int append_file(s_file *child, s_directory *parent)
 {
-    s_directory* tmp = parent;
-    while(tmp->files->next_file != NULL)
-      tmp->files = tmp->files->next_file;
-    tmp->files->next_file = child;
+    child->next_file = parent->files;
+    parent->files = child;
     return 1;
 }
 
@@ -34,8 +30,12 @@ void clear_files(s_directory *parent)
 void clear_subdirs(s_directory *parent)
 {
   while(parent->subdirs != NULL)
-    clear_subdirs(parent->subdirs->next_dir);
+  {
+    clear_subdirs(parent->subdirs);
+    parent->subdirs = parent->subdirs->next_dir;
+  }
 
   clear_files(parent);
   free(parent->subdirs);
+  parent->subdirs = NULL;
 }

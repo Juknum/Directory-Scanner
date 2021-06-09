@@ -15,7 +15,6 @@
 #include <sys/stat.h>
 #include <stdbool.h>
 
-
 typedef enum {DIRECTORY, REGULAR_FILE, OTHER_TYPE} e_type;
 
 /**

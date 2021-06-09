@@ -29,12 +29,12 @@ s_directory *process_dir(char *path)
       {
         tmpPath = catPath(path,file->d_name);
         f = process_file(tmpPath);
-        mainDir->files = add_files(mainDir,f);
+        append_file(f,mainDir);
 
         if((int)file->d_type == 4)
         {
           s_directory* newDir = process_dir(tmpPath);
-          mainDir = add_dir(mainDir,newDir);
+          append_subdir(newDir,mainDir);
         }
         free(tmpPath);
         tmpPath = NULL;
@@ -42,10 +42,7 @@ s_directory *process_dir(char *path)
 
     }
 
-    if(dir){
-      closedir(dir);
-    }
-    
+    if(dir) closedir(dir);
     return mainDir;
 }
 
@@ -56,68 +53,24 @@ s_file *process_file(char *path)
   s_file* files = (s_file*)malloc(sizeof(s_file));
   files->next_file = NULL;
   char buffer[100];
-  char* name = (char*) malloc(sizeof(char)*(strlen(basename(path))+1));
-  strcpy(name,basename(path));
-  name[strlen(basename(path))] = '\0';
+
+  char* name = getRelativePath(path);
   strcpy(files->name,name);
   free(name);
 
   struct stat buf;
   stat(path, &buf);
 
-  if(S_ISDIR(buf.st_mode)){
-	files->file_type = DIRECTORY;
-	
-   }
-  else if(S_ISREG(buf.st_mode)){
-   	files->file_type = REGULAR_FILE;
-   	printf("%s\n",files ->name);
-   	strftime(buffer, 50, "%d/%m/%Y %H:%M:%S",localtime(&buf.st_mtime) );
-  	printf("last modification %s\n",buffer);
-  	double taille =buf.st_size;
-	printf("%.01lf \n",taille);
-   }
+  if(S_ISDIR(buf.st_mode)) files->file_type = DIRECTORY;
+  else if(S_ISREG(buf.st_mode)) files->file_type = REGULAR_FILE;
   else files->file_type = OTHER_TYPE;
-  
 
-
+  files->file_size = buf.st_size;
+  files->mod_time = buf.st_mtime;
+  strftime(buffer, 50, "%d/%m/%Y %H:%M:%S",localtime(&buf.st_mtime) );
 
   return files;
 }
-
-/******************************************/
-
-s_file* add_files(s_directory* dir,s_file* to_add)
-{
-  /*
-  to_add->next_file = NULL;
-  
-  if(dir->files == NULL){
-    dir->files = to_add;
-  }
-  else
-  {
-    
-    s_file* tmp = dir->files;
-    while(tmp->next_file != NULL)
-      tmp = tmp->next_file;
-    tmp->next_file = to_add;
-    
-    
-    while(dir->files->next_file != NULL)
-      dir->files = dir->files->next_file;
-    dir->files->next_file = to_add;
-    
-    to_add->next_file = dir->files;
-    
-  }
-  */
-  to_add->next_file = dir->files;
-  
-
-  return to_add;
-}
-
 
 /******************************************/
 
@@ -129,23 +82,6 @@ char* catPath(char* dir,char* file)
   strcat(path,file);
   path[strlen(path)] = '\0';
   return path;
-}
-
-/******************************************/
-
-s_directory* add_dir(s_directory* mainDir,s_directory* newDir)
-{
-  if(!mainDir->subdirs)
-  {
-    mainDir->subdirs = newDir;
-  }
-  else{
-    s_directory* tmp = mainDir->subdirs;
-    while(tmp->next_dir != NULL)
-      tmp = tmp->next_dir;
-    tmp->next_dir = newDir;
-  }
-  return mainDir;
 }
 
 /******************************************/
@@ -163,10 +99,10 @@ char* getRelativePath(char* path)
   {
     free(newPath);
     newPath = malloc(sizeof(char)*(strlen(strToken)+1));
-    //newPath = realloc(newPath,strlen(strToken));
     strcpy(newPath,strToken);
     strToken = strtok ( NULL, "/" );
   }
+  newPath[strlen(newPath)] = '\0';
   free(p);
   return newPath;
 }
