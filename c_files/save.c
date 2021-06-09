@@ -3,7 +3,7 @@
 int save_to_file(s_directory *root, char *path_to_target){
     bool isCreated = true;
     isCreated = mkdir("~/.filescanner",0755);
-    if(!isCreated) fprintf(stderr,"le fixhier n'a pas été créé");
+    if(!isCreated) fprintf(stderr,"le fichier n'a pas été créé");
     FILE *fichier = NULL;
 
     fichier = fopen("~/lol.txt", "w");
@@ -19,7 +19,7 @@ int save_to_file(s_directory *root, char *path_to_target){
         fclose(fichier);
     } else {
         // On affiche un message d'erreur
-        fprintf(stderr,"Impossible d'ouvirir le fichier\n");
+        fprintf(stderr,"Impossible d'ouvrir le fichier\n");
     }
     exit(EXIT_SUCCESS);
 

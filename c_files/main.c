@@ -30,10 +30,16 @@ int main(int argc, char* argv[]){
 
 void read_s_directory(s_directory* dir)
 {
+    char buffer[100];
+
     printf("/**********Files of %s*********/ \n",dir->name);
     while(dir->files != NULL)
     {
       printf("%s\n",dir->files->name);
+      strftime(buffer, 50, "%d/%m/%Y %H:%M:%S",localtime(&(dir->files->mod_time)) );
+      printf("%s\n",buffer);
+      printf("%ld\n",dir->files->file_size);
+      printf("%s\n",dir->files->md5sum);
       dir->files = dir->files->next_file;
     }
     printf("\n");
@@ -41,6 +47,7 @@ void read_s_directory(s_directory* dir)
     while(dir->subdirs)
     {
       read_s_directory(dir->subdirs);
+      save_to_file(dir,"./filescanner");
       dir->subdirs = dir->subdirs->next_dir;
     }
 }
