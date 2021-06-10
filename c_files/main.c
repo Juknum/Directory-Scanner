@@ -3,6 +3,7 @@
 #include "../include/md5sum.h"
 #include "../include/tree.h"
 #include "../include/scan.h"
+#include <stdlib.h>
 #include <string.h>
 
 void read_s_directory(s_directory* dir);
@@ -16,10 +17,11 @@ int main(int argc, char* argv[]){
       {.name="save-file",.has_arg=1,.flag=0,.val='o'},
       {.name="evaluate_md5",.has_arg=0,.flag=0,.val='s'},
       {.name="directory",.has_arg=1,.flag=0,.val='i'},
+      {.name="help",.has_arg=0,.flag=0,.val='h'},
       {.name=0,.has_arg=0,.flag=0,.val=0}, // last element must be zero
     };  
     
-    while((opt = getopt_long(argc, argv, "o:si:", my_opts, NULL)) != -1) {
+    while((opt = getopt_long(argc, argv, "o:shi:", my_opts, NULL)) != -1) {
       switch (opt) {
         case 'o':
           if(optarg[0] != '-'){
@@ -49,6 +51,16 @@ int main(int argc, char* argv[]){
             return EXIT_FAILURE;
           }
           break;
+        case 'h':
+          printf("NOM :\n\tarborescence_displayer [OPTIONS]\n");
+          printf("DESCRIPTION :\n\tThis programm will let you display the file arborescence of any directory of your file system.\n\n");
+          
+          printf("OPTIONS : \n");
+          printf("\t-o, --save-file [file_name] :\n\t\tThe file where the arborescence's informations will be displayed. If you want to put the informations in the commandline, just write 'stdout'\n\t\tBy default the datas are saved in ~/.filescanner/yyyy-MM-dd-hh:mm:ss.scan file.\n\n");
+          printf("\t-i, --directory [dir_name] :\n\t\tThe directory to scan. By default, the directory scanned will the current directory.\n\n");
+          printf("\t-s, --evaluate_md5 :\n\t\tThe md5sum will be calculated when it is possible.\n\n");
+          printf("\t-h, --help :\n\t\tDisplay this help message.\n\n");
+          return EXIT_SUCCESS;
         case '?':
           fprintf(stderr,"Unknown option!\n");
           return EXIT_FAILURE;
