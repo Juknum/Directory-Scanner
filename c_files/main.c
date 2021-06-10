@@ -17,8 +17,8 @@ int main(int argc, char* argv[]){
       {.name="evaluate_md5",.has_arg=0,.flag=0,.val='s'},
       {.name="directory",.has_arg=1,.flag=0,.val='i'},
       {.name=0,.has_arg=0,.flag=0,.val=0}, // last element must be zero
-    };  
-    
+    };
+
     while((opt = getopt_long(argc, argv, "o:si:", my_opts, NULL)) != -1) {
       switch (opt) {
         case 'o':
@@ -26,7 +26,6 @@ int main(int argc, char* argv[]){
             printf("The file where the arborescence will be saved is : %s\n",optarg);
             path = calloc(sizeof(char),strlen(optarg)+1);
             path = strcpy(path, optarg);
-            path[strlen(optarg)] = '\0';
           } else{
             fprintf(stderr,"Argument is invalid!\n");
             return EXIT_FAILURE;
@@ -43,7 +42,6 @@ int main(int argc, char* argv[]){
             printf("The directory evaluated is : %s\n",optarg);
             dirPath = calloc(sizeof(char),strlen(optarg)+1);
             dirPath = strcpy(dirPath, optarg);
-            dirPath[strlen(optarg)] = '\0';
           } else{
             fprintf(stderr,"Argument is invalid!\n");
             return EXIT_FAILURE;
@@ -55,7 +53,7 @@ int main(int argc, char* argv[]){
           break;
       }
     }
-    
+
     if(!dirPath){
       dirPath = calloc(sizeof(char),2);
       dirPath[0] = '.';
@@ -63,9 +61,8 @@ int main(int argc, char* argv[]){
     }
 
     if(!path){
-      path = calloc(sizeof(char),7);
-      path = strcpy(path, "stdout");
-      path[6] = '\0';
+      path = calloc(sizeof(char),strlen("/.filescanner/yyyy-MM-dd-hh:mm:ss.scan")+strlen(getenv("HOME"))+1);
+      strcpy(path,getenv("HOME"));
     }
 
     if(evaluate_md5){
