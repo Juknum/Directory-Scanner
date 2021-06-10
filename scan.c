@@ -13,7 +13,7 @@ s_directory* process_dir(char* path){
 	if(!real_dir){
 		printf("Directory %s couldn't be opened\n\n", path);
 		fprintf(stderr, "Error while opening %s\n", path);
-		exit(EXIT_FAILURE);
+		return NULL;
 	}
 	s_directory* my_dir = malloc(sizeof(s_directory));
 	my_dir->subdirs = NULL;
@@ -32,7 +32,7 @@ s_directory* process_dir(char* path){
 	}else{
 		printf("Stat computing doesn't work on directory %s\n\n", path);
 		fprintf(stderr, "Error while computing stats of %s\n", path);
-		exit(EXIT_FAILURE);
+		return NULL;
 	}
 	struct dirent* entry;
 	while(entry = readdir(real_dir)) != NULL){
@@ -44,7 +44,7 @@ s_directory* process_dir(char* path){
 					if(append_subdir(process_dir(full_path), my_dir) != 0){
 						printf("Error while adding %s to %s\n\n", full_path, path);
 						fprintf(stderr, "Error while adding %s to %s\n", full_path, path);
-						exit(EXIT_FAILURE);
+						return NULL;
 					} 
 				break;
 
@@ -52,7 +52,7 @@ s_directory* process_dir(char* path){
 					if(append_file(process_file(full_path), my_dir) != 0){
 						printf("Error while adding %s to %s\n\n", full_path, path);
 						fprintf(stderr, "Error while adding %s to %s\n", full_path, path);
-						exit(EXIT_FAILURE);
+						return NULL;
 					} 
 				break;
 			} 
@@ -92,13 +92,14 @@ s_file *process_file(char *path){
 				}else{
 					printf("Error while following link %s\n\n", path);
 					fprintf(stderr, "Error while following link %s\n", path);
+					return NULL;
 				} 
 			}	
 		} 
 	}else{
 		printf("Stat computing doesn't work on file %s\n\n", path);
 		fprintf(stderr, "Error while computing stats of %s\n", path);
-		exit(EXIT_FAILURE);
+		return NULL;
 	}
 	return my_file;
 } 
