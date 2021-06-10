@@ -4,17 +4,17 @@
 #include "scan.h"
 
 /**
- * Libere la memoire du la structure qui decrit le fichier
+ * Libere la memoire de la structure qui decrit le fichier
  * @author Florent
- * @param parent pointeur la structure qui decrit le fichier
+ * @param parent pointeur de la structure qui decrit le fichier
  */
 void clear_files(s_file *parent);
 
 /**
- * Libere la memoire du la structure qui decrit le dossier
+ * Libere la memoire de la structure qui decrit le dossier
  * @author Florent
- * @param parent pointeur la structure qui decrit le dossier
+ * @param parent pointeur de la structure qui decrit le dossier
  */
 void clear_subdirs(s_directory *parent);
 
-#endif //_TREE_H_ 
+#endif //_TREE_H_
