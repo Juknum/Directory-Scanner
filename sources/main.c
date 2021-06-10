@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 int main(int argc, char *argv[]) {
 	char *file, *directory;
@@ -52,17 +53,32 @@ int main(int argc, char *argv[]) {
 	}
 	if (is_file == 0)//Si aucun fichier n'a été précisé, création du fichier de sauvegarde
 	{
-		FILE *save_file = NULL;
-		save_file = fopen("save_file.txt", "a");
-		if (save_file != NULL)
+		file = malloc(sizeof(char) * 38);
+		DIR *dir = opendir("filescanner");//Vérifie l'existence du répertoire
+		if (!dir) 
 		{
-			file = malloc(sizeof(char) * strlen("save_file.txt"));
-			strcpy(file,"save_file.txt");
+			mkdir("filescanner",755);//Si il n'existe pas, le crée
+		}
+		closedir(dir);
+		strcpy(file,"filescanner/");
+		
+		char today_time[20];//Récupère la date complète
+		time_t timestamp;
+		time(&timestamp);
+		struct tm *info = localtime(&timestamp);
+
+		strftime(today_time, 20, "%Y-%m-%d-%H:%M:%S", info);
+		strcat(file, today_time); strcat(file,".scan");
+		
+		FILE *f = NULL;
+		f = fopen(file, "a");//Crée le fichier
+		if (f != NULL)
+		{
 			printf("-> saving in file %s\n", file);
-			fclose(save_file);
+			fclose(f);
 		}else
 		{
-			printf("can't create save_file.txt\n");
+			printf("can't create %s\n", file);
 			return 1;
 		}
 	}
@@ -73,6 +89,7 @@ int main(int argc, char *argv[]) {
 		printf("-> analysing directory: %s\n",directory);
 	}
 	//programme(file,directory,check_md5)
+	free(file); free(directory);
 	return 0;
 }
 
