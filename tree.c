@@ -61,6 +61,7 @@ void clear_subdirs(s_directory *parent){
     s_directory* next_temp_dir;
     while(temp_dir->next_dir){
         next_temp_dir=temp_dir->next_dir;
+        clear_files(temp_dir);
         free(temp_dir);
         temp_dir = next_temp_dir;
     } 
