@@ -22,13 +22,13 @@ int main(int argc, char* argv[]){
     };  
     
     while((opt = getopt_long(argc, argv, "o:shi:", my_opts, NULL)) != -1) {
+
       switch (opt) {
         case 'o':
           if(optarg[0] != '-'){
             printf("The file where the arborescence will be saved is : %s\n",optarg);
             path = calloc(sizeof(char),strlen(optarg)+1);
             path = strcpy(path, optarg);
-            path[strlen(optarg)] = '\0';
           } else{
             fprintf(stderr,"Argument is invalid!\n");
             return EXIT_FAILURE;
@@ -45,7 +45,6 @@ int main(int argc, char* argv[]){
             printf("The directory evaluated is : %s\n",optarg);
             dirPath = calloc(sizeof(char),strlen(optarg)+1);
             dirPath = strcpy(dirPath, optarg);
-            dirPath[strlen(optarg)] = '\0';
           } else{
             fprintf(stderr,"Argument is invalid!\n");
             return EXIT_FAILURE;
@@ -67,7 +66,7 @@ int main(int argc, char* argv[]){
           break;
       }
     }
-    
+
     if(!dirPath){
       dirPath = calloc(sizeof(char),2);
       dirPath[0] = '.';
@@ -75,9 +74,8 @@ int main(int argc, char* argv[]){
     }
 
     if(!path){
-      path = calloc(sizeof(char),7);
-      path = strcpy(path, "stdout");
-      path[6] = '\0';
+      path = calloc(sizeof(char),strlen("/.filescanner/yyyy-MM-dd-hh:mm:ss.scan")+strlen(getenv("HOME"))+1);
+      strcpy(path,getenv("HOME"));
     }
 
     if(evaluate_md5){
@@ -85,17 +83,14 @@ int main(int argc, char* argv[]){
     }
 
     s_directory* test = process_dir(dirPath, evaluate_md5);
-    //if(test) read_s_directory(test);
 
     save_to_file(test,path,evaluate_md5);
+
+    //if(test) read_s_directory(test);
     clear_subdirs(test);
 
-    if(!test->subdirs && !test->files)
-    {
-      free(test);
-      printf("Successefully cleared subdirs\n");
-    }
-
+    if(!test->subdirs && !test->files) printf("Successefully cleared subdirs\n");
+    free(test);
 
     return EXIT_SUCCESS;
 }
@@ -104,17 +99,16 @@ int main(int argc, char* argv[]){
 
 void read_s_directory(s_directory* dir)
 {
-  bool md5 = false;
-    char buffer[100];
+
 
     printf("/**********Files of %s*********/ \n",dir->name);
     while(dir->files != NULL)
     {
+      //char buffer[100];
       printf("%s\n",dir->files->name);
-      strftime(buffer, 50, "%d/%m/%Y %H:%M:%S",localtime(&(dir->files->mod_time)) );
+      /*strftime(buffer, 50, "%d/%m/%Y %H:%M:%S",localtime(&(dir->files->mod_time)) );
       printf("%s\n",buffer);
-      printf("%ld\n",dir->files->file_size);
-      //printf("%s\n",dir->files->md5sum);
+      printf("%ld\n",dir->files->file_size);*/
       dir->files = dir->files->next_file;
     }
     printf("\n");
@@ -122,7 +116,6 @@ void read_s_directory(s_directory* dir)
     while(dir->subdirs)
     {
       read_s_directory(dir->subdirs);
-      save_to_file(dir,"./filescanner",md5);
       dir->subdirs = dir->subdirs->next_dir;
     }
 }

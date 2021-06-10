@@ -2,27 +2,43 @@
 #include <stdio.h>
 
 int save_to_file(s_directory *root, char *path_to_target, bool md5){
-    bool isCreated = true;
-    //char* buffer = calloc(sizeof(char),100);
-    isCreated = mkdir("~/.filescanner",0755);
-    if(!isCreated) fprintf(stderr,"le fichier n'a pas été créé");
+
     FILE *fichier = NULL;
     if(strcmp(path_to_target,"stdout")==0){
         fichier = stdout;
-    } else {
-        fichier = fopen("~/lol.txt", "w");
+    } else if (strcmp(path_to_target,getenv("HOME")) == 0){
+        bool isCreated = true;
+        isCreated = mkdir(strcat(path_to_target,"/.filescanner/"),0755);
+        if(!isCreated) fprintf(stderr,"le fichier n'a pas été créé");
+
+        char buffer[100];
+        time_t now = time (NULL);
+        struct tm tm_now = *localtime (&now);
+        strftime(buffer, 50, "%Y-%m-%d-%H:%M:%S",&tm_now);
+
+        strcat(path_to_target,buffer);
+        strcat(path_to_target,".scan");
+        path_to_target[strlen(path_to_target)] = '\0';
+        printf("Saving to default path : %s\n",path_to_target);
+        fichier = fopen(path_to_target, "w");
+        if(!fichier) fichier = fopen(path_to_target, "a");
+    }
+    else
+    {
+      fichier = fopen(path_to_target, "w");
+      if(!fichier) fichier = fopen(path_to_target, "a");
     }
 
 
     if (fichier != NULL) {
         write_directories(root, fichier,0, md5);
-
         fclose(fichier);
     } else {
         // On affiche un message d'erreur
         fprintf(stderr,"Impossible d'ouvrir le fichier\n");
     }
-    exit(EXIT_SUCCESS);
+    free(path_to_target);
+    return 0;
 
 }
 
@@ -40,7 +56,7 @@ void write_files(s_file* files,FILE* fichier, int tabs, bool md5){
                 print_md5sum(files->md5sum, fichier);
                 printf(" ");
             }
-            
+
             fprintf(fichier,"%s\n",files->name);
         }
         free(buffer);
@@ -64,7 +80,7 @@ void write_directories(s_directory* directories, FILE* fichier, int tabs, bool m
         write_directories(directories->next_dir,fichier,tabs,md5);
     } else{
         print_tabs(tabs, fichier);
-        printf("------------------------------\n");
+        fprintf(fichier,"------------------------------\n");
     }
 }
 
