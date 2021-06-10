@@ -24,6 +24,9 @@
 - [ ] `void clear_subdirs(s_directory *parent);`  
     - [ ] Need review
     - [ ] Done
+- [ ] `int main(int argc, char *argv[])`  
+    - [x] Need review
+    - [ ] Done
 
 ## Git
 
