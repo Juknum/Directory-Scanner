@@ -12,7 +12,7 @@ typedef enum {FALSE,TRUE} Bool;
  * @param path
  * @return s_directory*
  */
-s_directory *process_dir(char *path);
+s_directory *process_dir(char *path, bool md5);
 
 /**
  * @brief
@@ -20,7 +20,7 @@ s_directory *process_dir(char *path);
  * @param path
  * @return s_file*
  */
-s_file *process_file(char *path);
+s_file *process_file(char *path, bool md5);
 
 
 /**

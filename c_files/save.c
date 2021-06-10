@@ -1,7 +1,7 @@
 #include "../include/save.h"
 #include <stdio.h>
 
-int save_to_file(s_directory *root, char *path_to_target){
+int save_to_file(s_directory *root, char *path_to_target, bool md5){
     bool isCreated = true;
     //char* buffer = calloc(sizeof(char),100);
     isCreated = mkdir("~/.filescanner",0755);
@@ -15,15 +15,7 @@ int save_to_file(s_directory *root, char *path_to_target){
 
 
     if (fichier != NULL) {
-        printf("possible d'ouvrir le fichier sauvegharde.txt\n");
-
-        fprintf(fichier,"0 ");
-        //strftime(buffer, 100, "%d/%m/%Y %H:%M:%S",localtime(&(root->mod_time)) );
-        //fprintf(fichier,"%s %s\n",buffer,root->name);
-        //free(buffer);
-        write_files(root->files, fichier,1);
-
-        write_directories(root->subdirs, fichier,1);
+        write_directories(root, fichier,0, md5);
 
         fclose(fichier);
     } else {
@@ -34,7 +26,7 @@ int save_to_file(s_directory *root, char *path_to_target){
 
 }
 
-void write_files(s_file* files,FILE* fichier, int tabs){
+void write_files(s_file* files,FILE* fichier, int tabs, bool md5){
     char* buffer = NULL;
     if(files != NULL ){
         if(files->file_type !=DIRECTORY){
@@ -44,16 +36,20 @@ void write_files(s_file* files,FILE* fichier, int tabs){
             fprintf(fichier,"%d ",files->file_type);
             strftime(buffer, 100, "%d/%m/%Y %H:%M:%S",localtime(&files->mod_time) );
             fprintf(fichier,"%s %lu ",buffer,files->file_size);
-            print_md5sum(files->md5sum, fichier);
-            fprintf(fichier," %s\n",files->name);
+            if(md5){
+                print_md5sum(files->md5sum, fichier);
+                printf(" ");
+            }
+            
+            fprintf(fichier,"%s\n",files->name);
         }
         free(buffer);
-        write_files(files->next_file, fichier, tabs);
+        write_files(files->next_file, fichier, tabs, md5);
     }
 
 }
 
-void write_directories(s_directory* directories, FILE* fichier, int tabs){
+void write_directories(s_directory* directories, FILE* fichier, int tabs, bool md5){
     char* buffer = NULL;
     if(directories != NULL){
         buffer = calloc(sizeof(char),100);
@@ -63,9 +59,9 @@ void write_directories(s_directory* directories, FILE* fichier, int tabs){
         fprintf(fichier,"%s %s\n",buffer,directories->name);
 
         free(buffer);
-        write_files(directories->files,fichier, tabs+1);
-        write_directories(directories->subdirs,fichier,tabs+1);
-        write_directories(directories->next_dir,fichier,tabs);
+        write_files(directories->files,fichier, tabs+1,md5);
+        write_directories(directories->subdirs,fichier,tabs+1,md5);
+        write_directories(directories->next_dir,fichier,tabs,md5);
     } else{
         print_tabs(tabs, fichier);
         printf("------------------------------\n");

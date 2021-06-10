@@ -14,6 +14,8 @@
 #include <time.h>
 #include <sys/stat.h>
 #include <stdbool.h>
+#include <stdint.h>
+#include <getopt.h>
 
 typedef enum {DIRECTORY, REGULAR_FILE, OTHER_TYPE} e_type;
 

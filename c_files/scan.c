@@ -1,7 +1,7 @@
 #include "../include/scan.h"
 
 
-s_directory *process_dir(char *path)
+s_directory *process_dir(char *path, bool md5)
 {
   s_directory* mainDir = (s_directory*)malloc(sizeof(s_directory));
   mainDir->files = NULL;
@@ -31,12 +31,12 @@ s_directory *process_dir(char *path)
       if(strcmp(file->d_name,".") != 0 && strcmp(file->d_name,"..") != 0 && strcmp(file->d_name,".git") != 0)
       {
         tmpPath = catPath(path,file->d_name);
-        f = process_file(tmpPath);
+        f = process_file(tmpPath, md5);
         append_file(f,mainDir);
 
         if((int)file->d_type == 4)
         {
-          s_directory* newDir = process_dir(tmpPath);
+          s_directory* newDir = process_dir(tmpPath, md5);
           append_subdir(newDir,mainDir);
         }
         free(tmpPath);
@@ -51,7 +51,7 @@ s_directory *process_dir(char *path)
 
 /******************************************/
 
-s_file *process_file(char *path)
+s_file *process_file(char *path, bool md5)
 {
   s_file* files = (s_file*)malloc(sizeof(s_file));
   files->next_file = NULL;
@@ -66,10 +66,10 @@ s_file *process_file(char *path)
   if(S_ISDIR(buf.st_mode)) files->file_type = DIRECTORY;
   else if(S_ISREG(buf.st_mode)){
     files->file_type = REGULAR_FILE;
-    compute_md5(path, files->md5sum);
+    if(md5) compute_md5(path, files->md5sum);
   }  else{
     files->file_type = OTHER_TYPE;
-    compute_md5(path, files->md5sum);
+    if(md5) compute_md5(path, files->md5sum);
   }
 
 
