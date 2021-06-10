@@ -5,12 +5,13 @@ int compute_md5(char *path, unsigned char buffer[]){
     ssize_t bytes;
     MD5_CTX current_char;
     FILE* f = NULL;
-
+    struct stat buf;
+    if(access(path, R_OK) !=0) return EXIT_FAILURE;
+    if(stat(path, &buf) == -1) return EXIT_FAILURE;
+    if( !S_ISLNK(buf.st_mode) && !S_ISREG(buf.st_mode)) return EXIT_FAILURE;
     f = fopen(path,"r");
-    if(!f){
-        fprintf(stderr,"This file does not exist !\n");
-        return EXIT_FAILURE;
-    }
+    
+    if(!f) return EXIT_FAILURE;
 
     MD5_Init(&current_char);
     do
