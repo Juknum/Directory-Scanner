@@ -26,7 +26,7 @@ typedef struct _directory {
 } s_directory;
 
 s_directory *process_dir(char *path);
-s_file *process_file(char *path, bool is_regular);
+s_file *process_file(char *path);
 
 
 #endif
