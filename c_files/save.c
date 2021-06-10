@@ -38,7 +38,7 @@ int save_to_file(s_directory *root, char *path_to_target, bool md5){
         fprintf(stderr,"Impossible d'ouvrir le fichier\n");
     }
     free(path_to_target);
-    exit(EXIT_SUCCESS);
+    return 0;
 
 }
 

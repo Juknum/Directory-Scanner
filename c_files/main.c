@@ -70,17 +70,14 @@ int main(int argc, char* argv[]){
     }
 
     s_directory* test = process_dir(dirPath, evaluate_md5);
-    //if(test) read_s_directory(test);
 
     save_to_file(test,path,evaluate_md5);
+
+    //if(test) read_s_directory(test);
     clear_subdirs(test);
 
-    if(!test->subdirs && !test->files)
-    {
-      free(test);
-      printf("Successefully cleared subdirs\n");
-    }
-
+    if(!test->subdirs && !test->files) printf("Successefully cleared subdirs\n");
+    free(test);
 
     return EXIT_SUCCESS;
 }
@@ -89,17 +86,16 @@ int main(int argc, char* argv[]){
 
 void read_s_directory(s_directory* dir)
 {
-  bool md5 = false;
-    char buffer[100];
+
 
     printf("/**********Files of %s*********/ \n",dir->name);
     while(dir->files != NULL)
     {
+      //char buffer[100];
       printf("%s\n",dir->files->name);
-      strftime(buffer, 50, "%d/%m/%Y %H:%M:%S",localtime(&(dir->files->mod_time)) );
+      /*strftime(buffer, 50, "%d/%m/%Y %H:%M:%S",localtime(&(dir->files->mod_time)) );
       printf("%s\n",buffer);
-      printf("%ld\n",dir->files->file_size);
-      //printf("%s\n",dir->files->md5sum);
+      printf("%ld\n",dir->files->file_size);*/
       dir->files = dir->files->next_file;
     }
     printf("\n");
@@ -107,7 +103,6 @@ void read_s_directory(s_directory* dir)
     while(dir->subdirs)
     {
       read_s_directory(dir->subdirs);
-      save_to_file(dir,"./filescanner",md5);
       dir->subdirs = dir->subdirs->next_dir;
     }
 }
