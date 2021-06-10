@@ -3,7 +3,7 @@
 
 int save_to_file(s_directory *root, char *path_to_target){
     bool isCreated = true;
-    char* buffer = calloc(sizeof(char),100);
+    //char* buffer = calloc(sizeof(char),100);
     isCreated = mkdir("~/.filescanner",0755);
     if(!isCreated) fprintf(stderr,"le fichier n'a pas été créé");
     FILE *fichier = NULL;
@@ -12,15 +12,15 @@ int save_to_file(s_directory *root, char *path_to_target){
     } else {
         fichier = fopen("~/lol.txt", "w");
     }
-    
+
 
     if (fichier != NULL) {
         printf("possible d'ouvrir le fichier sauvegharde.txt\n");
 
         fprintf(fichier,"0 ");
-        strftime(buffer, 100, "%d/%m/%Y %H:%M:%S",localtime(&(root->mod_time)) );
-        fprintf(fichier,"%s %s\n",buffer,root->name);
-        free(buffer);
+        //strftime(buffer, 100, "%d/%m/%Y %H:%M:%S",localtime(&(root->mod_time)) );
+        //fprintf(fichier,"%s %s\n",buffer,root->name);
+        //free(buffer);
         write_files(root->files, fichier,1);
 
         write_directories(root->subdirs, fichier,1);
@@ -50,7 +50,7 @@ void write_files(s_file* files,FILE* fichier, int tabs){
         free(buffer);
         write_files(files->next_file, fichier, tabs);
     }
-    
+
 }
 
 void write_directories(s_directory* directories, FILE* fichier, int tabs){

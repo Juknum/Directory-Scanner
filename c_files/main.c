@@ -18,11 +18,13 @@ int main(int argc, char* argv[]){
 
     save_to_file(test,"stdout");
     clear_subdirs(test);
-    if(!test->subdirs)
+
+    if(!test->subdirs && !test->files)
     {
       free(test);
       printf("Successefully cleared subdirs\n");
     }
+
 
     return EXIT_SUCCESS;
 }
@@ -40,7 +42,7 @@ void read_s_directory(s_directory* dir)
       strftime(buffer, 50, "%d/%m/%Y %H:%M:%S",localtime(&(dir->files->mod_time)) );
       printf("%s\n",buffer);
       printf("%ld\n",dir->files->file_size);
-      printf("%s\n",dir->files->md5sum);
+      //printf("%s\n",dir->files->md5sum);
       dir->files = dir->files->next_file;
     }
     printf("\n");
