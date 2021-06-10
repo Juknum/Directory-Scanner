@@ -9,7 +9,7 @@ int save_to_file(s_directory *root, char *path_to_target, bool md5){
     } else if (strcmp(path_to_target,getenv("HOME")) == 0){
         bool isCreated = true;
         isCreated = mkdir(strcat(path_to_target,"/.filescanner/"),0755);
-        if(!isCreated) fprintf(stderr,"le fichier n'a pas été créé");
+        if(!isCreated) fprintf(stderr,"The file was not created\n");
 
         char buffer[100];
         time_t now = time (NULL);
@@ -54,7 +54,7 @@ void write_files(s_file* files,FILE* fichier, int tabs, bool md5){
             fprintf(fichier,"%s %lu ",buffer,files->file_size);
             if(md5){
                 print_md5sum(files->md5sum, fichier);
-                printf(" ");
+                fprintf(fichier," ");
             }
 
             fprintf(fichier,"%s\n",files->name);
