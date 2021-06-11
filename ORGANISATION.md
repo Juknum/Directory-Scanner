@@ -27,6 +27,9 @@
 - [ ] `int main(int argc, char *argv[])`  
     - [x] Need review
     - [ ] Done
+- [ ] `int compute_md5(char *path, unsigned char buffer[])`  
+    - [x] Need review
+    - [ ] Done
 
 ## Git
 
