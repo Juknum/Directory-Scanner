@@ -17,34 +17,32 @@
 #include "../headers/save.h"
 #include "../headers/tree.h"
 
-
-
-
 int main(int argc, char *argv[]) {
 	char *file, *directory;
 	short is_file = 0, is_dir = 0, opt = 0, check_md5 = 0;
-	
-	while((opt = getopt(argc, argv, "o:si:")) != -1) 
-	{
-		switch (opt) 
-		{
-			case 'o': //obtenir le nom du fichier de sauvegarde
+		
+	while((opt = getopt(argc, argv, "i:so")) != -1) {
+		switch (opt) {
+			// obtenir le nom du fichier de sauvegarde
+			case 'o': 
 				file = malloc(sizeof(char) * strlen(optarg));
 				strcpy(file,optarg);
 				is_file = 1;
 				printf("-> saving in file %s\n", file);
 				break;
 				
-			case 's'://activation du calcul des sommes MD5
-				check_md5 = 1;//Vaut 1 si la somme doit etre calculé, 0 sinon
+			// activation du calcul des sommes MD5
+			case 's': 
+				check_md5 = 1; // Vaut 1 si la somme doit etre calculé, 0 sinon
 				printf("-> activating MD5 calculus \n");
 				break;
 
-			case 'i'://obtenir le répertoire à analyser
-				;
-				DIR *test_dir = opendir(optarg);//Vérifie l'existence du répertoire
-				if (!test_dir) 
-				{
+			// obtenir le répertoire à analyser
+			case 'i':; // ; -> fix de: "error: a label can only be part of a statement and a declaration is not a statement"
+				
+				// Vérifie l'existence du répertoire
+				DIR *test_dir = opendir(optarg);
+				if (!test_dir) {
 					printf("%s is not a valid path\n", optarg);
 					return 1;
 				}
@@ -55,22 +53,24 @@ int main(int argc, char *argv[]) {
 				printf("-> analysing directory: %s\n", directory);
 				break;
 
+			// options non définie: 
 			default:
-				break;
+				printf("\nOPTIONS:\n\t-o\t:\tSave file location, default: ./filescanner/year-month-day-H:M:S.scan\n\t-s\t:\tActivate MD5 sum, disabled by default\n\t-i\t:\tDirectory to scan, \".\" by default.\n\n");
+				return 0;
 		}
 	}
-	if (is_file == 0)//Si aucun fichier n'a été précisé, création du fichier de sauvegarde
-	{
+
+	//Si aucun fichier n'a été précisé, création du fichier de sauvegarde
+	if (is_file == 0) {
 		file = malloc(sizeof(char) * 38);
-		DIR *dir = opendir("filescanner");//Vérifie l'existence du répertoire
-		if (!dir) 
-		{
-			mkdir("filescanner",777);//Si il n'existe pas, le crée
+		DIR *dir = opendir("filescanner"); // Vérifie l'existence du répertoire
+		if (!dir) {
+			mkdir("filescanner", 0755); // Si il n'existe pas, le crée
 		}
 		closedir(dir);
 		strcpy(file,"filescanner/");
 		
-		char today_time[20];//Récupère la date complète
+		char today_time[20]; // Récupère la date complète
 		time_t timestamp;
 		time(&timestamp);
 		struct tm *info = localtime(&timestamp);
@@ -79,19 +79,19 @@ int main(int argc, char *argv[]) {
 		strcat(file, today_time); strcat(file,".scan");
 		
 		FILE *f = NULL;
-		f = fopen(file, "a");//Crée le fichier
-		if (f != NULL)
-		{
+		f = fopen(file, "a"); // Crée le fichier
+		if (f != NULL) {
 			printf("-> saving in file %s\n", file);
 			fclose(f);
-		}else
-		{
+		}
+		else {
 			printf("can't create %s\n", file);
 			return 1;
 		}
 	}
-	if (is_dir == 0)//Si aucun répertoire n'a été précisé, analyse du répertoire courant "."
-	{
+
+	//Si aucun répertoire n'a été précisé, analyse du répertoire courant "."
+	if (is_dir == 0) {
 		directory = malloc(sizeof(char) * strlen("."));
 		strcpy(directory,".");
 		printf("-> analysing directory: %s\n",directory);
@@ -100,15 +100,12 @@ int main(int argc, char *argv[]) {
 	s_directory * parent = process_dir("dossier_test","dossier_test");
 	printf("Fin scan\n");
 
-	save_to_file(parent, file, 1, "..");
+	save_to_file(parent, file, 0, "./dossier_test");
 	printf("Fin sauvegarde\n");
 
 	clear_subdirs(parent);
-
 
 	//programme(file,directory,check_md5)
 	free(file); free(directory);
 	return 0;
 }
-
-// /!\ouvrir le fichier de sauvegarde en mode "a"

@@ -10,8 +10,7 @@
 #include "../headers/tree.h"
 
 s_file *process_file(char *path, char * nom){
-
-	printf("_Entree dans process_file_\n");
+	// printf("FILE:\t");
 
 	//structures de manipulation de fichier
 	struct stat stats;
@@ -29,22 +28,19 @@ s_file *process_file(char *path, char * nom){
 		parent->file_type = 1;
 		parent->file_size = stats.st_size;
 		//md5sum
-		snprintf(parent->md5sum, sizeof(parent->md5sum), "wip");
+		snprintf(parent->md5sum, sizeof(parent->md5sum), "WIP");
 	}
-	else{
+	else {
 		parent->file_type = 2;
 	}
 	snprintf(parent->name, sizeof(parent->name), "%s", nom);
 	parent->mod_time = stats.st_mtime;
-	printf("_Sortie de process_file_\n");
-
 	return parent; 
 }
 
 s_directory *process_dir(char *path, char *nom){
 
-	printf("_Entree dans process_dir_\n");
-
+	// printf("DIR:\t%s\t", nom);
 	//structures de manipulation de fichier
 	DIR *descripteur;
 	struct dirent *dirent = NULL;
@@ -69,8 +65,8 @@ s_directory *process_dir(char *path, char *nom){
 	parent->next_dir = NULL;
 
 	//lecture du contenu du dossier
-	descripteur=opendir(path);
-	dirent=readdir(descripteur);
+	descripteur = opendir(path);
+	dirent = readdir(descripteur);
 
 	//scan dossier intermediaire pour le scan
 	s_directory * dir1;
@@ -82,99 +78,69 @@ s_directory *process_dir(char *path, char *nom){
 
 	//Boucle de lecture du dossier//
 	//============================//
-	while(dirent!=NULL) {
+	while (dirent != NULL) {
 
-		printf("Element lu %s\n",dirent->d_name);
-		
 		//Verifie si l'element du dossier n'est pas .. ou .
-		if(strcmp(dirent->d_name,"..")==0 || strcmp(dirent->d_name,".")==0 ){
-			printf("Mauvais element (.. ou .)\n\n");
-			dirent=readdir(descripteur);
+		if (strcmp(dirent->d_name,"..") == 0 || strcmp(dirent->d_name,".") == 0 ){
+			dirent = readdir(descripteur);
 			continue;
 		}
 
 		//Creation du string chemin complet
-		snprintf(chemin, 200, "%s", path);	
-		strcat(chemin,"/");
+		snprintf(chemin, 2048, "%s", path);	strcat(chemin,"/");
 		strcat(chemin,dirent->d_name);
 		
-		printf("Le chemin est : %s\n",chemin);
-
-
+		// printf("PATH: \t%s\n",chemin);
 
 		//Si la lecture de l'etat de l'element est possible
 		//-------------------------------------------------
-		if( (stat(chemin, &stats)) == 0 && (strcmp(dirent->d_name,"..")!=0 || strcmp(dirent->d_name,".")!=0 ) ){
-			printf("Element lu est possible\n");
+		if (stat(chemin, &stats) == 0){
 
 			//Element est un dossier//
 			//----------------------//
-			if(S_ISDIR(stats.st_mode)){
-				printf("C'est un dossier \n\n");
+			if (S_ISDIR(stats.st_mode)) {
 				//scan le sous dossier
 				dir1 = process_dir(chemin,dirent->d_name);
 				
 				//Un sous dosier a deja ete creer
-				if(dir0 != NULL){
-					printf("Nouveau sous dossier de %s : %s",parent->name,dir1->name);
+				if (dir0 != NULL) {
 					dir0->next_dir = dir1;
 					dir0 = dir1;
 				}
 				//Premier sous dossier
-				else{
-					printf("Premier sous dossier de %s est %s\n",parent->name,dir1->name);
+				else {
 					parent->subdirs = dir1;
 					dir0 = dir1;
 				}
-				printf("\n");
 			}
 			//Element est un fichier//
 			//----------------------//
-			else if(S_ISREG(stats.st_mode)){
-				printf("C'est un fichier regulier\n\n");
+			else if (S_ISREG(stats.st_mode)) {
 
 				//scan le fichier
 				file1 = process_file(chemin,dirent->d_name);
 				
 				//Un fichier a deja ete creer
-				if(file0 != NULL){
-					printf("Nouveau fichier de %s : %s",parent->name,file1->name);
+				if (file0 != NULL) {
 					file0->next_file = file1;
 					file0 = file1;
 				}
 				//Premier fichier
 				else{
-					printf("Premier fichier de %s est %s\n",parent->name,file1->name);
 					parent->files = file1;
 					file0 = file1;
 				}
-				printf("\n");
 			}
 			//ERREUR
-			else{ printf("Erreur, type de l'element impossible\n"); return NULL;}
+			else return NULL;
 		}
 		//ERREUR
-		else{ printf("Erreur, lecture etat de l'element impossible\n"); return NULL; }
+		else return NULL;
 
 		//Lis l'element suivant du dossier
-		dirent=readdir(descripteur);
+		dirent = readdir(descripteur);
 	}
 	closedir(descripteur);
 
-	printf("_Sortie de process_dir_\n");
-
 	return parent;
 }
-
-
-/*
-void main() {
-
-	
-
-	s_directory * parent = process_dir("source","source");
-	printf("Fin scan\n");
-	clear_subdirs(parent);
-
-
-}*/

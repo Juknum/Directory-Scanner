@@ -32,6 +32,7 @@ int save_to_file(s_directory *root, char *path_to_target, int nb_tabs, char *pat
     current_file = current_file -> next_file; // fichier suivant
   }
 
+  fputs("\n", f);
   fclose(f); // on ferme le fichier maintenant car on le réouvre dans la récurrence
 
   // écriture des dossiers
