@@ -28,11 +28,11 @@ char * recuperation_nom(char * path){
 			break;
 		}
 		else if (i == 0){
-			strcat(nom, path);
+			strcpy(nom, path);
 			//printf("Pas de / donc nom = %s",nom);
 		}
 	}
-
+	//printf("nom = %s\n",nom);
 	return nom;
 }
 
@@ -66,6 +66,7 @@ s_file *process_file(char *path){
 }
 
 s_directory *process_dir(char *path){
+
 
 	// printf("DIR:\t%s\t", nom);
 	//structures de manipulation de fichier
@@ -117,7 +118,7 @@ s_directory *process_dir(char *path){
 		snprintf(chemin, 2048, "%s", path);	strcat(chemin,"/");
 		strcat(chemin,dirent->d_name);
 		
-		// printf("PATH: \t%s\n",chemin);
+		//printf("PATH: \t%s\n",chemin);
 
 		//Si la lecture de l'etat de l'element est possible
 		//-------------------------------------------------
