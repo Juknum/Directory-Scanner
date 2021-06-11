@@ -98,7 +98,7 @@ int main(int argc, char *argv[]) {
 		printf("-> analysing directory: %s\n",directory);
 	}
 
-	s_directory * parent = process_dir("dossier_test","dossier_test");
+	s_directory * parent = process_dir("dossier_test");
 	printf("Fin scan\n");
 
 	save_to_file(parent, file, 0, "./dossier_test");

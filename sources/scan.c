@@ -9,7 +9,34 @@
 #include "../headers/scan.h"
 #include "../headers/tree.h"
 
-s_file *process_file(char *path, char * nom){
+char * recuperation_nom(char * path){
+
+	char *nom;
+	long int l = strlen(path);
+	nom = malloc(l+1);
+	//printf("Path = %s\n",path);
+	
+	for(int i=l-1;i>=0;i--){
+		//printf("Entre dans boucle, i = %d\n",i);
+		if(path[i] == '/'){
+			//printf("caractere / \n");
+			for(int n=0;n<l-i-1;n++){
+				nom[n] = path[n+i+1];
+				nom[n+1] = '\0';
+				//printf("n = %d, caractere = %c, nom = %s\n",n,path[n+i+1],nom);
+			}
+			break;
+		}
+		else if (i == 0){
+			strcat(nom, path);
+			//printf("Pas de / donc nom = %s",nom);
+		}
+	}
+
+	return nom;
+}
+
+s_file *process_file(char *path){
 	// printf("FILE:\t");
 
 	//structures de manipulation de fichier
@@ -33,12 +60,12 @@ s_file *process_file(char *path, char * nom){
 	else {
 		parent->file_type = 2;
 	}
-	snprintf(parent->name, sizeof(parent->name), "%s", nom);
+	snprintf(parent->name, sizeof(parent->name), "%s", recuperation_nom(path));
 	parent->mod_time = stats.st_mtime;
 	return parent; 
 }
 
-s_directory *process_dir(char *path, char *nom){
+s_directory *process_dir(char *path){
 
 	// printf("DIR:\t%s\t", nom);
 	//structures de manipulation de fichier
@@ -58,7 +85,7 @@ s_directory *process_dir(char *path, char *nom){
 
 	//Champs par default du dossier
 	//-----------------------------
-	snprintf(parent->name, sizeof(parent->name), "%s", nom);
+	snprintf(parent->name, sizeof(parent->name), "%s", recuperation_nom(path));
 	parent->mod_time = stats.st_mtime;
 	parent->subdirs = NULL;
 	parent->files = NULL;
@@ -100,7 +127,7 @@ s_directory *process_dir(char *path, char *nom){
 			//----------------------//
 			if (S_ISDIR(stats.st_mode)) {
 				//scan le sous dossier
-				dir1 = process_dir(chemin,dirent->d_name);
+				dir1 = process_dir(chemin);
 				
 				//Un sous dosier a deja ete creer
 				if (dir0 != NULL) {
@@ -118,7 +145,7 @@ s_directory *process_dir(char *path, char *nom){
 			else if (S_ISREG(stats.st_mode)) {
 
 				//scan le fichier
-				file1 = process_file(chemin,dirent->d_name);
+				file1 = process_file(chemin);
 				
 				//Un fichier a deja ete creer
 				if (file0 != NULL) {
