@@ -1,21 +1,21 @@
 CC= gcc
-CFLAGS = -Wall -Werror -ansi -pedantic -std=c99 -g
+CFLAGS = -Wall -Werror -ansi -pedantic -std=gnu99 -g
 OBJ = objects
-CF = c_files
-HF = include
-TARGET = database
+BIN = bin
+F = files
+TARGET = main
 
 
 
-all: $(OBJ) $(TARGET)
+all: $(OBJ) $(BIN) $(BIN)/$(TARGET)
 
-$(TARGET): $(OBJ)/main.o $(OBJ)/$(TARGET).o
+$(BIN)/$(TARGET): $(OBJ)/main.o $(OBJ)/$(TARGET).o $(OBJ)/scan.o $(OBJ)/tree.o $(OBJ)/save.o $(OBJ)/md5sum.o
 	$(CC) -o $@ $^ $(CFLAGS)
 
-$(OBJ)/main.o: $(CF)/main.c
+$(OBJ)/main.o: $(F)/main.c
 	$(CC) -o $@ -c $< $(CFLAGS)
 
-$(OBJ)/%.o: $(CF)/%.c $(HF)/%.h
+$(OBJ)/%.o: $(F)/%.c $(F)/%.h
 	$(CC) -o $@ -c $< $(CFLAGS)
 
 # Phony target
