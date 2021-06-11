@@ -13,7 +13,8 @@
 #include "../headers/tree.h"
 
 /**
- * Fonction principale
+ * Fonction principale: gère les options, controle les arguments puis appelle les fonctions scan et save
+ * @author Antoine
  * @param argc Nombre d'arguments
  * @param argv Tableau des arguemnts
  */
