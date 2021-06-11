@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -38,5 +37,5 @@ char *md5sum(char* path, unsigned char buffer) {
 	        printf("%s\n", out);
 	
         fclose(f);
-    return ;
+    return out;
 }
