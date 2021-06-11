@@ -15,7 +15,7 @@ int save_to_file(s_directory *root, char *path_to_target, int nb_tabs, char *pat
   tabs[nb_tabs] = '\0';
 
   // ajout des info du dossier actuel
-  char buffer[256];
+  char buffer[2048];
   fputs(tabs, f);
   string_builder_of_dir(buffer, *root, path_to_current_dir);
   fputs(buffer, f);
@@ -28,6 +28,7 @@ int save_to_file(s_directory *root, char *path_to_target, int nb_tabs, char *pat
     string_builder_of_file(buffer, *current_file, path_to_current_dir);
     fputs(tabs, f);
     fputs(buffer, f);
+    fputs("\n", f);
     current_file = current_file -> next_file; // fichier suivant
   }
 
@@ -35,7 +36,7 @@ int save_to_file(s_directory *root, char *path_to_target, int nb_tabs, char *pat
 
   // écriture des dossiers
   s_directory *current_dir = root -> subdirs;
-  char next_dir_path[256];
+  char next_dir_path[2048];
   while (current_dir != NULL) {
     // récurrence /!\
     strcpy(next_dir_path, path_to_current_dir);
@@ -77,7 +78,7 @@ void string_builder_of_file(char *buffer, s_file file, char *path_to_parent_dir)
 
   if (file.file_type == REGULAR_FILE) {
     // taille
-    strcat(buffer, file.file_size); strcat(buffer, "\t");
+    snprintf(buffer, sizeof(buffer), "%lu" ,file.file_size); strcat(buffer, "\t");
 
     // md5
     strcat(buffer, file.md5sum); strcat(buffer, "\t");

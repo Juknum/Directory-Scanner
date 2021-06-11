@@ -4,9 +4,10 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <sys/stat.h>
-#include <errno.h>
-#include "scan.h"
-#include "tree.h"
+
+#include "../headers/definitions.h"
+#include "../headers/scan.h"
+#include "../headers/tree.h"
 
 s_file *process_file(char *path, char * nom){
 
@@ -28,9 +29,10 @@ s_file *process_file(char *path, char * nom){
 		parent->file_type = 1;
 		parent->file_size = stats.st_size;
 		//md5sum
+		snprintf(parent->md5sum, sizeof(parent->md5sum), "wip");
 	}
 	else{
-		parent->file_type = 3;
+		parent->file_type = 2;
 	}
 	snprintf(parent->name, sizeof(parent->name), "%s", nom);
 	parent->mod_time = stats.st_mtime;
@@ -53,7 +55,7 @@ s_directory *process_dir(char *path, char *nom){
 	parent = malloc(sizeof(s_directory));
 
 	//Chemin de l'element
-	char chemin[200];
+	char chemin[2048];
 
 	///lecture de l'etat du dossier
 	stat(chemin, &stats);

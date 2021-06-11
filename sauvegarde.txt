@@ -1,0 +1,9 @@
+	0	4459433-08-03-06:03:17	..dossier_test/		1600	wip	..source
+		0	wip	..t1.txt
+		0	wip	..t2
+		0	1970-01-01-01:00:00	¡K–(/destdest/			0	wip	¡K–(/destt1.txt
+			0	wip	¡K–(/destt2
+		0	2983850-08-27-04:34:40	¡K–(/dest/d2d2/			0	wip	¡K–(/dest/d2t4
+		0	2021-04-12-13:01:29	¡K–(/dest/d2/d_1d_1/			0	wip	¡K–(/dest/d2/d_1t3.txt
+			0	2983850-08-27-04:34:40	h/d4d4/			0	2983850-08-27-04:34:40	h/d4/d_3d_3/				0	wip	h/d4/d_3t6
+				0	wip	h/d4/d_3t5.txt

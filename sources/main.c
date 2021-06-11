@@ -12,6 +12,14 @@
 #include <string.h>
 #include <time.h>
 
+#include "../headers/definitions.h"
+#include "../headers/scan.h"
+#include "../headers/save.h"
+#include "../headers/tree.h"
+
+
+
+
 int main(int argc, char *argv[]) {
 	char *file, *directory;
 	short is_file = 0, is_dir = 0, opt = 0, check_md5 = 0;
@@ -57,7 +65,7 @@ int main(int argc, char *argv[]) {
 		DIR *dir = opendir("filescanner");//Vérifie l'existence du répertoire
 		if (!dir) 
 		{
-			mkdir("filescanner",755);//Si il n'existe pas, le crée
+			mkdir("filescanner",777);//Si il n'existe pas, le crée
 		}
 		closedir(dir);
 		strcpy(file,"filescanner/");
@@ -88,6 +96,16 @@ int main(int argc, char *argv[]) {
 		strcpy(directory,".");
 		printf("-> analysing directory: %s\n",directory);
 	}
+
+	s_directory * parent = process_dir("dossier_test","dossier_test");
+	printf("Fin scan\n");
+
+	save_to_file(parent, file, 1, "..");
+	printf("Fin sauvegarde\n");
+
+	clear_subdirs(parent);
+
+
 	//programme(file,directory,check_md5)
 	free(file); free(directory);
 	return 0;

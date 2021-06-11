@@ -1,7 +1,7 @@
 #ifndef _TREE_H_
 #define _TREE_H_
 
-#include "scan.h"
+#include "./definitions.h"
 
 /**
  * Libere la memoire de la structure qui decrit le fichier
