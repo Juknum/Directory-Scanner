@@ -1,8 +1,3 @@
-/**
- * Fonction principale
- * @param argc Nombre d'arguments
- * @param argv Tableau des arguemnts
- */
 #include <unistd.h>
 #include <dirent.h>
 #include <sys/types.h>
@@ -17,6 +12,11 @@
 #include "../headers/save.h"
 #include "../headers/tree.h"
 
+/**
+ * Fonction principale
+ * @param argc Nombre d'arguments
+ * @param argv Tableau des arguemnts
+ */
 int main(int argc, char *argv[]) {
 	char *file, *directory;
 	short is_file = 0, is_dir = 0, opt = 0, check_md5 = 0;
