@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
 				fichier_sortie = opendir(optarg);
 					if (fichier_sortie != NULL)
     				{
-    					printf("Erreur : l'argument donné avec l'option o n'est pas un fichier.");
+    					printf("Erreur : l'argument donné avec l'option -o n'est pas un fichier.");
     					closedir(fichier_sortie);
 
     				}
@@ -74,11 +74,12 @@ int main(int argc, char *argv[]) {
 					dossier_analyse = opendir(optarg);
 					if (dossier_analyse != NULL)
 					{
-						printf("C'est bien un dossier !\n");
+						closedir(fichier_sortie);
+						strncpy(in_path,optarg,PATH_MAX);
 					}
 					else
 					{
-						printf("Ce n'est PAS un dossier !\n");
+						printf("Erreur : l'argument passé avec l'option -i n'est pas un dossier.\n");
 					}
 				
 				break;
@@ -110,3 +111,4 @@ int main(int argc, char *argv[]) {
 		}
 
 	}
+
