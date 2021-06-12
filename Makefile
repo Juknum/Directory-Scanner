@@ -36,5 +36,11 @@ clean:
 run: all
 	./$(BIN_DIR)/$(TARGET)
 
+run_md5: all
+	./$(BIN_DIR)/$(TARGET) -s
+
 debug: all
 	gdb ./$(BIN_DIR)/$(TARGET)
+
+help: all
+	./$(BIN_DIR)/$(TARGET) -h

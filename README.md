@@ -1,5 +1,7 @@
 # Projet de LP25
 
+# Enoncé de Frédéric Lassabe
+
 L'évaluation de la partie programmation en langage C de LP25 se base sur un projet à réaliser en groupes de 4 étudiants. Ce projet doit être réalisé en langage C.
 
 ## Descriptif global du projet
@@ -184,3 +186,50 @@ La bibliothèque pour calculer des sommes MD5 est fournie avec OpenSSL. Pour l'u
 Il est nécessaire d'ouvrir le fichier dont vous calculez la somme MD5 et de le lire par parties (à vous de choisir la taille des éléments que vous traitez) afin de permettre à MD5 de calculer la somme sur la taille complète du fichier.
 
 Quelques informations supplémentaires au sujet de MD5 vous seront données ultérieurement.
+
+ 
+ 
+ 
+ 
+ 
+
+# Réalisation par notre groupe
+
+Nous avons réalisé tous les objectifs demandés mis à part l'objectif optionnel consistant à écrire nos fichiers dans une base de donnée sqlite.
+
+## Fonctionnement du makefile
+
+Le make file est doté de plusieurs phony targets afin de simplifier son utilisation :
+
+- clean : Permet de nettoyer les répertoires contenant les fichiers .o et les fichiers binaires.
+- run : Permet de faire directement tourner le programme avec les options par défaut.
+- run_md5 : Permet de faire tourner le programme en calculant les sommes md5 mais avec les autres options par défaut.
+- debug : Permet de lancer le débugage avec gdb directement après la compilation.
+- help : Permet d'afficher le message d'help inspiré des pages de manuel linux.
+- all : (par défaut) Permet de compiler l'ensemble des fichiers.
+
+## Aide 
+
+Nous avons réalisé une aide afin de rendre l'utilisation du programme plus claire pour l'utilisateur. Cette aide est la suivante :
+
+```
+NOM :
+	arborescence_displayer [OPTIONS]
+DESCRIPTION :
+	This programm will let you display the file arborescence of any directory of your file system.
+
+OPTIONS : 
+	-o, --save-file [file_name] :
+		The file where the arborescence's informations will be displayed. If you want to put the informations in the commandline, just write 'stdout'
+		By default the datas are saved in ~/.filescanner/yyyy-MM-dd-hh:mm:ss.scan file.
+
+	-i, --directory [dir_name] :
+		The directory to scan. By default, the directory scanned will the current directory.
+
+	-s, --evaluate_md5 :
+		The md5sum will be calculated when it is possible.
+
+	-h, --help :
+		Display this help message.
+
+```
