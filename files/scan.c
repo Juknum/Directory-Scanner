@@ -23,6 +23,7 @@ void scan(char *dir_name,s_directory *parent) {
         }
         closedir(directory);
     }else{
+        printf("Error scan/scan ! Directory not found.\n");
         free(directory);
     }
 }

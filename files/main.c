@@ -5,10 +5,10 @@
 #include "md5sum.h"
 
 int main(int argc, char *argv[]) {
-	if (argc < 2) {
+	/*if (argc < 2) {
 		printf("Please enter a Path name.\nOptions:\n-o + path: specify the save file.\n-s: also compute md5.\n-i + repertory path: specify the repertory to scan.\n");
 		return 0;
-	} 
+	}*/ 
 
 	//strings to stock the optional paths
 	char* save_file_path;
@@ -32,6 +32,7 @@ int main(int argc, char *argv[]) {
     		case 'o': 
     			if (optarg[0] == '-'){
                     printf("Unavailable parameter! Please Don't enter an option as parameter of -o.\n");
+					return 1;
                 } else {
                 	specific_save_file = true;
                 	save_file_path = malloc(sizeof(char)*strlen(optarg));
@@ -46,7 +47,8 @@ int main(int argc, char *argv[]) {
     		case 'i': 
     			if (optarg[0] == '-'){
                     printf("Unavailable parameter! Please Don't enter an option as parameter of -i.\n");
-                } else {
+					return 1;
+				} else {
                 	specific_directory = true;
                 	directory = malloc(sizeof(char)*strlen(optarg));
                 	strcpy(directory,optarg);
@@ -55,13 +57,43 @@ int main(int argc, char *argv[]) {
     	}
     }
 
-    //TO DELETE for testing purposes
-    if (md5_sum_computing == true){
-    	printf("md5 ok");
+
+	// Verifying and setting the necessary arguments
+    FILE* f;
+
+    if (!specific_directory){
+    	directory = (char*)malloc(sizeof(char)*110);
+		getcwd(directory,110);
     }
 
+	if (specific_save_file)
+	{
+		if((f = fopen(save_file_path,"w"))==NULL)
+		{
+			printf("Error ! The file %s doesn't exist.\n",save_file_path);
+			return 1;
+		}
+	}
+	else
+	{
+		f = fopen("Directory_Tree","w");
+		save_file_path = malloc(sizeof(char)*15);
+		strcpy(save_file_path,"Directory_tree");
+	}
+	
+
     //launch the program
-	//scan(argv[1]);
+	s_directory* parent = (s_directory*)malloc(sizeof(s_directory));
+
+	scan(directory,parent);
+	
+	printf("Saving...\n");
+	if(save_to_file(parent,save_file_path,md5_sum_computing)==0)
+	{
+		printf("Error ! There was an error during the saving.\n");
+		return 1;
+	}
+
 
 	//free dynamically allowed variables
 	if (specific_save_file){
@@ -70,6 +102,7 @@ int main(int argc, char *argv[]) {
 	if (specific_directory){
 		free (directory);
 	}
+	free(parent);
 
 	return 0;
 }
