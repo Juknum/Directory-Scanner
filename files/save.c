@@ -1,6 +1,6 @@
 #include "save.h"
 
-int save_to_file(s_directory *root, char *path_to_target){
+int save_to_file(s_directory *root, char *path_to_target, bool md5_sum_computing){
 	if(root == NULL){
 		printf("Directory structure couldn't be read!\n");
 		return 0;
@@ -20,7 +20,7 @@ int save_to_file(s_directory *root, char *path_to_target){
 	fprintf(f,"Directory:\n0\t%s\t%s/\n",str_time,root->name);
 
 	//display all files, not checking if the files pointer is null because it is done by the function already
-	if(write_files(root->files,path_to_target) == 0){
+	if(write_files(root->files,path_to_target,md5_sum_computing) == 0){
 		printf("No files!\n");
 	}
 
@@ -34,14 +34,14 @@ int save_to_file(s_directory *root, char *path_to_target){
 
 	//time to get recursive, we will first display all the data of subdirectories if there are some:
 	if (root->subdirs != NULL){
-		if (save_to_file(root->subdirs,path_to_target) == 0){
+		if (save_to_file(root->subdirs,path_to_target, md5_sum_computing) == 0){
 			return 0;
 		}
 	}
 
 	//and now for the next directory of this level:
 	if(root->next_dir != NULL){
-		if (save_to_file(root->next_dir,path_to_target) == 0){
+		if (save_to_file(root->next_dir,path_to_target, md5_sum_computing) == 0){
 			return 0;
 		}
 	}
@@ -49,7 +49,7 @@ int save_to_file(s_directory *root, char *path_to_target){
 	return -1;
 }
 
-int write_files(s_file *file, char *path_to_target){
+int write_files(s_file *file, char *path_to_target, bool md5_sum_computing){
 	if(file == NULL){
 		return 0;
 	}
@@ -80,7 +80,7 @@ int write_files(s_file *file, char *path_to_target){
 
 	//recursively write all files in the linked list
 	if(file->next_file != NULL){
-		if(write_files(file->next_file,path_to_target) == 0){
+		if(write_files(file->next_file,path_to_target, md5_sum_computing) == 0){
 			return 0;
 		}
 	}

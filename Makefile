@@ -1,5 +1,5 @@
 CC= gcc
-CFLAGS = -Wall -Werror -ansi -pedantic -std=gnu99 -g
+CFLAGS = -Wall -Werror -ansi -pedantic -std=gnu99 -g -lcrypto -lssl
 OBJ = objects
 BIN = bin
 F = files

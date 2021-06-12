@@ -14,7 +14,12 @@ int main(int argc, char *argv[]) {
 	char* save_file_path;
 	char* directory;
 
-	//initialize option global variables
+	//variables linked to our options
+	bool specific_save_file;
+	bool md5_sum_computing;
+	bool specific_directory;
+
+	//initialize option variables
 	specific_save_file = false;
 	md5_sum_computing = false;
 	specific_directory = false;
@@ -50,8 +55,13 @@ int main(int argc, char *argv[]) {
     	}
     }
 
+    //TO DELETE for testing purposes
+    if (md5_sum_computing == true){
+    	printf("md5 ok");
+    }
+
     //launch the program
-	scan(argv[1],NULL);
+	//scan(argv[1]);
 
 	//free dynamically allowed variables
 	if (specific_save_file){

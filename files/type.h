@@ -35,9 +35,4 @@ typedef struct _directory {
     struct _directory *next_dir;
 } s_directory;
 
-//global variables linked to our options
-bool specific_save_file;
-bool md5_sum_computing;
-bool specific_directory;
-
 #endif
