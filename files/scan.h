@@ -5,7 +5,7 @@
 #include "tree.h"
 #include "md5sum.h"
 
-void scan(char *dir_name);
+void scan(char *dir_name,s_directory *parent);
 
 /*
  *  Function that recursivly reads and get the informations of the repository

@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
     }
 
     //launch the program
-	scan(argv[1]);
+	scan(argv[1],NULL);
 
 	//free dynamically allowed variables
 	if (specific_save_file){
