@@ -1,5 +1,16 @@
+/**
+ * @file save.c
+ * @author Blanchot Lukas, Viala Alexandre, Chaillard Léo, Lignon Thomas
+ * @brief All the functions linked to the save in a file is here.
+ * @version 0.1
+ * @date 2021-06-12
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #include "../include/save.h"
-#include <stdio.h>
+#include <stdlib.h>
 
 int save_to_file(s_directory *root, char *path_to_target, bool md5){
 
@@ -38,7 +49,7 @@ int save_to_file(s_directory *root, char *path_to_target, bool md5){
         fprintf(stderr,"Impossible d'ouvrir le fichier\n");
     }
     free(path_to_target);
-    return 0;
+    return EXIT_SUCCESS;
 
 }
 

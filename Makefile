@@ -34,7 +34,7 @@ clean:
 	$(RM) -r $(BIN_DIR)
 
 run: all
-	./$(BIN_DIR)/$(TARGET) ~
+	./$(BIN_DIR)/$(TARGET)
 
 debug: all
 	gdb ./$(BIN_DIR)/$(TARGET)

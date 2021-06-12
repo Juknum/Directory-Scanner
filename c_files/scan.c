@@ -1,3 +1,14 @@
+/**
+ * @file scan.c
+ * @author Blanchot Lukas, Viala Alexandre, Chaillard Léo, Lignon Thomas
+ * @brief The functions used to scan the file in a certain file system are here.
+ * @version 0.1
+ * @date 2021-06-12
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #include "../include/scan.h"
 
 

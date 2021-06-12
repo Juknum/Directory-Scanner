@@ -1,5 +1,15 @@
+/**
+ * @file tree.c
+ * @author Blanchot Lukas, Viala Alexandre, Chaillard Léo, Lignon Thomas
+ * @brief All the functions used to modify the s_directory & s_file structure are here.
+ * @version 0.1
+ * @date 2021-06-12
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #include "../include/tree.h"
-#include <stdlib.h>
 
 
 int append_subdir(s_directory *child, s_directory *parent)

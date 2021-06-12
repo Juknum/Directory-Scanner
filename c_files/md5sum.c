@@ -1,3 +1,14 @@
+/**
+ * @file md5sum.c
+ * @author Blanchot Lukas, Viala Alexandre, Chaillard Léo, Lignon Thomas
+ * @brief The functions used to compute the md5sum are here.
+ * @version 0.1
+ * @date 2021-06-12
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #include "../include/md5sum.h"
 
 int compute_md5(char *path, unsigned char buffer[]){

@@ -1,3 +1,14 @@
+/**
+ * @file main.c
+ * @author Blanchot Lukas, Viala Alexandre, Chaillard Léo, Lignon Thomas
+ * @brief The main function of our project. It is used to run the program and get options given by the user.
+ * @version 0.1
+ * @date 2021-06-12
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #include "../include/structures.h"
 #include "../include/save.h"
 #include "../include/md5sum.h"
