@@ -39,7 +39,6 @@ int append_file(s_file *child, s_directory *parent)
             index = index->next_file;
         }
         index->next_file = child;
-        free(index);
         printf("Added %s to %s\n",child->name,parent->name);
         return 1;
     }

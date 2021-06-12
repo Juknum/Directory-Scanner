@@ -21,4 +21,6 @@ s_directory *process_dir(char *path);
  */
 s_file *process_file(char *path);
 
+int getFileNameSize(char* nameFile);
+
 #endif
