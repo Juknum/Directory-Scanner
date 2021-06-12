@@ -44,7 +44,7 @@ Par exemple, on souhaite inscrire l'arborescence dans le fichier dont le chemin 
 ```bash
 ./projet -o "home/arborescence.txt" -i "home/dir_test" -s
 ```
-### 4) Informations complémentaires :
+## 4) Informations complémentaires :
 
 Dans le fichier de sortie, lorsque le programme inscrit l'arborescence, il inscrit :
 + Le nom, la taille, la date de modification et la somme MD5 (si activée) de chaque fichier.
