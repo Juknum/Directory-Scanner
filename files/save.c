@@ -14,7 +14,7 @@ int save_to_file(s_directory *root, char *path_to_target){
 
     //get a proper displayable date for the current directory
     char str_time[20];
-    strftime(str_time, 20, "%Y-%m-%d %H:%M:%S", localtime(root->mod_time));
+    strftime(str_time, 20, "%Y-%m-%d %H:%M:%S", localtime(&root->mod_time));
 
     //write in the save file all the expected data
 	fprintf(f,"Directory:\n0\t%s\t%s/\n",str_time,root->name);
@@ -61,20 +61,20 @@ int write_files(s_file *file, char *path_to_target){
 
     //get a proper displayable date for the current directory
     char str_time[20];
-    strftime(str_time, 20, "%Y-%m-%d %H:%M:%S", localtime(file->mod_time));
+    strftime(str_time, 20, "%Y-%m-%d %H:%M:%S", localtime(&file->mod_time));
 
     //write in the save file all the expected data
     fprintf(f,"%d\t%s\t",file->file_type,str_time);
 
     if(file->file_type == 1){
-    	fprintf("%d\t",file->file_size);
+    	fprintf(f,"%ld\t",file->file_size);
     } 
 
     if(md5_sum_computing){
-    	fprintf("%s\t",file->md5sum);
+    	fprintf(f,"%s\t",file->md5sum);
     }
 
-    fprintf("%s\n",file->name);
+    fprintf(f,"%s\n",file->name);
 
 	fclose (f);
 
@@ -101,7 +101,7 @@ int write_directories(s_directory *dir, char *path_to_target){
 
     //get a proper displayable date for the current directory
     char str_time[20];
-    strftime(str_time, 20, "%Y-%m-%d %H:%M:%S", localtime(dir->mod_time));
+    strftime(str_time, 20, "%Y-%m-%d %H:%M:%S", localtime(&dir->mod_time));
 
     //write in the save file all the expected data
 	fprintf(f,"0\t%s\t%s/\n",str_time,dir->name);
