@@ -3,8 +3,10 @@
 
 #include <stdint.h>
 #include <linux/limits.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <sys/types.h>
-#include "openssl/md5.h"
+#include <openssl/md5.h>
 
 typedef enum {DIRECTORY, REGULAR_FILE, OTHER_TYPE} e_type;
 
