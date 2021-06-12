@@ -83,6 +83,9 @@ int main(int argc, char *argv[]) {
 					}
 				
 				break;
+			
+			default:
+				break;
 		}
 
 		// Scanner le répertoire d'entrée récursivement
@@ -111,4 +114,3 @@ int main(int argc, char *argv[]) {
 		}
 
 	}
-
