@@ -14,7 +14,7 @@ Le programme "projet" permet de scanner récursivement le contenu d'un répertoi
 
 Par défaut le programme scanne le dossier ".", mais il est possible de spécifier le dossier à scanner avec l'option -i.
 
-De même : par défaut le programme inscrit l'arborescence dans un fichier nommé avec la structure suivante : `~/.filescanner/yyyy-MM-dd-hh:mm:ss.scan` situé dans un dossier ` ~/.filescanner` mais il est possible de spécifier ce fichier avec avec l'option -o.
+De même : par défaut le programme inscrit l'arborescence dans un fichier nommé avec la structure suivante : `yyyy-MM-dd-hh:mm:ss.scan` et situé dans le dossier ` ~/.filescanner` mais il est possible de spécifier ce fichier avec avec l'option -o.
 
 Enfin, il est possible d'activer le calcul des sommes MD5 avec l'option -s.
 
