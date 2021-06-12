@@ -15,42 +15,51 @@ int save_to_file(s_directory *root, char *path_to_target, int nb_tabs, char *pat
   tabs[nb_tabs] = '\0';
 
   // ajout des info du dossier actuel
-  char buffer[2048];
   fputs(tabs, f);
-  string_builder_of_dir(buffer, *root, path_to_current_dir);
-  fputs(buffer, f);
+  fputs(string_builder_of_dir(*root, path_to_current_dir), f);
+  fputs("\n", f);
   tabs[nb_tabs] = '\t';
   tabs[nb_tabs + 1] = '\0';
 
   // écriture des fichiers
   s_file *current_file = root -> files;
   while (current_file != NULL) {
-    string_builder_of_file(buffer, *current_file, path_to_current_dir);
     fputs(tabs, f);
-    fputs(buffer, f);
+    fputs(string_builder_of_file(*current_file, path_to_current_dir), f);
     fputs("\n", f);
     current_file = current_file -> next_file; // fichier suivant
   }
+  free(current_file);
 
   fputs("\n", f);
   fclose(f); // on ferme le fichier maintenant car on le réouvre dans la récurrence
 
-  // écriture des dossiers
+  // écriture des sous-dossiers
   s_directory *current_dir = root -> subdirs;
-  char next_dir_path[2048];
-  while (current_dir != NULL) {
-    // récurrence /!\
-    strcpy(next_dir_path, path_to_current_dir);
-    strcat(next_dir_path, "/"); strcat(next_dir_path, current_dir -> name);
-    save_to_file(current_dir, path_to_target, nb_tabs + 1, next_dir_path);
-    current_dir = current_dir -> next_dir;
-  }
+  char *next_dir_path = (char *)malloc(4096 * sizeof(char));
+
+  strcpy(next_dir_path, path_to_current_dir);
+  strcat(next_dir_path, "/"); strcat(next_dir_path, current_dir -> name);
+  printf("path: %s\n", next_dir_path);
+
+  // while (current_dir -> next_dir != NULL) {
+  //   // récurrence
+  //   strcpy(next_dir_path, path_to_current_dir);
+  //   strcat(next_dir_path, "/"); strcat(next_dir_path, current_dir -> name);
+  //   save_to_file(current_dir, path_to_target, nb_tabs + 1, next_dir_path);
+  //   current_dir = current_dir -> next_dir;
+  // }
+  free(current_dir);
+  free(next_dir_path);
 
   return 0;
 }
 
-void string_builder_of_dir(char *buffer, s_directory dir, char *path_to_parent_dir) {
+char* string_builder_of_dir(s_directory dir, char *path_to_parent_dir) {
   char time[32];
+  char *buffer = (char *)malloc(2048 * sizeof(char));
+
+  printf("writting:\t%s", dir.name);
 
   // code e_type
   strcpy(buffer, "0"); // dir e_type
@@ -61,12 +70,15 @@ void string_builder_of_dir(char *buffer, s_directory dir, char *path_to_parent_d
   strcat(buffer, time); strcat(buffer, "\t");
 
   // chemin
-  strcat(buffer, path_to_parent_dir); strcat(buffer, dir.name);
+  strcat(buffer, path_to_parent_dir);
   strcat(buffer, "/");
+
+  return buffer;
 }
 
-void string_builder_of_file(char *buffer, s_file file, char *path_to_parent_dir) {
+char* string_builder_of_file(s_file file, char *path_to_parent_dir) {
   char time[32];
+  char *buffer = (char *)malloc(2048 * sizeof(char));
 
   // code e_type
   if (file.file_type == REGULAR_FILE) strcpy(buffer, "1"); // file e_type
@@ -86,5 +98,7 @@ void string_builder_of_file(char *buffer, s_file file, char *path_to_parent_dir)
   }
 
   // chemin
-  strcat(buffer, path_to_parent_dir); strcat(buffer, file.name);
+  strcat(buffer, path_to_parent_dir); strcat(buffer, "/"); strcat(buffer, file.name);
+
+  return buffer;
 }

@@ -17,23 +17,21 @@ int save_to_file(s_directory *root, char *path_to_target, int nb_tabs, char *pat
 /**
  * Modifie le buffer pour être une string contenant l'ensemble des infos nécessaires à sauvegarder
  * @author Julien
- * @param buffer string buffer de 256 caractères
  * @param dir dossier dont on veut les infos
  * @param path_to_parent_dir chemin d'accès au dossier (sans le dossier)
  * 
  * TODO: faire de l'allocation dynamique pour le buffer (256 char c'est peu)
  */
-void string_builder_of_dir(char *buffer, s_directory dir, char *path_to_parent_dir);
+char* string_builder_of_dir(s_directory dir, char *path_to_parent_dir);
 
 /**
  * Modifie le buffer pour être une string contenant l'ensemble des infos nécessaires à sauvegarder
  * @author Julien
- * @param buffer string buffer de 256 caractères
  * @param file fichier dont on veut les infos
  * @param path_to_parent_dir chemin d'accès au fichier (sans le fichier)
  *
  * TODO: faire de l'allocation dynamique pour le buffer (256 char c'est peu)
  */
-void string_builder_of_file(char *buffer, s_file file, char *path_to_parent_dir);
+char* string_builder_of_file(s_file file, char *path_to_parent_dir);
 
 #endif
