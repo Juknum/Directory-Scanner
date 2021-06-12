@@ -32,10 +32,6 @@ int main(int argc, char *argv[]) {
 	snprintf(out_file,PATH_MAX+1,"%s/.filescanner/%04d-%02d-%02d:%02d:%02d:%02d.scan",getenv("HOME"),tmtime->tm_year+1900,tmtime->tm_mon+1,tmtime->tm_mday,tmtime->tm_hour,tmtime->tm_min,tmtime->tm_sec);
 
 
-// Initialisation des pointeurs pour la vérification des arguments
-	DIR* fichier_sortie = NULL;
-	DIR* dossier_analyse = NULL;
-
 
 
 	// On scanne tous les arguments du programme avec une boucle et getopt.
@@ -44,24 +40,9 @@ int main(int argc, char *argv[]) {
 		switch (opt) {
 
 			case 'o': //Cas option -o
-			
-			// On essaie d'ouvrir le fichier de sortie en mode lecture.
-			// Si il est ouvert, c'est qu'il existe et qu'il s'agit bien d'un fichier.
 
-				fichier_sortie = opendir(optarg);
-					if (fichier_sortie != NULL)
-    				{
-    					printf("Erreur : l'argument donné avec l'option -o n'est pas un fichier.");
-    					closedir(fichier_sortie);
-
-    				}
-    				else
-    				{
-    					// L'argument fichier de sortie valide, on copie l'argument dans out_file.
+                        //On copie l'argument dans out_file.
  					    strncpy(out_file,optarg,PATH_MAX); 		       			
-    				}
-
-
 				break;
 				
 			case 's': //Cas option -s
@@ -71,17 +52,9 @@ int main(int argc, char *argv[]) {
 				break;
 
 			case 'i': //Cas option i
-					dossier_analyse = opendir(optarg);
-					if (dossier_analyse != NULL)
-					{
-						closedir(fichier_sortie);
+                        //On copie l'argument dans in_path.
 						strncpy(in_path,optarg,PATH_MAX);
-					}
-					else
-					{
-						printf("Erreur : l'argument passé avec l'option -i n'est pas un dossier.\n");
-					}
-				
+						
 				break;
 			
 			default:
