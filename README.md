@@ -12,7 +12,7 @@ Les membres du groupe sont :
 
 Le programme "projet" permet de scanner récursivement le contenu d'un répertoire et d'inscrire l'arborescence obtenue dans un fichier.
 
-Par défaut le programme scanne le dossier "." mais il est possible de spécifier le dossier à scanner avec l'option -i.
+Par défaut le programme scanne le dossier "." .Mais il est possible de spécifier le dossier à scanner avec l'option -i.
 
 De même : par défaut le programme inscrit l'arborescence dans un fichier nommé avec la structure suivante : "~/.filescanner/yyyy-MM-dd-hh:mm:ss.scan" situé dans un dossier " ~/.filescanner" mais il est possible de spécifier ce fichier avec avec l'option -o.
 
@@ -51,4 +51,3 @@ Dans le fichier de sortie, lorsque le programme inscrit l'arborescence, il inscr
 + Le nom et la date de modification de chaque dossier.
 + Le nom, le fichier pointé et la date de modification de chaque lien symbolyque.
 + Le nom et la date de modification des autres types de fichier.
-
