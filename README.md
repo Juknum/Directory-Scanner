@@ -16,7 +16,7 @@ Par défaut le programme scanne le dossier ".".
 
 Mais il est possible de spécifier le dossier à scanner avec l'option -i.
 
-De même : par défaut le programme inscrit l'arborescence dans un fichier nommé avec la structure suivante : "~/.filescanner/yyyy-MM-dd-hh:mm:ss.scan" situé dans un dossier " ~/.filescanner" mais il est possible de spécifier ce fichier avec avec l'option -o.
+De même : par défaut le programme inscrit l'arborescence dans un fichier nommé avec la structure suivante : `~/.filescanner/yyyy-MM-dd-hh:mm:ss.scan` situé dans un dossier ` ~/.filescanner` mais il est possible de spécifier ce fichier avec avec l'option -o.
 
 Enfin, il est possible d'activer le calcul des sommes MD5 avec l'option -s.
 
@@ -31,13 +31,13 @@ Pour activer le calcul des sommes MD5, il faut ajouter l'option -s sans argument
 ./projet -s
 ```
 Il est aussi possible de spécifier le répertoire à scanner avec l'option -i :
-Par exemple, on souhaite scanner le répertoire dont le chemin est "home/dir_test" :
+Par exemple, on souhaite scanner le répertoire dont le chemin est `home/dir_test` :
 ```bash
 ./projet -i "home/dir_test"
 ```
 
 De même, il aussi possible de spécifier le fichier dans lequel inscrire l'arborescence avec l'option -o :
-Par exemple, on souhaite inscrire l'arborescence dans le fichier dont le chemin est "home/arborescence.txt" :
+Par exemple, on souhaite inscrire l'arborescence dans le fichier dont le chemin est `home/arborescence.txt` :
 ```bash
 ./projet -o "home/arborescence.txt"
 ```
