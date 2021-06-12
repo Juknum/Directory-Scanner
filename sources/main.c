@@ -98,13 +98,13 @@ int main(int argc, char *argv[]) {
 		printf("-> analysing directory: %s\n",directory);
 	}
 
-	s_directory * parent = process_dir("dossier_test");
-	printf("Fin scan\n");
+	s_directory * parent = process_dir("dirtest");
+	printf("Scan success\n");
 
-	save_to_file(parent, file, 0, "./dossier_test");
-	printf("Fin sauvegarde\n");
+	save_to_file(parent, file, 0, "./dirtest");
+	printf("Save success\n");
 
-	clear_subdirs(parent);
+	//clear_subdirs(parent);
 
 	//programme(file,directory,check_md5)
 	free(file); free(directory);

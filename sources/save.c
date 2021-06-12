@@ -22,33 +22,28 @@ int save_to_file(s_directory *root, char *path_to_target, int nb_tabs, char *pat
   tabs[nb_tabs + 1] = '\0';
 
   // écriture des fichiers
-  s_file *current_file = root -> files;
+  s_file *current_file = root->files;
   while (current_file != NULL) {
     fputs(tabs, f);
     fputs(string_builder_of_file(*current_file, path_to_current_dir), f);
     fputs("\n", f);
-    current_file = current_file -> next_file; // fichier suivant
+    current_file = current_file->next_file; // fichier suivant
   }
   free(current_file);
-
-  fputs("\n", f);
   fclose(f); // on ferme le fichier maintenant car on le réouvre dans la récurrence
 
   // écriture des sous-dossiers
-  s_directory *current_dir = root -> subdirs;
+  s_directory *current_dir;
+  current_dir = root -> subdirs;
   char *next_dir_path = (char *)malloc(4096 * sizeof(char));
 
-  strcpy(next_dir_path, path_to_current_dir);
-  strcat(next_dir_path, "/"); strcat(next_dir_path, current_dir -> name);
-  printf("path: %s\n", next_dir_path);
-
-  // while (current_dir -> next_dir != NULL) {
-  //   // récurrence
-  //   strcpy(next_dir_path, path_to_current_dir);
-  //   strcat(next_dir_path, "/"); strcat(next_dir_path, current_dir -> name);
-  //   save_to_file(current_dir, path_to_target, nb_tabs + 1, next_dir_path);
-  //   current_dir = current_dir -> next_dir;
-  // }
+  while (current_dir != NULL) {
+    // récurrence
+    strcpy(next_dir_path, path_to_current_dir);
+    strcat(next_dir_path, "/"); strcat(next_dir_path, current_dir->name);
+    save_to_file(current_dir, path_to_target, nb_tabs + 1, next_dir_path);
+    current_dir = current_dir->next_dir;
+  }
   free(current_dir);
   free(next_dir_path);
 
