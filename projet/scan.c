@@ -16,7 +16,7 @@
 s_directory* process_dir(char* path){
 	debug("processdir");
 	char full_path[PATH_MAX];
-	printf("%s\n",path);
+	debug("%s\n",path);
 	DIR* directory = opendir(path);
 	if(directory==NULL){
 		fprintf(stderr,"Erreur d'ouverture du répertoire %s\n",path);
@@ -46,7 +46,7 @@ s_directory* process_dir(char* path){
 	// lecture du contenu du répertoire
 	struct dirent* entry;
 	while ((entry = readdir(directory))!=NULL) {
-		printf("traitement de %s\n",entry->d_name);
+		debug("traitement de %s\n",entry->d_name);
 		if(strcmp(entry->d_name,".")==0 || strcmp(entry->d_name,"..")==0)
 			continue;
 
@@ -132,4 +132,3 @@ s_file* process_other(char* path){
 	}
 	return struct_other;
 }
-
