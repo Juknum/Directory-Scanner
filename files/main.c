@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
 
     		case 'i': 
     			if (optarg[0] == '-'){
-                    printf("Unavailable parameter! Please Don't enter an option as parameter of -o.\n");
+                    printf("Unavailable parameter! Please Don't enter an option as parameter of -i.\n");
                 } else {
                 	specific_directory = true;
                 	directory = malloc(sizeof(char)*strlen(optarg));
