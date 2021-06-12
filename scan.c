@@ -82,7 +82,7 @@ s_file *process_file(char *path) {
 	if (enable_md5) {
 		unsigned char md5[MD5_DIGEST_LENGTH];
 		if (compute_md5(path,md5)==-1)
-			memcpy(filestruct->md5sum,md5,sizeof(unsigned char));
+			memcpy(filestruct->md5sum,md5,sizeof(unsigned char)*MD5_DIGEST_LENGTH);
 	}
 
 	// Type du fichier
