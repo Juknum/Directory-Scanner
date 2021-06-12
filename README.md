@@ -14,7 +14,7 @@ Le programme "projet" permet de scanner récursivement le contenu d'un répertoi
 
 Par défaut le programme scanne le dossier "." mais il est possible de spécifier le dossier à scanner avec l'option -i.
 
-De même : par défaut le programme inscrit l'arborescence dans un fichier nommé avec la structure suivante : "~/.filescanner/yyyy-MM-dd-hh:mm:ss.scan" mais il est possible de spécifier ce fichier avec avec l'option -o.
+De même : par défaut le programme inscrit l'arborescence dans un fichier nommé avec la structure suivante : "~/.filescanner/yyyy-MM-dd-hh:mm:ss.scan" situé dans un dossier " ~/.filescanner" mais il est possible de spécifier ce fichier avec avec l'option -o.
 
 Enfin, il est possible d'activer le calcul des sommes MD5 avec l'option -s.
 
@@ -44,10 +44,11 @@ Par exemple, on souhaite inscrire l'arborescence dans le fichier dont le chemin 
 ```bash
 ./projet -o "home/arborescence.txt" -i "home/dir_test" -s
 ```
-### Informations complémentaires :
+### 4) Informations complémentaires :
 
 Dans le fichier de sortie, lorsque le programme inscrit l'arborescence, il inscrit :
 + Le nom, la taille, la date de modification et la somme MD5 (si activée) de chaque fichier.
 + Le nom et la date de modification de chaque dossier.
 + Le nom, le fichier pointé et la date de modification de chaque lien symbolyque.
 + Le nom et la date de modification des autres types de fichier.
+
