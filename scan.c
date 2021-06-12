@@ -35,11 +35,11 @@ s_directory* process_dir(char* path){
 		return NULL;
 	}
 	struct dirent* entry;
-	while(entry = readdir(real_dir)) != NULL){
+	while((entry = readdir(real_dir)) != NULL){
 		if(strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0){
-			char full_path[MAX_HANDLED_PATH_LENGTH];
+			char full_path[PATH_MAX];
 			sprintf(full_path, "%s/%s", path, entry->d_name);
-			switch(entry->d_name){
+			/**switch(entry->d_type){
 				case DT_DIR : 
 					if(append_subdir(process_dir(full_path), my_dir) != 0){
 						printf("Error while adding %s to %s\n\n", full_path, path);
@@ -55,14 +55,14 @@ s_directory* process_dir(char* path){
 						return NULL;
 					} 
 				break;
-			} 
+			} **/
 		}  
 	}
 	return my_dir;
 }
 
 s_file *process_file(char *path){
-	s_directory* my_file = malloc(sizeof(s_file));
+	s_file* my_file = malloc(sizeof(s_file));
 
 	char* name = strrchr(path, '/');
 	if(!name){
@@ -74,15 +74,15 @@ s_file *process_file(char *path){
 	struct stat stat_file;
 	if(stat(path, &stat_file) == 0){
 		my_file->next_file=NULL;
-		my_file->mod_time=file_stat.st_mtime;
+		my_file->mod_time=stat_file.st_mtime;
 		if(S_ISREG(stat_file.st_mode)){
 			my_file->file_type=REGULAR_FILE;
-			my_file->file_size=file_stat.st_size;
-			compute_md5(path, my_file->md5sum);
+			my_file->file_size=stat_file.st_size;
+			//compute_md5(path, my_file->md5sum);
 		}else{
 			my_file->file_type=OTHER_TYPE;
 			my_file->md5sum[0]='\0';
-			my_file->size = NULL;
+			//my_file->file_size = NULL;
 			if(S_ISLNK(stat_file.st_mode)){
 				int name_size = FILENAME_MAX-strlen(my_file->name)-4;
 				char pointed_file_name[name_size];
