@@ -51,3 +51,32 @@ Dans le fichier de sortie, lorsque le programme inscrit l'arborescence, il inscr
 + Le nom et la date de modification de chaque dossier.
 + Le nom, le fichier pointé et la date de modification de chaque lien symbolyque.
 + Le nom et la date de modification des autres types de fichier.
+
+
+
+# man projet
+
+### NAME
+
+projet - enregistre l'arborescence contenue dans un dossier dans un fichier.
+
+### SYNOPSIS
+
+*./projet [options] [fichiers...]*
+
+Options GNU : [-osi]
+
+### DESCRIPTION
+
+Le programme "projet" permet de scanner récursivement le contenu d'un répertoire et d'inscrire l'arborescence obtenue dans un fichier.
+Par défaut le programme scanne le dossier ".", mais il est possible de spécifier le dossier à scanner avec l'option -i.
+De même : par défaut le programme inscrit l'arborescence dans un fichier nommé avec la structure suivante : yyyy-MM-dd-hh:mm:ss.scan et situé dans le dossier ~/.filescanner mais il est possible de spécifier ce fichier avec avec l'option -o.
+Enfin, il est possible d'activer le calcul des sommes MD5 avec l'option -s.
+
+### OPTIONS GNU
+
+-o		Permet de spécifier le fichier de sauvegarde de l'arborescence.
+
+-s		Active le calcul des sommes MD5.
+
+-i		Permet de spécifier le dossier à scanner.
