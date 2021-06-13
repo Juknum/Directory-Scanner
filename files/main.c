@@ -127,7 +127,6 @@ int main(int argc, char *argv[]) {
 	//free dynamically allowed variables
 	free (save_file_path);
 	free (directory);
-	free(parent);
 
 	return 0;
 }
