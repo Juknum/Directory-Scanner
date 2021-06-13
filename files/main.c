@@ -91,14 +91,14 @@ int main(int argc, char *argv[]) {
             mkdir(".filescanner/", 0777);
         }
         time_t rawtime;
-	time( &rawtime );
-	char str_time[20];
-	char str1[14]=".filescanner/";
-	char str2[6]=".scan";
-	strftime(str_time, 20, "%Y-%m-%d %H:%M:%S", localtime( &rawtime ));
-	strcat( str1, str_time);
-	strcat( str1, str2);
-    //write in the save file all the expected data
+		time( &rawtime );
+		char str_time[20];
+		char str1[14]=".filescanner/";
+		char str2[6]=".scan";
+		strftime(str_time, 20, "%Y-%m-%d %H:%M:%S", localtime( &rawtime ));
+		strcat( str1, str_time);
+		strcat( str1, str2);
+		//write in the save file all the expected data
         strcpy(fileName,str1);
         save_file_path = (char*)malloc(sizeof(char)*(strlen(fileName)));
         strcpy(save_file_path,fileName);
@@ -125,12 +125,8 @@ int main(int argc, char *argv[]) {
 
 
 	//free dynamically allowed variables
-	if (specific_save_file){
 	free (save_file_path);
-	}
-	if (specific_directory){
 	free (directory);
-	}
 	free(parent);
 
 	return 0;

@@ -23,6 +23,9 @@ void scan(char *dir_name,s_directory *parent)
                         new_dir=(s_directory*)malloc(sizeof(s_directory));
                         strcpy(new_dir->name,new_path);
                         new_dir->mod_time=current_stat.st_mtime;
+                        new_dir->files = NULL;
+                        new_dir->next_dir = NULL;
+                        new_dir->subdirs = NULL;
 			            append_subdir(new_dir,parent);
                         scan(new_path,new_dir);
                     }else{
@@ -51,8 +54,6 @@ void scan(char *dir_name,s_directory *parent)
     }
 
 }
-
-
 
 int getFileNameSize(char* nameFile){
     char buffer[1] = {nameFile[0]};
