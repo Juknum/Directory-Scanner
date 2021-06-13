@@ -1,11 +1,12 @@
-#include <stdio.h>
-#include <time.h>
-#include <string.h>
 #include "save.h"
 #include "scan.h"
 
+extern bool do_arborescence;
+extern bool do_path;
+extern bool do_md5sum;
+
 int save_to_file(s_directory *root, char *path_to_target, char *path_to_dir){
-    char full_path[MAX_HANDLED_PATH_LENGTH];
+    char full_path[PATH_MAX];
     time_t timestamp = time(0);
     struct tm* date = localtime(&timestamp);
     char full_date[20]; 
@@ -19,12 +20,14 @@ int save_to_file(s_directory *root, char *path_to_target, char *path_to_dir){
     } 
     fprintf(target_file,"%s\n\n", full_date);
     fprintf(target_file,"Content of :\n");
-    write_dir_line(target_file, root, 0);
-    fprintf(target_file,"\n\n");
+    
     if(root->subdirs){
         if(do_path){
+			write_dir_line(target_file, root, path_to_dir, 0);
+    		fprintf(target_file,"\n\n");
             print_dir(target_file,root->subdirs, path_to_dir, 0);
         }else{
+			write_dir_line(target_file, root, "", 0);
             print_dir(target_file,root->subdirs, "", 0);
         }
     }
@@ -36,15 +39,16 @@ int save_to_file(s_directory *root, char *path_to_target, char *path_to_dir){
         }
     }
     fclose(target_file);
+	return 0;
 } 
 
 void print_dir(FILE *target_file, s_directory *my_dir, char *path, int depth){
     write_dir_line(target_file, my_dir, path, depth);
-    char new_path[MAX_HANDLED_PATH_LENGTH];
+	char new_path[PATH_MAX+2];
     if(do_path){
-        sprintf(new_path, "%s%s/", path, my_dir);
+        sprintf(new_path, "%s%s/", path, my_dir->name);
     }else{
-        sprintf(new_path, "");
+        strcpy(new_path, "");
     }
     if(do_arborescence){
         depth++;
@@ -78,7 +82,7 @@ void write_file_line(FILE *target_file,s_file *my_file, char *path,int depth){
     for(int i = 0; i < depth; i++){
         fprintf(target_file,"\t");
     }
-    struct *tm date = localtime(&my_file->mod_time);
+    struct tm* date = localtime(&my_file->mod_time);
     if(my_file->file_type == REGULAR_FILE){
         fprintf(target_file,"1\t%04d-%02d-%02d-%02d:%02d:%02d\t",date->tm_year+1900,date->tm_mon+1,date->tm_mday,date->tm_hour,date->tm_min,date->tm_sec);
         fprintf(target_file,"%" PRIu64 "\t", my_file->file_size);
@@ -88,7 +92,7 @@ void write_file_line(FILE *target_file,s_file *my_file, char *path,int depth){
     }else{
         fprintf(target_file,"2\t%04d-%02d-%02d-%02d:%02d:%02d\t",date->tm_year+1900,date->tm_mon+1,date->tm_mday,date->tm_hour,date->tm_min,date->tm_sec);
     }
-    fprintf("%s%s\n",path,my_file->name);
+    fprintf(target_file,"%s%s\n",path,my_file->name);
 }
 
 void write_dir_line(FILE *target_file,s_directory* my_dir, char *path,int depth){
@@ -98,9 +102,7 @@ void write_dir_line(FILE *target_file,s_directory* my_dir, char *path,int depth)
     for(int i = 0; i < depth; i++){
         fprintf(target_file,"\t");
     }
-    struct *tm date = localtime(&my_dir->mod_time);
+    struct tm* date = localtime(&my_dir->mod_time);
     fprintf(target_file,"0\t%04d-%02d-%02d-%02d:%02d:%02d\t",date->tm_year+1900,date->tm_mon+1,date->tm_mday,date->tm_hour,date->tm_min,date->tm_sec);
     fprintf(target_file,"%s%s/\n",path, my_dir->name);
 }
-
-
