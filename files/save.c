@@ -25,7 +25,6 @@ int save_to_file(s_directory *root, char *path_to_target, bool md5_sum_computing
 	//display all subdirectories, similar to write_files
 	write_directories(root->subdirs,path_to_target);
 
-	printf("\n");
 	fclose(f);
 
 	//time to get recursive, we will first display all the data of subdirectories if there are some:
