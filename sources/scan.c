@@ -1,13 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-#include <dirent.h>
-#include <sys/stat.h>
-
-#include "../headers/definitions.h"
+#include "../headers/md5sum.h"
 #include "../headers/scan.h"
-#include "../headers/tree.h"
 
 char* recuperation_nom(char * path) {
 	long int l = strlen(path);
@@ -36,7 +28,7 @@ char* recuperation_nom(char * path) {
 	return nom;
 }
 
-s_file *process_file(char *path){
+s_file *process_file(char *path, bool doMD5){
 
 	//structures de manipulation de fichier
 	struct stat stats;
@@ -54,7 +46,13 @@ s_file *process_file(char *path){
 		parent->file_type = REGULAR_FILE;
 		parent->file_size = stats.st_size;
 		//md5sum
-		snprintf(parent->md5sum, sizeof(parent->md5sum), "WIP");
+		if (doMD5) {
+			char *buffer;
+
+			compute_md5(path, buffer);
+			snprintf(parent->md5sum, sizeof(parent->md5sum), buffer);
+		}
+		else snprintf(parent->md5sum, sizeof(parent->md5sum), "Not asked");
 	}
 	else {
 		parent->file_type = OTHER_TYPE;
@@ -65,7 +63,7 @@ s_file *process_file(char *path){
 	return parent;
 }
 
-s_directory *process_dir(char *root_path) {
+s_directory *process_dir(char *root_path, bool doMD5) {
 
 	DIR *descripteur;
 	struct dirent *dirent = NULL;
@@ -108,13 +106,13 @@ s_directory *process_dir(char *root_path) {
 		// si c'est un dossier
 		if (S_ISDIR(stats.st_mode) != 0) {
 			// si c'est le premier sous-dossier
-			if (root->subdirs == NULL) root->subdirs = process_dir(path);
+			if (root->subdirs == NULL) root->subdirs = process_dir(path, doMD5);
 			// sinon on l'attache au sous-dossier précédent
 			else {
 				s_directory *next_subdir;
 				next_subdir = root->subdirs;
 				while (next_subdir->next_dir != NULL) next_subdir = next_subdir->next_dir;
-				next_subdir->next_dir = process_dir(path);
+				next_subdir->next_dir = process_dir(path, doMD5);
 			}
 		}
 
@@ -122,13 +120,13 @@ s_directory *process_dir(char *root_path) {
 		if (S_ISREG(stats.st_mode) != 0) {
 
 			// si c'est le premier fichier
-			if (root->files == NULL) root->files = process_file(path);
+			if (root->files == NULL) root->files = process_file(path, doMD5);
 			// sinon on l'attache au fichier précédent
 			else {
 				s_file *file;
 				file = root->files;
 				while (file->next_file != NULL) file = file->next_file;
-				file->next_file = process_file(path);
+				file->next_file = process_file(path, doMD5);
 			}
 
 		}

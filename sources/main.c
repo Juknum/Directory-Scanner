@@ -1,16 +1,6 @@
-#include <unistd.h>
-#include <dirent.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-
 #include "../headers/definitions.h"
 #include "../headers/scan.h"
 #include "../headers/save.h"
-#include "../headers/tree.h"
 
 /**
  * Fonction principale: gère les options, controle les arguments puis appelle les fonctions scan et save
@@ -20,7 +10,8 @@
  */
 int main(int argc, char *argv[]) {
 	char *file, *directory;
-	short is_file = 0, is_dir = 0, opt = 0, check_md5 = 0;
+	short is_file = 0, is_dir = 0, opt = 0;
+	bool check_md5 = false;
 		
 	while((opt = getopt(argc, argv, "i:so")) != -1) {
 		switch (opt) {
@@ -34,8 +25,8 @@ int main(int argc, char *argv[]) {
 				
 			// activation du calcul des sommes MD5
 			case 's': 
-				check_md5 = 1; // Vaut 1 si la somme doit etre calculé, 0 sinon
-				printf("-> activating MD5 calculus \n");
+				check_md5 = true; // Vaut vrai si la somme doit etre calculé, faux sinon
+				printf("-> activating MD5 sum\n");
 				break;
 
 			// obtenir le répertoire à analyser
@@ -96,10 +87,10 @@ int main(int argc, char *argv[]) {
 		printf("-> analysing directory: %s\n",directory);
 	}
 
-	s_directory * parent = process_dir("dirtest");
+	s_directory * parent = process_dir("dirtest", check_md5);
 	printf("Scan success\n");
 
-	save_to_file(parent, file, 0, "./dirtest");
+	save_to_file(parent, file, 0, "./dirtest", check_md5);
 	printf("Save success\n");
 
 	//clear_subdirs(parent);

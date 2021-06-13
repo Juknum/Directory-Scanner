@@ -1,7 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include "../headers/tree.h"
-#include "../headers/scan.h"
 
 void clear_files(s_file *parent){
 	if(parent->next_file != NULL)	

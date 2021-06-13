@@ -1,11 +1,6 @@
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
 #include "../headers/save.h"
 
-int save_to_file(s_directory *root, char *path_to_target, int nb_tabs, char *path_to_current_dir) {
+int save_to_file(s_directory *root, char *path_to_target, int nb_tabs, char *path_to_current_dir, bool doMD5) {
   FILE *f = fopen(path_to_target, "a");
   if (!f) return -1;
 
@@ -25,7 +20,7 @@ int save_to_file(s_directory *root, char *path_to_target, int nb_tabs, char *pat
   s_file *current_file = root->files;
   while (current_file != NULL) {
     fputs(tabs, f);
-    fputs(string_builder_of_file(*current_file, path_to_current_dir), f);
+    fputs(string_builder_of_file(*current_file, path_to_current_dir, doMD5), f);
     fputs("\n", f);
     current_file = current_file->next_file; // fichier suivant
   }
@@ -41,7 +36,7 @@ int save_to_file(s_directory *root, char *path_to_target, int nb_tabs, char *pat
     // récurrence
     strcpy(next_dir_path, path_to_current_dir);
     strcat(next_dir_path, "/"); strcat(next_dir_path, current_dir->name);
-    save_to_file(current_dir, path_to_target, nb_tabs + 1, next_dir_path);
+    save_to_file(current_dir, path_to_target, nb_tabs + 1, next_dir_path, doMD5);
     current_dir = current_dir->next_dir;
   }
   free(current_dir);
@@ -69,7 +64,7 @@ char* string_builder_of_dir(s_directory dir, char *path_to_parent_dir) {
   return buffer;
 }
 
-char* string_builder_of_file(s_file file, char *path_to_parent_dir) {
+char* string_builder_of_file(s_file file, char *path_to_parent_dir, bool doMD5) {
   char time[32];
   char *buffer = (char *)malloc(2048 * sizeof(char));
 
@@ -85,8 +80,10 @@ char* string_builder_of_file(s_file file, char *path_to_parent_dir) {
   if (file.file_type == REGULAR_FILE) {
     // taille
     snprintf(buffer, sizeof(buffer), "%lu" ,file.file_size); strcat(buffer, "\t");
+  }
 
-    // md5
+  // md5
+  if (doMD5 == true) {
     strcat(buffer, file.md5sum); strcat(buffer, "\t");
   }
 

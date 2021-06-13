@@ -1,14 +1,18 @@
 #ifndef DEFINITIONS_H
 #define DEFINITIONS_H
 
+#include <unistd.h>
+#include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <stdbool.h>
 #include <linux/limits.h>
 #include <time.h>
-
-#ifndef OPENSSL_MD5
-  #include "../openssl/md5.h"
-#else
-  #error NO MD5 LIBRARY
-#endif
+#include "./openssl/md5.h"
 
 enum type {
   DIRECTORY,
