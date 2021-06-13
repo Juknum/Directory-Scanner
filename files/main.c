@@ -86,25 +86,38 @@ int main(int argc, char *argv[]) {
 	else
 	{
         char fileName[110];
-        if (stat(".filescanner/", &st) == -1) 
+        char* str1= (char *) malloc(100);;
+        //strcpy(str1, getenv("HOME"));
+        char *str7=getenv("HOME");
+        printf("%s\n\n",str7);
+        int i =0;
+        printf("%ld\n\n",strlen(str7));
+        for(i=0; i<strlen(str7);i++)
         {
-            mkdir(".filescanner/", 0777);
+        	*(str1+i)=*(str7+i);
+        	printf("%s\n\n",str1);
+        	printf("%c\n\n",(*(str7+i)));
+        }
+        strcat( str1, "/.filescanner/");
+        printf("%s\n\n",str1);
+
+        
+        if (stat(str1, &st) == -1) 
+        {
+            mkdir(str1, 0777);
         }
         time_t rawtime;
-		time( &rawtime );
-		char str_time[20];
-		char str1[14]=".filescanner/";
-		char str2[6]=".scan";
-		strftime(str_time, 20, "%Y-%m-%d %H:%M:%S", localtime( &rawtime ));
-		strcat( str1, str_time);
-		strcat( str1, str2);
-		//write in the save file all the expected data
+    	time( &rawtime );
+    	char str_time[20];
+    	char str2[6]=".scan";
+    	strftime(str_time, 20, "%Y-%m-%d %H:%M:%S", localtime( &rawtime ));
+    	strcat( str1, str_time);
+    	strcat( str1, str2);
         strcpy(fileName,str1);
         save_file_path = (char*)malloc(sizeof(char)*(strlen(fileName)));
         strcpy(save_file_path,fileName);
         f = fopen(save_file_path,"w");
 	}
-
 	fclose(f);
 	
 
