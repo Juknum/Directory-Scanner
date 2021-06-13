@@ -20,14 +20,10 @@ int save_to_file(s_directory *root, char *path_to_target, bool md5_sum_computing
 	fprintf(f,"Directory:\n0\t%s\t%s/\n\n",str_time,root->name);
 
 	//display all files, not checking if the files pointer is null because it is done by the function already
-	if(write_files(root->files,path_to_target,md5_sum_computing) == 0){
-		printf("No files!\n");
-	}
+	write_files(root->files,path_to_target,md5_sum_computing);
 
 	//display all subdirectories, similar to write_files
-	if(write_directories(root->subdirs,path_to_target) == 0){
-		printf("No subdirectories!\n");
-	}
+	write_directories(root->subdirs,path_to_target);
 
 	printf("\n");
 	fclose(f);
@@ -44,6 +40,7 @@ int save_to_file(s_directory *root, char *path_to_target, bool md5_sum_computing
 		}
 	}
 
+	free(root);
 	return -1;
 }
 
@@ -83,6 +80,7 @@ int write_files(s_file *file, char *path_to_target, bool md5_sum_computing){
 		}
 	}
 
+	free(file);
 	return -1;
 }
 
