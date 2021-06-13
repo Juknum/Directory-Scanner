@@ -5,7 +5,7 @@
 
 int save_to_file(s_directory *root, char *path_to_target);
 
-void print_file(s_file *file, char *path);
-void print_dir(s_directory *dir, char *path);
+void print_file(s_file *file, char *path, FILE *of);
+void print_dir(s_directory *dir, char *path, FILE *of);
 
 #endif

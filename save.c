@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <linux/limits.h>
 #include <time.h>
+#include <string.h>
 
 #include "save.h"
 
@@ -24,68 +25,86 @@ int save_to_file(s_directory *root, char *path_to_target) {
 	free(default_dir);
 	
 
+	// Enregistrer l'arborescence au format texte dans le fichier de sortie
 	FILE *f;
 	if (! (f=fopen(path_to_target,"w")) ) return 0;
-	
-	print_dir(root,""); 
-	
+	print_dir(root,"",f);
 	fclose(f);
 	return -1;
 }
 
-
-
-
-// =======================
-
-
-
-
-void print_file(s_file *file, char *path) {
+/* Écrire des lignes un fichier et ses fichiers suivants dans le fichier de sortie
+	file: structure fichier à écrire
+	path: chemin actuel
+	of: fichier de sortie ouvert en écriture
+*/
+void print_file(s_file *file, char *path, FILE *of) {
 	if (file==NULL) return;
 	
+	// Construire la chaîne du chemin vers le fichier
+	char newpath[strlen(path)+strlen(file->name)+1];
+	snprintf(newpath,strlen(path)+strlen(file->name)+2,"%s%s",path,file->name);
+	
 	// Type du fichier
-	printf("%d\t",file->file_type);
+	fprintf(of,"%d\t",file->file_type);
 	
 	// Date
 	struct tm *tmtime;
 	tmtime = localtime(&file->mod_time);
 	
-	printf("%04d-%02d-%02d-%02d:%02d:%02d\t",tmtime->tm_year+1900,tmtime->tm_mon+1,tmtime->tm_mday,tmtime->tm_hour,tmtime->tm_min,tmtime->tm_sec);
+	fprintf(of,"%04d-%02d-%02d-%02d:%02d:%02d\t",tmtime->tm_year+1900,tmtime->tm_mon+1,tmtime->tm_mday,tmtime->tm_hour,tmtime->tm_min,tmtime->tm_sec);
 	
 	if (file->file_type==REGULAR_FILE) {
 		// Taille
-		printf("%ld\t",file->file_size);
+		fprintf(of,"%ld\t",file->file_size);
 		
 		if (enable_md5) {
 			for(int i=0;i<MD5_DIGEST_LENGTH;i++)
-				printf("%02x",file->md5sum[i]);
-			printf("\t");		
+				fprintf(of,"%02x",file->md5sum[i]);
+			fprintf(of,"\t");		
 		}
 	}
 	
 	// Chemin
-	printf("%s",file->name);
+	fprintf(of,"%s\n",newpath);
 	
-	printf("\n");
-	
-	
+	// Afficher le prochain fichier
 	if (file->next_file!=NULL)
-		print_file(file->next_file,path); 
+		print_file(file->next_file,path,of); 
 }
 
-void print_dir(s_directory *dir,char *path) {
-	if(dir==NULL) return; 
+
+/* Écrire une ligne pour un répertoire ainsi que tout son contenu récursivement dans le fichier de sortie
+	dir: structure répertoire à écrire 
+	path: chemin actuel
+	of: fichier de sortie
+*/
+void print_dir(s_directory *dir,char *path, FILE *of) {
+	if(dir==NULL) return;
 	
-	printf("%d\t%s\n",DIRECTORY,dir->name);
+	// Construire la chaîne du chemin vers le répertoire
+	char newpath[strlen(path)+strlen(dir->name)+1];
+	snprintf(newpath,strlen(path)+strlen(dir->name)+3,"%s%s/",path,dir->name);
 	
-	// Dossiers de même niveau
-	print_dir(dir->next_dir,path);
+	// Type
+	fprintf(of,"%d\t",DIRECTORY);
 	
-	// Fichiers
-	print_file(dir->files,path);
+	// Date
+	struct tm *tmtime;
+	tmtime = localtime(&dir->mod_time);
 	
-	// Sous-dossiers
-	print_dir(dir->subdirs,path);
+	fprintf(of,"%04d-%02d-%02d-%02d:%02d:%02d\t",tmtime->tm_year+1900,tmtime->tm_mon+1,tmtime->tm_mday,tmtime->tm_hour,tmtime->tm_min,tmtime->tm_sec);
+	
+	// Chemin
+	fprintf(of,"%s\n",newpath);
+	
+	// Afficher les répertoires de même niveau
+	print_dir(dir->next_dir,newpath,of);
+	
+	// Afficher les fichiers
+	print_file(dir->files,newpath,of);
+	
+	// Afficher les Sous-dossiers
+	print_dir(dir->subdirs,newpath,of);
 
 }
