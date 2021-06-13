@@ -23,12 +23,19 @@ void scan(char *dir_name,s_directory *parent)
                         new_dir=(s_directory*)malloc(sizeof(s_directory));
                         strcpy(new_dir->name,new_path);
                         new_dir->mod_time=current_stat.st_mtime;
-			append_subdir(new_dir,parent);
+			            append_subdir(new_dir,parent);
                         scan(new_path,new_dir);
                     }else{
                         s_file* new_file=NULL;
                         new_file=(s_file*)malloc(sizeof(s_file));
-                        new_file->file_type=current_stat.st_mode;
+                        if((current_stat.st_mode & S_IFMT) == S_IFREG)
+                        {
+                            new_file->file_type=1;
+                        }
+                        else
+                        {
+                            new_file->file_type=2;
+                        }
                         strcpy(new_file->name,new_path);
                         new_file->mod_time=current_stat.st_mtime;
                         new_file->file_size=current_stat.st_size;

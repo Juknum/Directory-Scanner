@@ -78,7 +78,10 @@ int main(int argc, char *argv[]) {
 	{
 		save_file_path = malloc(sizeof(char)*15);
 		strcpy(save_file_path,"Directory_tree");
+		f = fopen(save_file_path,"w");
 	}
+
+	fclose(f);
 	
 
     //launch the program
