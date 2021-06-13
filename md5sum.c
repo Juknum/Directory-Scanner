@@ -2,7 +2,7 @@
 #include <openssl/md5.h>
 #include "md5sum.h"
 //on définit la taille des parties du fichier lu par le programme
-#define chunksize 512
+#define CHUNK_SIZE 512
 
 int compute_md5(char *path, unsigned char buffer[]){
 	MD5_CTX c;
@@ -18,9 +18,9 @@ int compute_md5(char *path, unsigned char buffer[]){
     //tant qu'on est pas arrivé à la fin du fichier
     while(!feof(file)){
     	//on créé le buffer "temp" avec pour taille chunk
-        uint8_t temp[chunksize];
+        uint8_t temp[CHUNK_SIZE];
         //on lit la taille en octet
-        size_t sizeb = fread(temp, sizeof(uint8_t), chunksize, file);
+        size_t sizeb = fread(temp, sizeof(uint8_t), CHUNK_SIZE, file);
         //on met a jour la somme md5 (ajout partie par partie)
         MD5_Update(&c, temp, sizeb);
     }
