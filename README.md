@@ -1,82 +1,46 @@
 # Projet LP25 Groupe 12
 
-## 1) Le groupe  :
+## Description
 
-Les membres du groupe sont :
-+ Loic François
-+ Léo Berthet
-+ Brice Van Aken
-+ Corentin Ehlinger
+Ce programme permet de scanner récursivement le contenu d'un répertoire et d'inscrire l'arborescence obtenue dans un fichier.
 
-## 2) Utilité du programme :
+## Compilation
 
-Le programme "projet" permet de scanner récursivement le contenu d'un répertoire et d'inscrire l'arborescence obtenue dans un fichier.
+### Prérequis
 
-Par défaut le programme scanne le dossier ".", mais il est possible de spécifier le dossier à scanner avec l'option -i.
+La bibliothèque `openssl` doit être installée pour permettre le calcul de la somme MD5.
 
-De même : par défaut le programme inscrit l'arborescence dans un fichier nommé avec la structure suivante : `yyyy-MM-dd-hh:mm:ss.scan` et situé dans le dossier ` ~/.filescanner` mais il est possible de spécifier ce fichier avec avec l'option -o.
+### Compiler avec make
 
-Enfin, il est possible d'activer le calcul des sommes MD5 avec l'option -s.
-
-## 3) Utilisation du programme :
-
-Il suffit de rentrer la commande suivante dans le répertoire où se situe le programme.
 ```bash
-./projet
-```
-Pour activer le calcul des sommes MD5, il faut ajouter l'option -s sans argument :
-```bash
-./projet -s
-```
-Il est aussi possible de spécifier le répertoire à scanner avec l'option -i :
-Par exemple, on souhaite scanner le répertoire dont le chemin est `home/dir_test` :
-```bash
-./projet -i "home/dir_test"
+make projet
 ```
 
-De même, il aussi possible de spécifier le fichier dans lequel inscrire l'arborescence avec l'option -o :
-Par exemple, on souhaite inscrire l'arborescence dans le fichier dont le chemin est `home/arborescence.txt` :
+## Utilisation
+
 ```bash
-./projet -o "home/arborescence.txt"
+./projet [options]
 ```
 
-Évidemment, il est possible d'activer toutes les options à la fois :
+### Options
+
+* **`-o`**`fichier`	Permet de spécifier le fichier de sauvegarde de l'arborescence. (Par défaut, `~/.filescanner/date.scan` où *date* est au format `yyyy-MM-dd-hh:mm:ss`)
+* **`-s`**	Active le calcul des sommes MD5.
+* **`-i`**`chemin`	Permet de spécifier le répertoire à scanner. (Par défaut, `"."`)
+
+### Exemple d'utilisation
+
+Enregistrer l'arborescence de `~/dir_test/` dans `arborescence.txt` en incluant la somme MD5 dans les informations sur chaque fichier :
+
 ```bash
-./projet -o "home/arborescence.txt" -i "home/dir_test" -s
+./projet -o "arborescence.txt" -i "~/dir_test" -s
 ```
-## 4) Informations complémentaires :
 
-Dans le fichier de sortie, lorsque le programme inscrit l'arborescence, il inscrit :
-+ Le nom, la taille, la date de modification et la somme MD5 (si activée) de chaque fichier.
-+ Le nom et la date de modification de chaque dossier.
-+ Le nom, le fichier pointé et la date de modification de chaque lien symbolyque.
-+ Le nom et la date de modification des autres types de fichier.
+## Auteurs
 
+Ce projet a été réalisé par :
 
-
-# man projet
-
-### NAME
-
-projet - enregistre l'arborescence contenue dans un dossier dans un fichier.
-
-### SYNOPSIS
-
-*./projet [options] [fichiers...]*
-
-Options GNU : [-osi]
-
-### DESCRIPTION
-
-Le programme "projet" permet de scanner récursivement le contenu d'un répertoire et d'inscrire l'arborescence obtenue dans un fichier.
-Par défaut le programme scanne le dossier ".", mais il est possible de spécifier le dossier à scanner avec l'option -i.
-De même : par défaut le programme inscrit l'arborescence dans un fichier nommé avec la structure suivante : yyyy-MM-dd-hh:mm:ss.scan et situé dans le dossier ~/.filescanner mais il est possible de spécifier ce fichier avec avec l'option -o.
-Enfin, il est possible d'activer le calcul des sommes MD5 avec l'option -s.
-
-### OPTIONS GNU
-
--o		Permet de spécifier le fichier de sauvegarde de l'arborescence.
-
--s		Active le calcul des sommes MD5.
-
--i		Permet de spécifier le dossier à scanner.
+* Loïc François
+* Léo Berthet
+* Brice Van Aken
+* Corentin Ehlinger
