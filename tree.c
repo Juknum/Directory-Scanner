@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "tree.h"
 
 int append_subdir(s_directory *child, s_directory *parent){
