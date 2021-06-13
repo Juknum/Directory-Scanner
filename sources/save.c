@@ -54,8 +54,6 @@ char* string_builder_of_dir(s_directory dir, char *path_to_parent_dir) {
   char time[32];
   char *buffer = (char *)malloc(2048 * sizeof(char));
 
-  printf("writting:\t%s", dir.name);
-
   // code e_type
   strcpy(buffer, "0"); // dir e_type
   strcat(buffer, "\t");

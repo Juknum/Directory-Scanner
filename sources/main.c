@@ -56,20 +56,18 @@ int main(int argc, char *argv[]) {
 
 			// options non définie: 
 			default:
-				printf("\nOPTIONS:\n\t-o\t:\tSave file location, default: ./filescanner/year-month-day-H:M:S.scan\n\t-s\t:\tActivate MD5 sum, disabled by default\n\t-i\t:\tDirectory to scan, \".\" by default.\n\n");
+				printf("\nOPTIONS:\n\t-o\t:\tSave file location, default: ~/.filescanner/year-month-day-H:M:S.scan\n\t-s\t:\tActivate MD5 sum, disabled by default\n\t-i\t:\tDirectory to scan, \".\" by default.\n\n");
 				return 0;
 		}
 	}
 
-	//Si aucun fichier n'a été précisé, création du fichier de sauvegarde
+	// Si aucun fichier n'a été précisé, création du fichier de sauvegarde
 	if (is_file == 0) {
 		file = malloc(sizeof(char) * 38);
-		DIR *dir = opendir("filescanner"); // Vérifie l'existence du répertoire
-		if (!dir) {
-			mkdir("filescanner", 0755); // Si il n'existe pas, le crée
-		}
+		DIR *dir = opendir(".filescanner"); // Vérifie l'existence du répertoire
+		if (!dir) mkdir(".filescanner", 0755); // Si il n'existe pas, le crée
 		closedir(dir);
-		strcpy(file,"filescanner/");
+		strcpy(file,".filescanner/");
 		
 		char today_time[20]; // Récupère la date complète
 		time_t timestamp;
@@ -91,7 +89,7 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	//Si aucun répertoire n'a été précisé, analyse du répertoire courant "."
+	// Si aucun répertoire n'a été précisé, analyse du répertoire courant "."
 	if (is_dir == 0) {
 		directory = malloc(sizeof(char) * strlen("."));
 		strcpy(directory,".");
