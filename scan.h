@@ -1,12 +1,16 @@
+#include <stdio.h>
+#include <sys/types.h>
+#include <openssl/md5.h>
+#include <stdlib.h>
+#include <string.h>
+#include <dirent.h>
+#include <sys/stat.h>
+#include <unistd.h> 
+
+
 #ifndef _SCAN_H
 #define _SCAN_H
 
-#include <stdint.h>
-#include <linux/limits.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <openssl/md5.h>
 
 typedef enum {DIRECTORY, REGULAR_FILE, OTHER_TYPE} e_type;
 
