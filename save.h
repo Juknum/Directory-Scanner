@@ -1,7 +1,9 @@
 #include <stdbool.h>
 #include <time.h>
 #include <string.h>
+#include <stdio.h>
 #include <linux/limits.h>
+#include "scan.h"
 
 #ifndef _SAVE_H
 #define _SAVE_H
