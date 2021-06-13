@@ -60,6 +60,7 @@ int main(int argc, char *argv[]) {
 			default:
 				break;
 		}
+		}
 
 		// Scanner le répertoire d'entrée récursivement
 		s_directory *root_dir = process_dir(in_path);
