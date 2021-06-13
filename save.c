@@ -10,6 +10,7 @@ int save_to_file(s_directory *root, char *path_to_target, char *path_to_dir){
     time_t timestamp = time(0);
     struct tm* date = localtime(&timestamp);
     char full_date[20]; 
+    char temp_path_to_dir[PATH_MAX];
     sprintf(full_date,"%04d-%02d-%02d-%02d:%02d:%02d",date->tm_year+1900,date->tm_mon+1,date->tm_mday,date->tm_hour,date->tm_min,date->tm_sec); 
     sprintf(full_path,"%s/%s.scan", path_to_target, full_date);
     FILE *target_file = fopen(full_path, "w");
@@ -20,24 +21,20 @@ int save_to_file(s_directory *root, char *path_to_target, char *path_to_dir){
     } 
     fprintf(target_file,"%s\n\n", full_date);
     fprintf(target_file,"Content of :\n");
-    
+    if(do_path){
+        strcpy(temp_path_to_dir, path_to_dir);
+    }else{
+        strcpy(temp_path_to_dir, "");
+    }
+    write_dir_line(target_file, root, temp_path_to_dir, 0);
+    fprintf(target_file,"\n\n");
     if(root->subdirs){
-        if(do_path){
-			write_dir_line(target_file, root, path_to_dir, 0);
-    		fprintf(target_file,"\n\n");
-            print_dir(target_file,root->subdirs, path_to_dir, 0);
-        }else{
-			write_dir_line(target_file, root, "", 0);
-            print_dir(target_file,root->subdirs, "", 0);
-        }
+        print_dir(target_file,root->subdirs, temp_path_to_dir, 0);
     }
     if(root->files){
-        if(do_path){ 
-            print_files(target_file, root->files, path_to_dir, 0);
-        }else{
-            print_files(target_file, root->files, "", 0);
-        }
+        print_files(target_file, root->files, temp_path_to_dir, 0);
     }
+    fprintf(target_file, "End of the analisis");
     fclose(target_file);
 	return 0;
 } 
@@ -53,9 +50,15 @@ void print_dir(FILE *target_file, s_directory *my_dir, char *path, int depth){
     if(do_arborescence){
         depth++;
     }
-    while(my_dir->subdirs){
-        print_dir(target_file, my_dir->subdirs, new_path, depth);
+    if(my_dir->subdirs){
+        s_directory *temp_dir = my_dir->subdirs;
+        print_dir(target_file, temp_dir, new_path, depth);
+        while(temp_dir){
+            temp_dir = temp_dir->next_dir;s
+            print_dir(target_file, temp_dir, new_path, depth);
+        }
     }
+    
     if(my_dir->files){
         print_files(target_file, my_dir->files, new_path, depth);
     }
