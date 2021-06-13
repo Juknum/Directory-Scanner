@@ -34,9 +34,7 @@ int save_to_file(s_directory *root, char *path_to_target, bool md5_sum_computing
 
 	//time to get recursive, we will first display all the data of subdirectories if there are some:
 	if (root->subdirs != NULL){
-		if (save_to_file(root->subdirs,path_to_target, md5_sum_computing) == 0){
-			return 0;
-		}
+		save_to_file(root->subdirs,path_to_target, md5_sum_computing);
 	}
 
 	//and now for the next directory of this level:

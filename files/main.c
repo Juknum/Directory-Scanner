@@ -76,9 +76,8 @@ int main(int argc, char *argv[]) {
 	}
 	else
 	{
-		f = fopen("Directory_Tree","w");
 		save_file_path = malloc(sizeof(char)*15);
-		strcpy(save_file_path,"Directory_Tree");
+		strcpy(save_file_path,"Directory_tree");
 	}
 	
 
@@ -90,8 +89,7 @@ int main(int argc, char *argv[]) {
 	printf("Saving...\n");
 	if(save_to_file(parent,save_file_path,md5_sum_computing)==0)
 	{
-		printf("Error ! There was an error during the saving.\n");
-		return 1;
+		printf("Error ! There was an error during the save.\n");
 	}
 
 
