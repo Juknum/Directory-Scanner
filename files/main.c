@@ -126,10 +126,10 @@ int main(int argc, char *argv[]) {
 
 	//free dynamically allowed variables
 	if (specific_save_file){
-		free (save_file_path);
+	free (save_file_path);
 	}
 	if (specific_directory){
-		free (directory);
+	free (directory);
 	}
 	free(parent);
 
