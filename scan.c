@@ -1,14 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <dirent.h>
-#include <sys/stat.h>
-#include <stdint.h>
-#include <unistd.h> 
 
 #include "scan.h"
+#include "tree.h"
 
-s_directory* process_dir(char* path){
+s_directory *process_dir(char* path){
 	DIR* real_dir = opendir(path);
 	if(!real_dir){
 		printf("Directory %s couldn't be opened\n\n", path);
@@ -39,7 +33,7 @@ s_directory* process_dir(char* path){
 		if(strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0){
 			char full_path[PATH_MAX];
 			sprintf(full_path, "%s/%s", path, entry->d_name);
-			/**switch(entry->d_type){
+			switch(entry->d_type){
 				case DT_DIR : 
 					if(append_subdir(process_dir(full_path), my_dir) != 0){
 						printf("Error while adding %s to %s\n\n", full_path, path);
@@ -55,7 +49,7 @@ s_directory* process_dir(char* path){
 						return NULL;
 					} 
 				break;
-			} **/
+			} 
 		}  
 	}
 	return my_dir;
@@ -82,7 +76,7 @@ s_file *process_file(char *path){
 		}else{
 			my_file->file_type=OTHER_TYPE;
 			my_file->md5sum[0]='\0';
-			//my_file->file_size = NULL;
+			my_file->file_size = 0;
 			if(S_ISLNK(stat_file.st_mode)){
 				int name_size = FILENAME_MAX-strlen(my_file->name)-4;
 				char pointed_file_name[name_size];
