@@ -89,18 +89,12 @@ int main(int argc, char *argv[]) {
         char* str1= (char *) malloc(100);;
         //strcpy(str1, getenv("HOME"));
         char *str7=getenv("HOME");
-        printf("%s\n\n",str7);
         int i =0;
-        printf("%ld\n\n",strlen(str7));
         for(i=0; i<strlen(str7);i++)
         {
         	*(str1+i)=*(str7+i);
-        	printf("%s\n\n",str1);
-        	printf("%c\n\n",(*(str7+i)));
         }
         strcat( str1, "/.filescanner/");
-        printf("%s\n\n",str1);
-
         
         if (stat(str1, &st) == -1) 
         {
