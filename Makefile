@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Wconversion -Wno-unused -g
+CFLAGS = -Wall -Wextra -Wconversion
 LDFLAGS = -lcrypto
 EXEC = projet
 
