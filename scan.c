@@ -1,6 +1,7 @@
 
 #include "scan.h"
 #include "tree.h"
+#include <linux/limits.h>
 
 s_directory *process_dir(char* path){
 	DIR* real_dir = opendir(path);
