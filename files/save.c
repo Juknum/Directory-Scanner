@@ -17,7 +17,7 @@ int save_to_file(s_directory *root, char *path_to_target, bool md5_sum_computing
     strftime(str_time, 20, "%Y-%m-%d %H:%M:%S", localtime(&root->mod_time));
 
     //write in the save file all the expected data
-	fprintf(f,"Directory:\n0\t%s\t%s/\n",str_time,root->name);
+	fprintf(f,"Directory:\n0\t%s\t%s/\n\n",str_time,root->name);
 
 	//display all files, not checking if the files pointer is null because it is done by the function already
 	if(write_files(root->files,path_to_target,md5_sum_computing) == 0){

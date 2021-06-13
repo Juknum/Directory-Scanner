@@ -14,7 +14,7 @@ void scan(char *dir_name,s_directory *parent)
         {
             new_path = realloc(new_path,sizeof(char)*(strlen(dir_name)+1+getFileNameSize(current_entry->d_name)));
             
-	if (snprintf(new_path, strlen(dir_name)+1+getFileNameSize(current_entry->d_name), "%s/%s", dir_name, current_entry->d_name) < MAX_HANDLED_PATH_LENGTH)
+	        if (snprintf(new_path, strlen(dir_name)+1+getFileNameSize(current_entry->d_name), "%s/%s", dir_name, current_entry->d_name) < MAX_HANDLED_PATH_LENGTH)
             {
                 if (lstat(new_path, &current_stat) != -1) 
                 {
@@ -42,8 +42,8 @@ void scan(char *dir_name,s_directory *parent)
                         new_file->next_file = NULL;
                         append_file(new_file,parent);
                         uint8_t sumbuff[MD5_DIGEST_LENGTH];
-			compute_md5(new_path,sumbuff);
-			strcpy((char*)new_file->md5sum,(char*)sumbuff);
+			            compute_md5(new_path,sumbuff);
+			            strcpy((char*)new_file->md5sum,(char*)sumbuff);
                     }
                 }
             }

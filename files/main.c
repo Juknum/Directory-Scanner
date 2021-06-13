@@ -60,11 +60,19 @@ int main(int argc, char *argv[]) {
 
 	// Verifying and setting the necessary arguments
     FILE* f;
+	struct stat st = {0};
 
     if (!specific_directory){
     	directory = (char*)malloc(sizeof(char)*110);
 		getcwd(directory,110);
     }
+	else
+	{
+		if (stat(directory, &st) == -1) 
+		{
+			printf("Error ! The Directory %s doesn't exist.\n",directory);
+		}
+	}
 
 	if (specific_save_file)
 	{
@@ -76,9 +84,16 @@ int main(int argc, char *argv[]) {
 	}
 	else
 	{
-		save_file_path = malloc(sizeof(char)*15);
-		strcpy(save_file_path,"Directory_tree");
-		f = fopen(save_file_path,"w");
+        char fileName[110];
+        if (stat(".filescanner/", &st) == -1) 
+        {
+            mkdir(".filescanner/", 0777);
+        }
+
+        strcpy(fileName,".filescanner/yyyy-MM-dd-hh:mm:ss.scan");
+        save_file_path = (char*)malloc(sizeof(char)*(strlen(fileName)));
+        strcpy(save_file_path,fileName);
+        f = fopen(save_file_path,"w");
 	}
 
 	fclose(f);
@@ -86,6 +101,10 @@ int main(int argc, char *argv[]) {
 
     //launch the program
 	s_directory* parent = (s_directory*)malloc(sizeof(s_directory));
+    strcpy(parent->name,directory);
+    parent->next_dir = NULL;
+    parent->subdirs = NULL;
+    parent->files = NULL;
 
 	scan(directory,parent);
 	
