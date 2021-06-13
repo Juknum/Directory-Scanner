@@ -69,9 +69,11 @@ void print_dir(FILE *target_file, s_directory *my_dir, char *path, int depth){
 }
 
 void print_files(FILE *target_file, s_file *my_file, char *path, int depth){
-    write_file_line(target_file, my_file, path, depth);
-    while(my_file->next_file){
-        print_files(target_file, my_file->next_file, path, depth);
+    s_file *temp_file = my_file;
+    write_file_line(target_file, temp_file, path, depth);
+    while(temp_file->next_file){
+        temp_file = temp_file->next_file;
+        write_file_line(target_file, temp_file, path, depth);
     }
 }
 
