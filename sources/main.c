@@ -1,6 +1,7 @@
 #include "../headers/definitions.h"
 #include "../headers/scan.h"
 #include "../headers/save.h"
+#include "../headers/tree.h"
 
 /**
  * Fonction principale: gère les options, controle les arguments puis appelle les fonctions scan et save
@@ -94,7 +95,7 @@ int main(int argc, char *argv[]) {
 	save_to_file(parent, file, 0, directory, check_md5);
 	printf("Save success\n");
 
-	//clear_subdirs(parent);
+	clear_subdirs(parent);
 
 	//programme(file,directory,check_md5)
 	free(file); free(directory);

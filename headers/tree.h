@@ -17,4 +17,14 @@ void clear_files(s_file *parent);
  */
 void clear_subdirs(s_directory *parent);
 
+/**
+ * @author Guillaume
+ */
+int append_subdir(s_directory *child, s_directory *parent);
+
+/**
+ * @author Guillaume
+ */
+int append_file(s_file *child, s_directory *parent);
+
 #endif //_TREE_H_

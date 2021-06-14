@@ -29,6 +29,7 @@ char* recuperation_nom(char * path) {
 }
 
 s_file *process_file(char *path, bool doMD5){
+	// printf("path:\t%s\n", path);
 
 	//structures de manipulation de fichier
 	struct stat stats;
@@ -51,23 +52,20 @@ s_file *process_file(char *path, bool doMD5){
 			buffer = malloc(sizeof(char) * (strlen(path) + 34));
 			compute_md5(path, buffer);
 			snprintf(parent->md5sum, sizeof(parent->md5sum),"%s", buffer);
-			printf("%s\n",buffer);
 			free(buffer);
-			printf("Liberation buffer\n");
 		}
 	}
-	else {
-		parent->file_type = OTHER_TYPE;
-		snprintf(parent->md5sum, sizeof(parent->md5sum),"%s", "rien");
-	}
+	else parent->file_type = OTHER_TYPE;
+
 	snprintf(parent->name, sizeof(parent->name), "%s", recuperation_nom(path));
 	parent->mod_time = stats.st_mtime;
-	printf("Fin process_file\n");
+	parent->next_file = NULL;
+
 	return parent;
 }
 
 s_directory *process_dir(char *root_path, bool doMD5) {
-
+	// printf("path:\t%s/\n", root_path);
 	DIR *descripteur;
 	struct dirent *dirent = NULL;
 	struct stat stats;
@@ -88,21 +86,21 @@ s_directory *process_dir(char *root_path, bool doMD5) {
 	descripteur = opendir(root_path);
 	if (descripteur == NULL) return NULL; // impossible d'ouvrir le répertoire
 
-	// tant qu'il y a des éléments dans le répertoire
-	char *path = (char *)malloc(2048 * sizeof(char));
+	char *path = (char *)malloc(4096 * sizeof(char));
 
+	// tant qu'il y a des éléments dans le répertoire
 	while((dirent = readdir(descripteur)) != NULL) {
 		// on évite de traiter les . et .. (boule infinie)
 		if (strcmp(dirent->d_name, ".") == 0 || strcmp(dirent->d_name, "..") == 0) {
 			continue;
 		}
 
-		snprintf(path, 2048, "%s", root_path);
+		// snprintf(path, sizeof(path), "%s", root_path);
+		strcpy(path, root_path);
 		strcat(path, "/"); strcat(path, dirent->d_name);
 
 		// lecture impossible -> on passe au suivant & on affiche l'erreur
 		if (lstat(path, &stats) == -1) {
-			printf("Erreur stat : \n");
 			perror("stat");
 			continue;
 		}
@@ -122,18 +120,15 @@ s_directory *process_dir(char *root_path, bool doMD5) {
 
 		// si c'est un fichier ou autre chose
 		else {
-
 			// si c'est le premier fichier
 			if (root->files == NULL) root->files = process_file(path, doMD5);
 			// sinon on l'attache au fichier précédent
 			else {
 				s_file *file;
 				file = root->files;
-				while (file->next_file != NULL){ file = file->next_file; printf("Fichier : %s, prochain : %p\n",file->name,file->next_file);}
+				while (file->next_file != NULL) file = file->next_file;
 				file->next_file = process_file(path, doMD5);
-				printf("Prochain fichier = %p\n", file->next_file);
 			}
-
 		}
 		
 

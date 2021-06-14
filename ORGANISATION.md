@@ -3,33 +3,33 @@
 ## Fonctions
 > Etat de l'avancée du projet
 
-- [ ] `s_directory *process_dir(char *path);`  
-    - [ ] Need review
-    - [ ] Done
-- [ ] `s_file *process_file(char *path);`  
-    - [ ] Need review
-    - [ ] Done
-- [ ] `int save_to_file(s_directory *root, char *path_to_target);`  
+- [x] `s_directory *process_dir(char *path);`  
     - [x] Need review
-    - [ ] Done
+    - [x] Done
+- [x] `s_file *process_file(char *path);`  
+    - [x] Need review
+    - [x] Done
+- [x] `int save_to_file(s_directory *root, char *path_to_target);`  
+    - [x] Need review
+    - [x] Done
 - [ ] `int append_subdir(s_directory *child, s_directory *parent);`  
     - [ ] Need review
     - [ ] Done
 - [ ] `int append_file(s_file *child, s_directory *parent);`  
     - [ ] Need review
     - [ ] Done
-- [ ] `void clear_files(s_directory *parent);`  
-    - [ ] Need review
-    - [ ] Done
-- [ ] `void clear_subdirs(s_directory *parent);`  
-    - [ ] Need review
-    - [ ] Done
-- [ ] `int main(int argc, char *argv[])`  
+- [x] `void clear_files(s_directory *parent);`  
     - [x] Need review
-    - [ ] Done
-- [ ] `int compute_md5(char *path, unsigned char buffer[])`  
+    - [x] Done
+- [x] `void clear_subdirs(s_directory *parent);`  
     - [x] Need review
-    - [ ] Done
+    - [x] Done
+- [x] `int main(int argc, char *argv[])`  
+    - [x] Need review
+    - [x] Done
+- [x] `int compute_md5(char *path, unsigned char buffer[])`  
+    - [x] Need review
+    - [x] Done
 
 ## Git
 
