@@ -4,7 +4,7 @@
 
 # Bibliothèque
 
-Il n'y a pas de bibliothèque surpplémentaire a part openssl 
+Il n'y a pas de bibliothèque surpplémentaire à part openssl 
 
 
 
