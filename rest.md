@@ -11,17 +11,13 @@ Il n'y a pas de bibliothèque surpplémentaire à part openssl
 # Pour compiler
 
 ```c
-
 make 
-
 ```
 
 ## Lancer le programme
 
 ```c 
-
 ./main.c 
-
 ```
 
 # Options 
@@ -30,3 +26,4 @@ make
  - s active la sommes MD5 des fichiers. 
  - i suivie d'un argument spécifie le dossier à analyser. 
  - a permet de structurer sous forme d’arborescence dans le fichier save.
+ - p affiche le chemin complet de chaque fichier
