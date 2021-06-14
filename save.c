@@ -6,28 +6,20 @@ extern bool do_path;
 extern bool do_md5sum;
 
 int save_to_file(s_directory *root, char *path_to_target, char *path_to_dir){
-    char full_path[PATH_MAX];
-    time_t timestamp = time(0);
-    struct tm* date = localtime(&timestamp);
-    char full_date[20]; 
+ 
     char temp_path_to_dir[PATH_MAX];
-    sprintf(full_date,"%04d-%02d-%02d-%02d:%02d:%02d",date->tm_year+1900,date->tm_mon+1,date->tm_mday,date->tm_hour,date->tm_min,date->tm_sec); 
-    sprintf(full_path,"%s/%s.scan", path_to_target, full_date);
-    FILE *target_file = fopen(full_path, "w");
+    FILE *target_file = fopen(path_to_target, "w");
     if(!target_file){
-        printf("File %s couldn't be opened or created\n\n", full_path);
-		fprintf(stderr, "Error while opening or creating %s\n", full_path);
+        printf("File %s couldn't be opened or created\n\n", path_to_target);
+		fprintf(stderr, "Error while opening or creating %s\n", path_to_target);
 		return -1;
     } 
-    fprintf(target_file,"%s\n\n", full_date);
-    fprintf(target_file,"Content of :\n");
+    fprintf(target_file,"Analisis of : %s\n\n", path_to_dir);
     if(do_path){
-        strcpy(temp_path_to_dir, path_to_dir);
+        sprintf(temp_path_to_dir,"%s/", path_to_dir);
     }else{
         strcpy(temp_path_to_dir, "");
     }
-    write_dir_line(target_file, root, temp_path_to_dir, 0);
-    fprintf(target_file,"\n\n");
     if(root->subdirs){
         print_dir(target_file,root->subdirs, temp_path_to_dir, 0);
     }
@@ -51,12 +43,7 @@ void print_dir(FILE *target_file, s_directory *my_dir, char *path, int depth){
         depth++;
     }
     if(my_dir->subdirs){
-        s_directory *temp_dir = my_dir->subdirs;
-        print_dir(target_file, temp_dir, new_path, depth);
-        while(temp_dir){
-            temp_dir = temp_dir->next_dir;s
-            print_dir(target_file, temp_dir, new_path, depth);
-        }
+        print_dir(target_file, my_dir->subdirs, new_path, depth);
     }
     
     if(my_dir->files){
@@ -65,10 +52,9 @@ void print_dir(FILE *target_file, s_directory *my_dir, char *path, int depth){
     if(do_arborescence){
         depth--;
     }
-    while(my_dir->next_dir){
+    if(my_dir->next_dir){
         print_dir(target_file, my_dir->next_dir, path, depth);
     }
-
 }
 
 void print_files(FILE *target_file, s_file *my_file, char *path, int depth){
@@ -90,7 +76,7 @@ void write_file_line(FILE *target_file,s_file *my_file, char *path,int depth){
     struct tm* date = localtime(&my_file->mod_time);
     if(my_file->file_type == REGULAR_FILE){
         fprintf(target_file,"1\t%04d-%02d-%02d-%02d:%02d:%02d\t",date->tm_year+1900,date->tm_mon+1,date->tm_mday,date->tm_hour,date->tm_min,date->tm_sec);
-        fprintf(target_file,"%" PRIu64 "\t", my_file->file_size);
+        fprintf(target_file,"%ld\t", my_file->file_size);
         if(do_md5sum){
             fprintf(target_file,"%s\t", my_file->md5sum); 
         }
