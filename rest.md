@@ -1,14 +1,14 @@
-### Partie du projet
+# Partie du projet
 
 ## Compilation 
 
-# Bibliothèque
+### Bibliothèque
 
 Il n'y a pas de bibliothèque supplémentaire à part openssl 
 
 
 
-# Pour compiler
+### Pour compiler
 
 ```c
 make 
@@ -20,7 +20,7 @@ make
 ./main
 ```
 
-# Options 
+### Options 
 
  - o suivie d'un argument permet de spécifier le fichier dans lequel faire la sauvegarde
  - s active la somme MD5 des fichiers. 
