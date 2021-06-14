@@ -184,3 +184,33 @@ La bibliothèque pour calculer des sommes MD5 est fournie avec OpenSSL. Pour l'u
 Il est nécessaire d'ouvrir le fichier dont vous calculez la somme MD5 et de le lire par parties (à vous de choisir la taille des éléments que vous traitez) afin de permettre à MD5 de calculer la somme sur la taille complète du fichier.
 
 Quelques informations supplémentaires au sujet de MD5 vous seront données ultérieurement.
+
+# Partie du projet
+
+## Compilation 
+
+### Bibliothèque
+
+Il n'y a pas de bibliothèque supplémentaire à part openssl 
+
+
+
+### Pour compiler
+
+```c
+make 
+```
+
+## Lancer le programme
+
+```c 
+./main
+```
+
+### Options 
+
+ - o suivie d'un argument permet de spécifier le fichier dans lequel faire la sauvegarde
+ - s active la somme MD5 des fichiers. 
+ - i suivie d'un argument spécifie le dossier à analyser. 
+ - a permet de structurer sous forme d’arborescence dans le fichier save.
+ - p affiche le chemin complet de chaque fichier
