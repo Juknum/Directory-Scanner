@@ -10,19 +10,19 @@ Il n'y a pas de bibliothèque surpplémentaire à part openssl
 
 # Pour compiler
 
-'''c 
+```c
 
 make 
 
-'''
+```
 
 ## Lancer le programme
 
-'''c 
+```c 
 
 ./main.c 
 
-'''
+```
 
 # Options 
 
