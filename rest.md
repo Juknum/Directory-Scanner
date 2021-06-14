@@ -1,14 +1,14 @@
-### Partie du projet
+# Partie du projet
 
 ## Compilation 
 
-# Bibliothèque
+### Bibliothèque
 
 Il n'y a pas de bibliothèque surpplémentaire à part openssl 
 
 
 
-# Pour compiler
+### Pour compiler
 
 ```c
 make 
@@ -20,7 +20,7 @@ make
 ./main.c 
 ```
 
-# Options 
+### Options 
 
  - o suivie d'un argument permet de spécifier le fichier dans lequel la sauvegarde de la liste de l'arborescence se fera
  - s active la sommes MD5 des fichiers. 
