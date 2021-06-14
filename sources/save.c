@@ -21,9 +21,12 @@ int save_to_file(s_directory *root, char *path_to_target, int nb_tabs, char *pat
   while (current_file != NULL) {
     fputs(tabs, f);
     fputs(string_builder_of_file(*current_file, path_to_current_dir, doMD5), f);
+    printf("Ecriture file\n");
     fputs("\n", f);
+    printf("Pointeur %p\n",current_file->next_file);
     current_file = current_file->next_file; // fichier suivant
   }
+printf("Sortie de boucle\n ");
   free(current_file);
   fclose(f); // on ferme le fichier maintenant car on le réouvre dans la récurrence
 
@@ -69,7 +72,9 @@ char* string_builder_of_file(s_file file, char *path_to_parent_dir, bool doMD5) 
   char *buffer = (char *)malloc(2048 * sizeof(char));
 
   // code e_type
-  if (file.file_type == REGULAR_FILE) strcpy(buffer, "1"); // file e_type
+  if (file.file_type == REGULAR_FILE){
+    strcpy(buffer, "1"); // file e_type
+  }
   else strcpy(buffer, "2");
   strcat(buffer, "\t");
 
@@ -77,18 +82,24 @@ char* string_builder_of_file(s_file file, char *path_to_parent_dir, bool doMD5) 
   strftime(time, 32, "%Y-%m-%d-%H:%M:%S", localtime(&file.mod_time));
   strcat(buffer, time); strcat(buffer, "\t");
 
+
   if (file.file_type == REGULAR_FILE) {
     // taille
-    snprintf(buffer, sizeof(buffer), "%lu" ,file.file_size); strcat(buffer, "\t");
+    char * size;
+    size = malloc(sizeof(file.file_size));
+    snprintf(size, sizeof(buffer), "%lu" ,file.file_size);
+    strcat(buffer,size); strcat(buffer, "\t");
+    // md5
+    if (doMD5 == true) {
+      printf("Debut md5 : %s,  %s\n", file.name,file.md5sum);
+      strcat(buffer, file.md5sum); strcat(buffer, "\t");
+      printf("Buffer = %s\n",buffer);
+    }
   }
-
-  // md5
-  if (doMD5 == true) {
-    strcat(buffer, file.md5sum); strcat(buffer, "\t");
-  }
-
   // chemin
   strcat(buffer, path_to_parent_dir); strcat(buffer, "/"); strcat(buffer, file.name);
+
+      printf("Buffer = %s\n",buffer);
 
   return buffer;
 }

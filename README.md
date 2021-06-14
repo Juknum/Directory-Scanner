@@ -5,7 +5,9 @@ L'évaluation de la partie programmation en langage C de LP25 se base sur un pro
 ## Descriptif global du projet
 
 Ce projet a pour but d'écrire un programme qui va scanner récursivement un répertoire, et en extraire l'arborescence complète de ce répertoire. Cette arborescence devra être stockée dans un premier temps dans la mémoire de l'ordinateur au cours de l'exécution du programme, puis ce contenu, une fois trié, devra être écrit dans un fichier.
-
+ing directory: .
+Scan success
+Save success
 ## Description détaillées des fonctionnalités
 
 Les fonctionnalités du programme à développer sont détaillées dans les paragraphes ci-dessous. Le cas échéant, le paragraphe vous donne le paramètre par défaut utilisé par cette fonctionnalité, en l'absence de toute option passée au programme.

@@ -87,10 +87,11 @@ int main(int argc, char *argv[]) {
 		printf("-> analysing directory: %s\n",directory);
 	}
 
-	s_directory * parent = process_dir("dirtest", check_md5);
+	s_directory * parent = process_dir(directory, check_md5);
 	printf("Scan success\n");
 
-	save_to_file(parent, file, 0, "./dirtest", check_md5);
+
+	save_to_file(parent, file, 0, directory, check_md5);
 	printf("Save success\n");
 
 	//clear_subdirs(parent);
