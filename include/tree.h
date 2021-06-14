@@ -4,9 +4,9 @@
  * @brief All the functions used to modify the s_directory & s_file structure are here.
  * @version 0.1
  * @date 2021-06-12
- * 
+ *
  * @copyright Copyright (c) 2021
- * 
+ *
  */
 
 #ifndef TREE_HEADER
@@ -17,37 +17,37 @@
 
 
 /**
- * @brief
+ * @brief insert a new directory on front of the "parent" list.
  *
- * @param child
- * @param parent
- * @return int
+ * @param child new directory to be inserted as head.
+ * @param parent current list of directories.
+ * @return 1 if the directory can be properly inserted, 0 otherwise.
  */
 int append_subdir(s_directory *child, s_directory *parent);
 
 /**
- * @brief
+ * @brief insert a new file on front of the files' linked list contained in the parent directory.
  *
- * @param child
- * @param parent
- * @return int
+ * @param child file to be inserted as head.
+ * @param parent current directory in which to insert the child file.
+ * @return 1 if the file can be properly inserted, 0 otherwise.
  */
 int append_file(s_file *child, s_directory *parent);
 
 /**
- * @brief
+ * @brief clear the list of files contained in the parent directory.
  *
- * @param parent
+ * @param parent directory containing the list of files to be cleaned
  */
 void clear_files(s_directory *parent);
 
 /**
- * @brief
+ * @brief clean recursively the entire content of the parent directory.
  *
- * @param parent
+ * @param parent directory to be cleaned.
  */
 void clear_subdirs(s_directory *parent);
 
 
 
-#endif 
+#endif
