@@ -17,7 +17,7 @@ make
 ## Lancer le programme
 
 ```c 
-./main.c 
+./main
 ```
 
 # Options 
