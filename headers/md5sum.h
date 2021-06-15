@@ -4,7 +4,7 @@
 #include "./definitions.h"
 
 /**
- * Calcule la somme md5 d'un fichier à partir de son chemin
+ * @brief Calcule la somme md5 d'un fichier à partir de son chemin
  * @author Antoine
  * @param path chemin vers le fichier cible
  * @param buffer string pour stocker la somme md5 du fichier

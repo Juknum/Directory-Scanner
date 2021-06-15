@@ -26,7 +26,7 @@ struct _file {
   char     name[NAME_MAX + 1];
   time_t   mod_time;
   uint64_t file_size;
-  u_char   md5sum[MD5_DIGEST_LENGTH];// md5sum retourne 32 caracteres mais MD5_DIGEST_LENGTH == 16
+  u_char   md5sum[MD5_DIGEST_LENGTH]; // md5sum retourne 32 caracteres mais MD5_DIGEST_LENGTH == 16
   struct   _file *next_file;
 };
 typedef struct _file s_file;

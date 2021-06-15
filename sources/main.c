@@ -4,7 +4,7 @@
 #include "../headers/tree.h"
 
 /**
- * Fonction principale: gère les options, controle les arguments puis appelle les fonctions scan et save
+ * @brief Fonction principale: gère les options, controle les arguments puis appelle les fonctions scan et save
  * @author Antoine
  * @param argc Nombre d'arguments
  * @param argv Tableau des arguemnts
@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
 		
 	while((opt = getopt(argc, argv, "i:so")) != -1) {
 		switch (opt) {
-			// obtenir le nom du fichier de sauvegarde
+			// Obtenir le nom du fichier de sauvegarde
 			case 'o': 
 				file = malloc(sizeof(char) * strlen(optarg));
 				strcpy(file,optarg);
@@ -24,13 +24,13 @@ int main(int argc, char *argv[]) {
 				printf("-> saving in file %s\n", file);
 				break;
 				
-			// activation du calcul des sommes MD5
+			// Activation du calcul des sommes MD5
 			case 's': 
 				check_md5 = true; // Vaut vrai si la somme doit etre calculé, faux sinon
 				printf("-> activating MD5 sum\n");
 				break;
 
-			// obtenir le répertoire à analyser
+			// Obtenir le répertoire à analyser
 			case 'i':; // ; -> fix de: "error: a label can only be part of a statement and a declaration is not a statement"
 				
 				// Vérifie l'existence du répertoire
@@ -46,17 +46,17 @@ int main(int argc, char *argv[]) {
 				printf("-> analysing directory: %s\n", directory);
 				break;
 
-			// options non définie: 
+			// Options non définie: 
 			default:
 				printf("\nOPTIONS:\n\t-o\t:\tSave file location, default: ~/.filescanner/year-month-day-H:M:S.scan\n\t-s\t:\tActivate MD5 sum, disabled by default\n\t-i\t:\tDirectory to scan, \".\" by default.\n\n");
-				return 0;
+				return 1;
 		}
 	}
 
 	// Si aucun fichier n'a été précisé, création du fichier de sauvegarde
 	if (is_file == 0) {
 		file = malloc(sizeof(char) * 38);
-		DIR *dir = opendir(".filescanner"); // Vérifie l'existence du répertoire
+		DIR *dir = opendir(".filescanner");    // Vérifie l'existence du répertoire
 		if (!dir) mkdir(".filescanner", 0755); // Si il n'existe pas, le crée
 		closedir(dir);
 		strcpy(file,".filescanner/");
@@ -91,13 +91,10 @@ int main(int argc, char *argv[]) {
 	s_directory * parent = process_dir(directory, check_md5);
 	printf("Scan success\n");
 
-
 	save_to_file(parent, file, 0, directory, check_md5);
 	printf("Save success\n");
 
 	clear_subdirs(parent);
-
-	//programme(file,directory,check_md5)
 	free(file); free(directory);
 	return 0;
 }

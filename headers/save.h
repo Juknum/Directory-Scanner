@@ -4,7 +4,7 @@
 #include "./definitions.h"
 
 /**
- * Ouvre le fichier donné par "path_to_target", écris l'arborescence depuis le dossier "root"
+ * @brief Ouvre le fichier donné par "path_to_target", écris l'arborescence depuis le dossier "root"
  * @author Julien
  * @param root dossier racine depuis laquelle la sauvegarde s'effectue
  * @param path_to_target chemin du fichier vers lequel enregistrer
@@ -16,7 +16,7 @@
 int save_to_file(s_directory *root, char *path_to_target, int nb_tabs, char *path_to_current_dir, bool doMD5);
 
 /**
- * Modifie le buffer pour être une string contenant l'ensemble des infos nécessaires à sauvegarder
+ * @brief Modifie le buffer pour être une string contenant l'ensemble des infos nécessaires à sauvegarder
  * @author Julien
  * @param dir dossier dont on veut les infos
  * @param path_to_parent_dir chemin d'accès au dossier (sans le dossier)
@@ -25,7 +25,7 @@ int save_to_file(s_directory *root, char *path_to_target, int nb_tabs, char *pat
 char* string_builder_of_dir(s_directory dir, char *path_to_parent_dir);
 
 /**
- * Modifie le buffer pour être une string contenant l'ensemble des infos nécessaires à sauvegarder
+ * @brief Modifie le buffer pour être une string contenant l'ensemble des infos nécessaires à sauvegarder
  * @author Julien
  * @param file fichier dont on veut les infos
  * @param path_to_parent_dir chemin d'accès au fichier (sans le fichier)
