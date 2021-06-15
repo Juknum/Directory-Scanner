@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 	struct tm *tmtime;
 	tmtime = localtime(&t);
 	char *out_file = malloc(sizeof(char)*PATH_MAX+1);
-	snprintf(out_file,PATH_MAX+1,"%s/.filescanner/%04d-%02d-%02d:%02d:%02d:%02d.scan",getenv("HOME"),tmtime->tm_year+1900,tmtime->tm_mon+1,tmtime->tm_mday,tmtime->tm_hour,tmtime->tm_min,tmtime->tm_sec);
+	snprintf(out_file,PATH_MAX+1,"%s/.filescanner/%04d-%02d-%02d-%02d:%02d:%02d.scan",getenv("HOME"),tmtime->tm_year+1900,tmtime->tm_mon+1,tmtime->tm_mday,tmtime->tm_hour,tmtime->tm_min,tmtime->tm_sec);
 
     
     // On scanne tous les arguments du programme avec une boucle et getopt.
