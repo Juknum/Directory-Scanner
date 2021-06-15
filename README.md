@@ -1,5 +1,80 @@
 # Projet de LP25
 
+Ce projet est réalisé dans le carde de l'UV LP25 à l'UTBM. Voir ci dessous pour voir le sujet et les attendus du projets
+
+### Pré-requis
+
+Ce qu'il est requis pour commencer avec votre projet...
+
+- un compilateur C
+- git
+
+- la librairie openssl/md5.h
+
+### Installation
+
+Les étapes pour installer et compiler et lancer le programme :
+
+Linux : 
+
+
+````
+ git clone https://git-info.utbm.fr/lp25p21/projet.git
+ git  branch group-8-CLOAREC-DURAND-DURR-FANTOU
+ cd projet
+ make main
+ ./bin/main [-i dossier_a_analyser] [-o fichier_de_sortie] [-s]
+ ````
+ 
+Windows :
+
+bonne chance avec votre éditeur
+
+## Démarrage
+
+pour lancer le projet depuis la racine du projet
+
+./bin/main [-i dossier_a_analyser] [-o fichier_de_sortie] [-s]
+
+les options : 
+
+L'option -o suivie d'un argument permet de spécifier le fichier dans lequel la sauvegarde de la liste de l'arborescence se fera.
+L'option -s sans argument active le calcul des sommes MD5 des fichiers.
+L'option -i suivie d'un argument spécifie le dossier à analyser.
+
+
+
+## Fabriqué avec
+
+Le projet à été développé en language C, avec Visual Studio code.
+
+* [Visual Studio Code](https://code.visualstudio.com) - Multylanguage IDE
+
+## Contribuer
+
+Si vous souhaitez contribuer, ou nous faire part d'un bug, vous pouver proposer une issue ou ouvrir un pull request
+
+## Versions
+
+**Dernière version stable :** 0.1.0
+**Dernière version :** 0.1.0
+
+## Auteurs
+
+* **Florian CLOAREC** _alias_ [@Flo3171](https://github.com/Flo3171)
+* **DURAND Sulyvan**
+* **DURR Theo**
+* **FANTOU Guillaume**
+
+
+
+## License
+
+Ce projet est sous licence ``GNU GENERAL PUBLIC LICENSE`` - voir le fichier [LICENSE.md](LICENSE.md) pour plus d'informations
+
+
+
+# Sujet
 L'évaluation de la partie programmation en langage C de LP25 se base sur un projet à réaliser en groupes de 4 étudiants. Ce projet doit être réalisé en langage C.
 
 ## Descriptif global du projet
