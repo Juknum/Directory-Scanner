@@ -51,36 +51,38 @@ Avec `./projet.exe -i dirtest -s`:
 
 ## Organisation du projet
 
-### Fonctions
-> Etat de l'avancée du projet
+### Avancée du projet
 
-- [x] `s_directory *process_dir(char *path);`  
-    - [x] Need review
-    - [x] Done
-- [x] `s_file *process_file(char *path);`  
-    - [x] Need review
-    - [x] Done
-- [x] `int save_to_file(s_directory *root, char *path_to_target);`  
-    - [x] Need review
-    - [x] Done
-- [x] `int append_subdir(s_directory *child, s_directory *parent);`  
-    - [x] Need review
-    - [x] Done
-- [x] `int append_file(s_file *child, s_directory *parent);`  
-    - [x] Need review
-    - [x] Done
-- [x] `void clear_files(s_directory *parent);`  
-    - [x] Need review
-    - [x] Done
-- [x] `void clear_subdirs(s_directory *parent);`  
-    - [x] Need review
-    - [x] Done
-- [x] `int main(int argc, char *argv[])`  
-    - [x] Need review
-    - [x] Done
-- [x] `int compute_md5(char *path, unsigned char buffer[])`  
-    - [x] Need review
-    - [x] Done
+- ✔️ `s_directory *process_dir(char *path);`  
+    - ✔️ Need review
+    - ✔️ Done
+- ✔️ `s_file *process_file(char *path);`  
+    - ✔️ Need review
+    - ✔️ Done
+- ✔️ `int save_to_file(s_directory *root, char *path_to_target);`  
+    - ✔️ Need review
+    - ✔️ Done
+- ✔️ `bool append_subdir(s_directory *child, s_directory *parent);`  
+    - ✔️ Need review
+    - ✔️ Done
+- ✔️ `bool append_file(s_file *child, s_directory *parent);`  
+    - ✔️ Need review
+    - ✔️ Done
+- ✔️ `void clear_files(s_directory *parent);`  
+    - ✔️ Need review
+    - ✔️ Done
+- ✔️ `void clear_subdirs(s_directory *parent);`  
+    - ✔️ Need review
+    - ✔️ Done
+- ✔️ `int main(int argc, char *argv[])`  
+    - ✔️ Need review
+    - ✔️ Done
+- ✔️ `int compute_md5(char *path, unsigned char buffer[])`  
+    - ✔️ Need review
+    - ✔️ Done
+    
+#### Bonus:
+- ❌  Enregistrement des scans dans un fichier SQLite
 
 ### Git
 
@@ -101,7 +103,7 @@ git status # check s'il y a des changements
 
 ```C
 /**
- * Description de la fonction
+ * @brief Description de la fonction
  * @authors la ou les personnes qui ont codé la fonction
  * @param nom_du_parametre description du paramettre
  * @return description de la valeur retournée (ne pas mettre cette ligne si void)
