@@ -1,0 +1,41 @@
+#ifndef STRUCTURE_H
+#define STRUCTURE_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <dirent.h>
+#include <libgen.h>
+#include <sys/types.h>
+#include <openssl/md5.h>
+#include <linux/limits.h>
+#include <unistd.h>
+#include <errno.h>
+#include <string.h>
+#include <time.h>
+#include <sys/stat.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <getopt.h>
+#include <openssl/md5.h>
+#include "md5sum.h"
+
+typedef enum {DIRECTORY, REGULAR_FILE, OTHER_TYPE} e_type;
+
+typedef struct _file {
+    e_type file_type;
+    char name[NAME_MAX+1];
+    time_t mod_time;
+    uint64_t file_size;
+    u_char md5sum[MD5_DIGEST_LENGTH];
+    struct _file *next_file;
+} s_file;
+
+typedef struct _directory {
+    char name[NAME_MAX+1];
+    time_t mod_time;
+    struct _directory *subdirs;
+    s_file *files;
+    struct _directory *next_dir;
+} s_directory;
+
+#endif
