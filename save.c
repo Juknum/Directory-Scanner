@@ -1,5 +1,5 @@
 
-
+#include<time.h>
 #include "save.h"
 #define BUFFER_SIZE 150
 
@@ -40,9 +40,10 @@ int save_to_file(s_directory *root, char *path_to_target){
 
 void save_reg_file(s_file *file,char *path_to_target){
 
-
+        struct tm *mod_time;
+        mod_time=localtime(&file->mod_time);
         FILE *save_file =fopen(path_to_target,"a");
-        fprintf(save_file,"1\t%ld\tMD5\t%s\n",file->file_size,file->name);
+        fprintf(save_file,"1\t%ld\t%02d/%02d/%04d %02d:%02d\tMD5\t%s\n",file->file_size,mod_time->tm_mday,mod_time->tm_mon+1,mod_time->tm_year+1900,mod_time->tm_hour,mod_time->tm_min,file->name);
         fclose(save_file);
      
 
@@ -59,17 +60,20 @@ chemin est le chemin complet vers le fichier depuis la racine du scan. Pour les 
 void save_oth_type(s_file *file,char *path_to_target){
 
        
-
+         struct tm *mod_time;
+        mod_time=localtime(&file->mod_time);
         FILE *save_file =fopen(path_to_target,"a");
-        fprintf(save_file,"2\t%s\n",file->name);
+    
+        fprintf(save_file,"2\t%s\t%02d/%02d/%04d %02d:%02d\n",file->name,mod_time->tm_mday,mod_time->tm_mon+1,mod_time->tm_year+1900,mod_time->tm_hour,mod_time->tm_min);
         fclose(save_file);
        
 }
 void save_dir(s_directory *dir,char *path_to_target){
     
-
+      struct tm *mod_time;
+      mod_time=localtime(&dir->mod_time);
       FILE *save_file =fopen(path_to_target,"a");
-      fprintf(save_file,"0\t%ld\t%s/\n",dir->mod_time,dir->name);
+      fprintf(save_file,"0\t%02d/%02d/%04d %02d:%02d\t%s/\n",mod_time->tm_mday,mod_time->tm_mon+1,mod_time->tm_year+1900,mod_time->tm_hour,mod_time->tm_min,dir->name);
       
       fclose(save_file);
         
