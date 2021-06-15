@@ -12,7 +12,6 @@
 #include <stdbool.h>
 #include <linux/limits.h>
 #include <time.h>
-#include "./openssl/md5.h"
 
 enum type {
   DIRECTORY,
