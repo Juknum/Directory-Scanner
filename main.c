@@ -2,12 +2,11 @@
 #include "tree.h"
 #include "scan.h"
 #include "save.h"
+
+
+
+
 int main(int argc, char **argv){
-
-  
-  
- 
-
 
     char *home = getenv("HOME");
     
@@ -50,16 +49,18 @@ int main(int argc, char **argv){
 
             case 'i':
                 if (optind < argc && optind > 0 && *argv[optind] != '-') {
-                    s_directory *test  = process_dir(argv[optind]);
+                    s_directory *result  = process_dir(argv[optind]);
                     
-                    save_to_file(test,filetosave);
+                    save_to_file(result,filetosave);
+                    clear_subdirs(result);
                     break;
                 }
                 else{
                    
-                    s_directory *test  = process_dir(getcwd(cwd,PATH_MAX));
-                    
-                    save_to_file(test,filetosave);
+                    s_directory *result  = process_dir(getcwd(cwd,PATH_MAX));
+                  
+                    save_to_file(result,filetosave);
+                    clear_subdirs(result);
                     break;
                 }
 
@@ -67,10 +68,5 @@ int main(int argc, char **argv){
         } 
       
     }
-
-
-
-
-
 
 }

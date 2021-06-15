@@ -79,23 +79,23 @@ void clear_files(s_directory* parent)
 
 /*---------------------------------------------------------*/
 
-void clear_subdirs(s_directory* parent)
-{
-    if (parent == NULL)
+
+void clear_subdirs(s_directory* parent){
+    if(parent==NULL)
     {
-        return;
-    }
-    clear_files(parent);
-    if (parent->subdirs != NULL)
-    {
-        while (parent->subdirs->next_dir != NULL)
-        {
-            clear_subdirs(parent->subdirs->next_dir);
-        }
-        clear_subdirs(parent->subdirs);        
-    }
-   
-  
-    free(parent);
+		return;
+	}
+	
+	clear_files(parent);
+	s_directory* dirs=parent->subdirs;
+	s_directory* next_subdir;
+
+	while(dirs!=NULL)
+	{
+		next_subdir=dirs->next_dir;
+		clear_subdirs(dirs);
+		dirs=next_subdir;
+	}
+	free(parent);
 }
 
