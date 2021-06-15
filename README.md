@@ -1,6 +1,6 @@
 # Projet de LP25
 
-Ce projet est réalisé dans le carde de l'UV LP25 à l'UTBM. Voir ci dessous pour voir le sujet et les attendus du projets
+Ce projet est réalisé dans le carde de l'UV LP25 à l'UTBM. Voir ci dessous pour voir le sujet et les attendus du projet
 
 ### Pré-requis
 
@@ -9,6 +9,7 @@ Ce qu'il est requis pour commencer avec votre projet...
 - un compilateur C
 - git
 
+- les librairies standards
 - la librairie openssl/md5.h
 
 ### Installation
@@ -38,9 +39,9 @@ pour lancer le projet depuis la racine du projet
 
 les options : 
 
-L'option -o suivie d'un argument permet de spécifier le fichier dans lequel la sauvegarde de la liste de l'arborescence se fera.
-L'option -s sans argument active le calcul des sommes MD5 des fichiers.
-L'option -i suivie d'un argument spécifie le dossier à analyser.
+* L'option -o suivie d'un argument permet de spécifier le fichier dans lequel la sauvegarde de la liste de l'arborescence se fera.
+* L'option -s sans argument active le calcul des sommes MD5 des fichiers.
+* L'option -i suivie d'un argument spécifie le dossier à analyser.
 
 
 
