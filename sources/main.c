@@ -14,12 +14,12 @@ int main(int argc, char *argv[]) {
 	short is_file = 0, is_dir = 0, opt = 0;
 	bool check_md5 = false;
 		
-	while((opt = getopt(argc, argv, "i:so")) != -1) {
+	while((opt = getopt(argc, argv, "i:so:")) != -1) {
 		switch (opt) {
 			// Obtenir le nom du fichier de sauvegarde
 			case 'o': 
 				file = malloc(sizeof(char) * strlen(optarg));
-				strcpy(file,optarg);
+				strcpy(file, optarg);
 				is_file = 1;
 				printf("-> saving in file %s\n", file);
 				break;
