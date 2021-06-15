@@ -19,7 +19,7 @@ int save_to_file(s_directory *root, char *path_to_target, char *path_to_dir){
     } 
     // Print the name of the directory to analyse
     fprintf(target_file,"Analisis of : %s\n\n", path_to_dir);
-    // Initialize the path to write according to the option slected
+    // Initialize the path to write according to the option selected
     if(do_path){
         sprintf(temp_path_to_dir,"%s/", path_to_dir);
     }else{
