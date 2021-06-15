@@ -1,0 +1,46 @@
+.TH "_file" 3 "Tue Jun 15 2021" "Version 0.1" "Arborescence_Displayer" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+_file \- Structure to stock the content of a file\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <structures\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "\fBe_type\fP \fBfile_type\fP"
+.br
+.RI "Type of file\&. "
+.ti -1c
+.RI "char \fBname\fP [NAME_MAX+1]"
+.br
+.RI "The basename of the file\&. "
+.ti -1c
+.RI "time_t \fBmod_time\fP"
+.br
+.RI "The last date of modification\&. "
+.ti -1c
+.RI "uint64_t \fBfile_size\fP"
+.br
+.RI "The isize of the file\&. "
+.ti -1c
+.RI "u_char \fBmd5sum\fP [MD5_DIGEST_LENGTH]"
+.br
+.RI "The md5sum of the file if it is not a directory\&. "
+.ti -1c
+.RI "struct \fB_file\fP * \fBnext_file\fP"
+.br
+.RI "A pointer on the next file\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Structure to stock the content of a file\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Arborescence_Displayer from the source code\&.

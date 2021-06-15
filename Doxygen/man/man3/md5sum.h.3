@@ -1,0 +1,72 @@
+.TH "include/md5sum.h" 3 "Tue Jun 15 2021" "Version 0.1" "Arborescence_Displayer" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/md5sum.h \- The functions used to compute the md5sum are here\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'structures\&.h'\fP
+.br
+\fC#include <openssl/md5\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBcompute_md5\fP (char *path, unsigned char buffer[])"
+.br
+.RI "Function to compute the md5 sum of file\&. If the file is not accessible or if it is not a classic file, the md5sum will not be read\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+The functions used to compute the md5sum are here\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Blanchot Lukas, Viala Alexandre, Chaillard Léo, Lignon Thomas 
+.RE
+.PP
+\fBVersion\fP
+.RS 4
+0\&.1 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+2021-06-12
+.RE
+.PP
+\fBCopyright\fP
+.RS 4
+Copyright (c) 2021 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "int compute_md5 (char * path, unsigned char buffer[])"
+
+.PP
+Function to compute the md5 sum of file\&. If the file is not accessible or if it is not a classic file, the md5sum will not be read\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpath\fP - string, the complete path of the file\&. 
+.br
+\fIbuffer\fP - u_char*, the place where the md5sum will be saved\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int - EXIT_SUCCESS if the md5sum has been calculated\&. EXIT_FAILURE else\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Arborescence_Displayer from the source code\&.

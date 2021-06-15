@@ -1,0 +1,140 @@
+\hypertarget{save_8c}{}\doxysection{c\+\_\+files/save.c File Reference}
+\label{save_8c}\index{c\_files/save.c@{c\_files/save.c}}
+
+
+All the functions linked to the save in a file is here.  
+
+
+{\ttfamily \#include \char`\"{}../include/save.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{save_8c_adf915bb21733f9369b0b0766fc194aa8}{save\+\_\+to\+\_\+file}} (\mbox{\hyperlink{structures_8h_a01f65533173671ccead98bc86ff8f004}{s\+\_\+directory}} $\ast$root, char $\ast$path\+\_\+to\+\_\+target, bool md5)
+\begin{DoxyCompactList}\small\item\em Function to write the content of a s\+\_\+directory (root). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{save_8c_a4eb0edf7f28b26aa8593b49f7c79fe4e}{write\+\_\+files}} (\mbox{\hyperlink{structures_8h_ae959bb43b3e29fdc649ae621a6607247}{s\+\_\+file}} $\ast$files, FILE $\ast$fichier, int tabs, bool md5)
+\begin{DoxyCompactList}\small\item\em Recursive function to write the content of the files in a directory into the file fichier. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{save_8c_a4629270d64886be9bb40ca720134408b}{write\+\_\+directories}} (\mbox{\hyperlink{structures_8h_a01f65533173671ccead98bc86ff8f004}{s\+\_\+directory}} $\ast$directories, FILE $\ast$fichier, int tabs, bool md5)
+\begin{DoxyCompactList}\small\item\em Recursive function to write the content of a directory into the file fichier. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{save_8c_a37f61b5b7eae22002a404e0c510546e3}{print\+\_\+tabs}} (int tabs, FILE $\ast$fichier)
+\begin{DoxyCompactList}\small\item\em Function to write tabulations inside the file fichier. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{save_8c_a69cd42a9d36195aa76395e4d73b8565b}{print\+\_\+md5sum}} (unsigned char buffer\mbox{[}$\,$\mbox{]}, FILE $\ast$fichier)
+\begin{DoxyCompactList}\small\item\em Function to print the md5sum of a s\+\_\+file which is not a s\+\_\+directory. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+All the functions linked to the save in a file is here. 
+
+\begin{DoxyAuthor}{Author}
+Blanchot Lukas, Viala Alexandre, Chaillard Léo, Lignon Thomas 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2021-\/06-\/12
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2021 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{save_8c_a69cd42a9d36195aa76395e4d73b8565b}\label{save_8c_a69cd42a9d36195aa76395e4d73b8565b}} 
+\index{save.c@{save.c}!print\_md5sum@{print\_md5sum}}
+\index{print\_md5sum@{print\_md5sum}!save.c@{save.c}}
+\doxysubsubsection{\texorpdfstring{print\_md5sum()}{print\_md5sum()}}
+{\footnotesize\ttfamily void print\+\_\+md5sum (\begin{DoxyParamCaption}\item[{unsigned char}]{buffer\mbox{[}$\,$\mbox{]},  }\item[{FILE $\ast$}]{fichier }\end{DoxyParamCaption})}
+
+
+
+Function to print the md5sum of a s\+\_\+file which is not a s\+\_\+directory. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & -\/ u\+\_\+char$\ast$, the md5sum of a certain file. \\
+\hline
+{\em fichier} & -\/ FILE$\ast$, the file to write in the md5sum. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{save_8c_a37f61b5b7eae22002a404e0c510546e3}\label{save_8c_a37f61b5b7eae22002a404e0c510546e3}} 
+\index{save.c@{save.c}!print\_tabs@{print\_tabs}}
+\index{print\_tabs@{print\_tabs}!save.c@{save.c}}
+\doxysubsubsection{\texorpdfstring{print\_tabs()}{print\_tabs()}}
+{\footnotesize\ttfamily void print\+\_\+tabs (\begin{DoxyParamCaption}\item[{int}]{tabs,  }\item[{FILE $\ast$}]{fichier }\end{DoxyParamCaption})}
+
+
+
+Function to write tabulations inside the file fichier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tabs} & -\/ int, number of tabulations to print. \\
+\hline
+{\em fichier} & -\/ FILE$\ast$, the file to write in the tabulations. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{save_8c_adf915bb21733f9369b0b0766fc194aa8}\label{save_8c_adf915bb21733f9369b0b0766fc194aa8}} 
+\index{save.c@{save.c}!save\_to\_file@{save\_to\_file}}
+\index{save\_to\_file@{save\_to\_file}!save.c@{save.c}}
+\doxysubsubsection{\texorpdfstring{save\_to\_file()}{save\_to\_file()}}
+{\footnotesize\ttfamily int save\+\_\+to\+\_\+file (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structures_8h_a01f65533173671ccead98bc86ff8f004}{s\+\_\+directory}} $\ast$}]{root,  }\item[{char $\ast$}]{path\+\_\+to\+\_\+target,  }\item[{bool}]{md5 }\end{DoxyParamCaption})}
+
+
+
+Function to write the content of a s\+\_\+directory (root). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em root} & -\/ s\+\_\+directory, the content of a directory wrote inside the scan file. \\
+\hline
+{\em path\+\_\+to\+\_\+target} & -\/ string, the file to write in. If the value is \char`\"{}stdout\char`\"{}, then it will write in the stdout. \\
+\hline
+{\em md5} & -\/ bool, variable to know if the md5 must be read or not. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int -\/ EXIT\+\_\+\+SUCCESS if the function ran correctly. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{save_8c_a4629270d64886be9bb40ca720134408b}\label{save_8c_a4629270d64886be9bb40ca720134408b}} 
+\index{save.c@{save.c}!write\_directories@{write\_directories}}
+\index{write\_directories@{write\_directories}!save.c@{save.c}}
+\doxysubsubsection{\texorpdfstring{write\_directories()}{write\_directories()}}
+{\footnotesize\ttfamily void write\+\_\+directories (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structures_8h_a01f65533173671ccead98bc86ff8f004}{s\+\_\+directory}} $\ast$}]{directories,  }\item[{FILE $\ast$}]{fichier,  }\item[{int}]{tabs,  }\item[{bool}]{md5 }\end{DoxyParamCaption})}
+
+
+
+Recursive function to write the content of a directory into the file fichier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em directories} & -\/ linked list of s\+\_\+directory, the list of directories present in a certain directory. \\
+\hline
+{\em fichier} & -\/ FILE$\ast$, the file to write in the content of files. \\
+\hline
+{\em tabs} & -\/ int, the number of tabulations to print befor the content of a file. \\
+\hline
+{\em md5} & -\/ bool, variable to know if the md5 must be written or not. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{save_8c_a4eb0edf7f28b26aa8593b49f7c79fe4e}\label{save_8c_a4eb0edf7f28b26aa8593b49f7c79fe4e}} 
+\index{save.c@{save.c}!write\_files@{write\_files}}
+\index{write\_files@{write\_files}!save.c@{save.c}}
+\doxysubsubsection{\texorpdfstring{write\_files()}{write\_files()}}
+{\footnotesize\ttfamily void write\+\_\+files (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structures_8h_ae959bb43b3e29fdc649ae621a6607247}{s\+\_\+file}} $\ast$}]{files,  }\item[{FILE $\ast$}]{fichier,  }\item[{int}]{tabs,  }\item[{bool}]{md5 }\end{DoxyParamCaption})}
+
+
+
+Recursive function to write the content of the files in a directory into the file fichier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em files} & -\/ linked list of s\+\_\+file, the list of files present in a certain directory. \\
+\hline
+{\em fichier} & -\/ FILE$\ast$, the file to write in the content of files. \\
+\hline
+{\em tabs} & -\/ int, the number of tabulations to print befor the content of a file. \\
+\hline
+{\em md5} & -\/ bool, variable to know if the md5 must be written or not. \\
+\hline
+\end{DoxyParams}

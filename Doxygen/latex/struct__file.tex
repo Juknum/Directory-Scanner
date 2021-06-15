@@ -1,0 +1,40 @@
+\hypertarget{struct__file}{}\doxysection{\+\_\+file Struct Reference}
+\label{struct__file}\index{\_file@{\_file}}
+
+
+Structure to stock the content of a file.  
+
+
+
+
+{\ttfamily \#include $<$structures.\+h$>$}
+
+\doxysubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{struct__file_a7e8129d8058dec78ca8d0b050de2d564}\label{struct__file_a7e8129d8058dec78ca8d0b050de2d564}} 
+\mbox{\hyperlink{structures_8h_a07fb55fb8ca681eee25e1f632b6701ad}{e\+\_\+type}} \mbox{\hyperlink{struct__file_a7e8129d8058dec78ca8d0b050de2d564}{file\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em Type of file. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct__file_ad9c747aeade1f77b30a4393a4be2a1be}\label{struct__file_ad9c747aeade1f77b30a4393a4be2a1be}} 
+char \mbox{\hyperlink{struct__file_ad9c747aeade1f77b30a4393a4be2a1be}{name}} \mbox{[}NAME\+\_\+\+MAX+1\mbox{]}
+\begin{DoxyCompactList}\small\item\em The basename of the file. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct__file_abe5fcec02f652fd7d3e2c4e9f6791af2}\label{struct__file_abe5fcec02f652fd7d3e2c4e9f6791af2}} 
+time\+\_\+t \mbox{\hyperlink{struct__file_abe5fcec02f652fd7d3e2c4e9f6791af2}{mod\+\_\+time}}
+\begin{DoxyCompactList}\small\item\em The last date of modification. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct__file_af564d0d073559935815f33b08f7fbd51}\label{struct__file_af564d0d073559935815f33b08f7fbd51}} 
+uint64\+\_\+t \mbox{\hyperlink{struct__file_af564d0d073559935815f33b08f7fbd51}{file\+\_\+size}}
+\begin{DoxyCompactList}\small\item\em The isize of the file. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct__file_a52a3d7d9468ddb2350dfb8f9c61e2607}\label{struct__file_a52a3d7d9468ddb2350dfb8f9c61e2607}} 
+u\+\_\+char \mbox{\hyperlink{struct__file_a52a3d7d9468ddb2350dfb8f9c61e2607}{md5sum}} \mbox{[}MD5\+\_\+\+DIGEST\+\_\+\+LENGTH\mbox{]}
+\begin{DoxyCompactList}\small\item\em The md5sum of the file if it is not a directory. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct__file_acad76db375ab79fd517b442cb7195cd8}\label{struct__file_acad76db375ab79fd517b442cb7195cd8}} 
+struct \mbox{\hyperlink{struct__file}{\+\_\+file}} $\ast$ \mbox{\hyperlink{struct__file_acad76db375ab79fd517b442cb7195cd8}{next\+\_\+file}}
+\begin{DoxyCompactList}\small\item\em A pointer on the next file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Structure to stock the content of a file. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{structures_8h}{structures.\+h}}\end{DoxyCompactItemize}

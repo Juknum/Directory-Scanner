@@ -1,0 +1,120 @@
+.TH "include/structures.h" 3 "Tue Jun 15 2021" "Version 0.1" "Arborescence_Displayer" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/structures.h \- All the libraries used in the project and the useful structures are in this file\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <dirent\&.h>\fP
+.br
+\fC#include <libgen\&.h>\fP
+.br
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <openssl/md5\&.h>\fP
+.br
+\fC#include <linux/limits\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+\fC#include <stdbool\&.h>\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include <getopt\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fB_file\fP"
+.br
+.RI "Structure to stock the content of a file\&. "
+.ti -1c
+.RI "struct \fB_directory\fP"
+.br
+.RI "Structur to stock the content of a directory\&. "
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fB_file\fP \fBs_file\fP"
+.br
+.RI "Structure to stock the content of a file\&. "
+.ti -1c
+.RI "typedef struct \fB_directory\fP \fBs_directory\fP"
+.br
+.RI "Structur to stock the content of a directory\&. "
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBe_type\fP { \fBDIRECTORY\fP, \fBREGULAR_FILE\fP, \fBOTHER_TYPE\fP }"
+.br
+.RI "Enum to indicate what type has the file targeted\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+All the libraries used in the project and the useful structures are in this file\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Blanchot Lukas, Viala Alexandre, Chaillard Léo, Lignon Thomas 
+.RE
+.PP
+\fBVersion\fP
+.RS 4
+0\&.1 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+2021-06-12
+.RE
+.PP
+\fBCopyright\fP
+.RS 4
+Copyright (c) 2021 
+.RE
+.PP
+
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBe_type\fP"
+
+.PP
+Enum to indicate what type has the file targeted\&. 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIDIRECTORY \fP\fP
+It is a directory\&. 
+.TP
+\fB\fIREGULAR_FILE \fP\fP
+It is a regualr file\&. 
+.TP
+\fB\fIOTHER_TYPE \fP\fP
+It has another type\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Arborescence_Displayer from the source code\&.

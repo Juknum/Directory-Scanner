@@ -1,0 +1,145 @@
+.TH "include/scan.h" 3 "Tue Jun 15 2021" "Version 0.1" "Arborescence_Displayer" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/scan.h \- The functions used to scan the file in a certain file system are here\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'structures\&.h'\fP
+.br
+\fC#include 'tree\&.h'\fP
+.br
+\fC#include 'md5sum\&.h'\fP
+.br
+
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBBool\fP { \fBFALSE\fP, \fBTRUE\fP }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBs_directory\fP * \fBprocess_dir\fP (char *path, bool md5)"
+.br
+.RI "scan an entire directory and put the content of this directory in a s_directory structure\&. "
+.ti -1c
+.RI "\fBs_file\fP * \fBprocess_file\fP (char *path, bool md5)"
+.br
+.RI "scan a file and put his content in a s_file strcture\&. "
+.ti -1c
+.RI "char * \fBcatPath\fP (char *dir, char *file)"
+.br
+.RI "Concatenate in a dynamic allocated string the name of a dir and the name of a file\&. "
+.ti -1c
+.RI "char * \fBgetRelativePath\fP (char *path)"
+.br
+.RI "Get the relative path of a file or a directory according to its path (same behavior as basename)\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+The functions used to scan the file in a certain file system are here\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Blanchot Lukas, Viala Alexandre, Chaillard Léo, Lignon Thomas 
+.RE
+.PP
+\fBVersion\fP
+.RS 4
+0\&.1 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+2021-06-12
+.RE
+.PP
+\fBCopyright\fP
+.RS 4
+Copyright (c) 2021 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "char* catPath (char * dir, char * file)"
+
+.PP
+Concatenate in a dynamic allocated string the name of a dir and the name of a file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIdir\fP - char*, the complete path of the directory 
+.br
+\fIfile\fP - char*, the basename of the file\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char*, the complete name of the file\&. 
+.RE
+.PP
+
+.SS "char* getRelativePath (char * path)"
+
+.PP
+Get the relative path of a file or a directory according to its path (same behavior as basename)\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpath\fP - char*, the complete path of the file\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char*, the basename of the the file\&. 
+.RE
+.PP
+
+.SS "\fBs_directory\fP* process_dir (char * path, bool md5)"
+
+.PP
+scan an entire directory and put the content of this directory in a s_directory structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpath\fP - string, complete path of the directory to scan\&. 
+.br
+\fImd5\fP - bool, variable to know if the md5 must be calculated or not\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+s_directory*, a linked list of s_directory\&. 
+.RE
+.PP
+
+.SS "\fBs_file\fP* process_file (char * path, bool md5)"
+
+.PP
+scan a file and put his content in a s_file strcture\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpath\fP - string, complete path of the file to scan\&. 
+.br
+\fImd5\fP - bool, variable to know if the md5 must be calculated or not\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+s_file*, a linked list of s_file\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Arborescence_Displayer from the source code\&.

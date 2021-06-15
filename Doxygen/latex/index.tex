@@ -1,0 +1,203 @@
+\label{index_md_README}%
+\Hypertarget{index_md_README}%
+ \hypertarget{index_autotoc_md1}{}\doxysection{Enoncé de Frédéric Lassabe}\label{index_autotoc_md1}
+L\textquotesingle{}évaluation de la partie programmation en langage C de LP25 se base sur un projet à réaliser en groupes de 4 étudiants. Ce projet doit être réalisé en langage C.\hypertarget{index_autotoc_md2}{}\doxysubsection{Descriptif global du projet}\label{index_autotoc_md2}
+Ce projet a pour but d\textquotesingle{}écrire un programme qui va scanner récursivement un répertoire, et en extraire l\textquotesingle{}arborescence complète de ce répertoire. Cette arborescence devra être stockée dans un premier temps dans la mémoire de l\textquotesingle{}ordinateur au cours de l\textquotesingle{}exécution du programme, puis ce contenu, une fois trié, devra être écrit dans un fichier.\hypertarget{index_autotoc_md3}{}\doxysubsection{Description détaillées des fonctionnalités}\label{index_autotoc_md3}
+Les fonctionnalités du programme à développer sont détaillées dans les paragraphes ci-\/dessous. Le cas échéant, le paragraphe vous donne le paramètre par défaut utilisé par cette fonctionnalité, en l\textquotesingle{}absence de toute option passée au programme.\hypertarget{index_autotoc_md4}{}\doxysubsubsection{Scan du répertoire}\label{index_autotoc_md4}
+Par défaut \+: scanne {\ttfamily .}
+
+En partant du répertoire indiqué, le programme va créer la liste des fichiers et répertoires contenus (à l\textquotesingle{}exception de {\ttfamily .} et {\ttfamily ..}). Attention, il ne faut pas suivre les liens symboliques (il y a risque de boucle infinie). Puis, le programme rentre successivement dans les éventuels répertoires contenus par le répertoire cible et procède au même traitement, jusqu\textquotesingle{}à atteindre l\textquotesingle{}extrémité de l\textquotesingle{}arborescence du dossier passé en paramètre.
+
+Vous traiterez les types de fichiers de la manière suivante \+:
+
+
+\begin{DoxyItemize}
+\item fichier \+: nom, taille, date de modification, somme MD5
+\item dossier \+: nom, date de modification, puis traiter son contenu
+\item lien symbolique \+: nom, fichier pointé, date de modification
+\item autre \+: nom, date de modification
+\end{DoxyItemize}
+
+Évidemment, il faut tester que le paramètre donnant la cible du scan est bien un dossier valide.\hypertarget{index_autotoc_md5}{}\doxysubsubsection{Stockage en mémoire}\label{index_autotoc_md5}
+Le stockage en mémoire est fait sous forme arborescente. L\textquotesingle{}idée est de partir d\textquotesingle{}une structure composée de dossiers et de fichiers, et de chaîner ces éléments.
+
+Deux structures définiront le contenu en mémoire, sous forme de listes chaînées \+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <linux/limits.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <time.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <openssl/md5.h>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{\mbox{\hyperlink{structures_8h_a07fb55fb8ca681eee25e1f632b6701ada9d09f58160b1161920aad19080f568cc}{DIRECTORY}}, \mbox{\hyperlink{structures_8h_a07fb55fb8ca681eee25e1f632b6701ada00512007115c06f83e278302d7c70590}{REGULAR\_FILE}}, \mbox{\hyperlink{structures_8h_a07fb55fb8ca681eee25e1f632b6701adaabd2ef38f6c18626db708c01cc587429}{OTHER\_TYPE}}\} \mbox{\hyperlink{structures_8h_a07fb55fb8ca681eee25e1f632b6701ad}{e\_type}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{struct__file}{\_file}} \{}
+\DoxyCodeLine{    \mbox{\hyperlink{structures_8h_a07fb55fb8ca681eee25e1f632b6701ad}{e\_type}} \mbox{\hyperlink{struct__file_a7e8129d8058dec78ca8d0b050de2d564}{file\_type}};}
+\DoxyCodeLine{    \textcolor{keywordtype}{char} \mbox{\hyperlink{struct__file_ad9c747aeade1f77b30a4393a4be2a1be}{name}}[NAME\_MAX+1];}
+\DoxyCodeLine{    time\_t \mbox{\hyperlink{struct__file_abe5fcec02f652fd7d3e2c4e9f6791af2}{mod\_time}};}
+\DoxyCodeLine{    uint64\_t \mbox{\hyperlink{struct__file_af564d0d073559935815f33b08f7fbd51}{file\_size}};}
+\DoxyCodeLine{    u\_char \mbox{\hyperlink{struct__file_a52a3d7d9468ddb2350dfb8f9c61e2607}{md5sum}}[MD5\_DIGEST\_LENGTH];}
+\DoxyCodeLine{    \textcolor{keyword}{struct }\mbox{\hyperlink{struct__file}{\_file}} *\mbox{\hyperlink{struct__file_acad76db375ab79fd517b442cb7195cd8}{next\_file}};}
+\DoxyCodeLine{\} \mbox{\hyperlink{structures_8h_ae959bb43b3e29fdc649ae621a6607247}{s\_file}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{struct__directory}{\_directory}} \{}
+\DoxyCodeLine{    \textcolor{keywordtype}{char} \mbox{\hyperlink{struct__directory_ad9c747aeade1f77b30a4393a4be2a1be}{name}}[NAME\_MAX+1];}
+\DoxyCodeLine{    time\_t \mbox{\hyperlink{struct__directory_abe5fcec02f652fd7d3e2c4e9f6791af2}{mod\_time}};}
+\DoxyCodeLine{    \textcolor{keyword}{struct }\mbox{\hyperlink{struct__directory}{\_directory}} *\mbox{\hyperlink{struct__directory_aac6c7e733d79f8a3fe6cec26bf512fa1}{subdirs}};}
+\DoxyCodeLine{    \mbox{\hyperlink{struct__file}{s\_file}} *\mbox{\hyperlink{struct__directory_a705f00320d1816155d0b9901c88e884a}{files}};}
+\DoxyCodeLine{    \textcolor{keyword}{struct }\mbox{\hyperlink{struct__directory}{\_directory}} *\mbox{\hyperlink{struct__directory_a1bc424155753091e188c10ba24f1cd49}{next\_dir}};}
+\DoxyCodeLine{\} \mbox{\hyperlink{structures_8h_a01f65533173671ccead98bc86ff8f004}{s\_directory}};}
+
+\end{DoxyCode}
+
+
+La structure {\ttfamily s\+\_\+file} ne requiert pas de valeurs dans tous ses champs, en fonction du type réel du fichier considéré (fichier standard, ou fichier spécial incluant les liens symboliques).\hypertarget{index_autotoc_md6}{}\doxysubsubsection{sauvegarde dans un fichier}\label{index_autotoc_md6}
+Par défaut dans {\ttfamily $\sim$/.filescanner/yyyy-\/\+MM-\/dd-\/hh\+:mm\+:ss.\+scan}. Créer le dossier {\ttfamily $\sim$/.filescanner} si nécessaire.
+
+Le fichier contient une ligne par entrée. Les informations sont stockées séparées par des tabulations (caractère `'\textbackslash{}t\textquotesingle{}\`{}).
+
+Une ligne de répertoire se présente sous la forme suivante \+: {\ttfamily 0 date chemin/} où \+:
+
+
+\begin{DoxyItemize}
+\item {\ttfamily 0} est la valeur pour le type DIRECTORY dans l\textquotesingle{}énumération {\ttfamily e\+\_\+type};
+\item {\ttfamily date} est la date de modification du répertoire;
+\item {\ttfamily chemin} est son chemin complet (il faut y penser quand vous parcourez la mémoire) terminé par un {\ttfamily /}. Les deux champs sont séparés par une tabulation.
+\end{DoxyItemize}
+
+Une ligne de fichier standard se présente sous la forme {\ttfamily 1 date taille MD5 chemin} où \+:
+
+
+\begin{DoxyItemize}
+\item {\ttfamily 1} est le code de {\ttfamily REGULAR\+\_\+\+FILE};
+\item {\ttfamily date} est la date comme définie pour le dossier;
+\item {\ttfamily taille} est la taille en octets du fichier;
+\item {\ttfamily MD5} est la somme MD5 du fichier en représentation hexadécimale;
+\item {\ttfamily chemin} est le chemin complet vers le fichier depuis la racine du scan. Pour les fichiers, il n\textquotesingle{}y a pas de {\ttfamily /} à la fin du chemin.
+\end{DoxyItemize}
+
+Une ligne de fichier autre (lien, etc.) se présente sous la forme {\ttfamily 2 date chemin} où {\ttfamily 2} est le code de {\ttfamily OTHER\+\_\+\+TYPE}, et {\ttfamily date} et {\ttfamily chemin} sont définis de la même manière que pour un fichier standard.
+
+L\textquotesingle{}écriture dans le fichier doit être faite dans l\textquotesingle{}ordre suivant \+:
+
+
+\begin{DoxyItemize}
+\item le dossier en cours de traitement
+\item ses fichiers
+\item ses sous dossiers
+\item puis on traite les contenus des sous dossiers
+\end{DoxyItemize}\hypertarget{index_autotoc_md7}{}\doxysubsubsection{Paramétrage du comportement}\label{index_autotoc_md7}
+Le comportement de l\textquotesingle{}application peut être paramétré suivant plusieurs options \+:
+
+
+\begin{DoxyItemize}
+\item L\textquotesingle{}option {\bfseries{-\/o}} suivie d\textquotesingle{}un argument permet de spécifier le fichier dans lequel la sauvegarde de la liste de l\textquotesingle{}arborescence se fera.
+\item L\textquotesingle{}option {\bfseries{-\/s}} sans argument active le calcul des sommes MD5 des fichiers.
+\item L\textquotesingle{}option {\bfseries{-\/i}} suivie d\textquotesingle{}un argument spécifie le dossier à analyser.
+\end{DoxyItemize}\hypertarget{index_autotoc_md8}{}\doxysubsection{Décomposition du programme}\label{index_autotoc_md8}
+Le programme sera séparé en plusieurs fichiers de code, chacun ayant un rôle précis.\hypertarget{index_autotoc_md9}{}\doxysubsubsection{main}\label{index_autotoc_md9}
+Le fichier {\ttfamily \mbox{\hyperlink{main_8c}{main.\+c}}} contiendra la fonction {\ttfamily main} qui aura deux rôles \+:
+
+
+\begin{DoxyItemize}
+\item Tester les options passées au programme pour son paramétrage, en utilisant getopt;
+\item Appeler les fonctions des autres fichiers pour scanner le répertoire cible, construire la structure en mémoire, et l\textquotesingle{}écrire dans le fichier de scan.
+\end{DoxyItemize}\hypertarget{index_autotoc_md10}{}\doxysubsubsection{Scan}\label{index_autotoc_md10}
+Les fichiers {\ttfamily \mbox{\hyperlink{scan_8h}{scan.\+h}}} et {\ttfamily \mbox{\hyperlink{scan_8c}{scan.\+c}}} contiendront respectivement les signatures et les définitions des fonctions nécessaires au scan, notamment \+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{struct__directory}{s\_directory}} *\mbox{\hyperlink{scan_8c_ac6fd3e9c3cb7d20bf628a993f456dcd3}{process\_dir}}(\textcolor{keywordtype}{char} *path);}
+\DoxyCodeLine{\mbox{\hyperlink{struct__file}{s\_file}} *\mbox{\hyperlink{scan_8c_aa17626a50f82025693b9a8801da44fed}{process\_file}}(\textcolor{keywordtype}{char} *path);}
+
+\end{DoxyCode}
+ Ces fonctions traitent respectivement les dossiers (en lisant leur contenu) et les fichiers (en testant leur type et en calculant les informations nécessaires). Elles renvoient un pointeur vers une structure de dossier ou de fichier, NULL en cas de problème. Le pointeur renvoyé a pour but d\textquotesingle{}ajouter l\textquotesingle{}élément à la liste en mémoire. Il ne faut pas oublier de libérer tous ces pointeurs à la fin de l\textquotesingle{}exécution du programme. Ceci sera vérifié et participera à la note du projet.\hypertarget{index_autotoc_md11}{}\doxysubsubsection{Save}\label{index_autotoc_md11}
+Les fichiers {\ttfamily \mbox{\hyperlink{save_8h}{save.\+h}}} et {\ttfamily \mbox{\hyperlink{save_8c}{save.\+c}}} contiendront respectivement les signatures et les définitions des fonctions pour la sauvegarde de la structure en mémoire résultant du scan. {\itshape A minima}, on y trouvera \+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} \mbox{\hyperlink{save_8c_adf915bb21733f9369b0b0766fc194aa8}{save\_to\_file}}(\mbox{\hyperlink{struct__directory}{s\_directory}} *root, \textcolor{keywordtype}{char} *path\_to\_target);}
+
+\end{DoxyCode}
+ Cette fonction écrira dans le fichier accessible par le chemin {\ttfamily path\+\_\+to\+\_\+target} l\textquotesingle{}ensemble des informations de la structure pointée par {\ttfamily root}. La fonction renvoie 0 en cas d\textquotesingle{}échec, -\/1 sinon. Il est fortement conseillé de créer des fonctions additionnelles pour traiter séparément l\textquotesingle{}écriture des différents types d\textquotesingle{}enregistrements.\hypertarget{index_autotoc_md12}{}\doxysubsubsection{Tree}\label{index_autotoc_md12}
+Les fichiers {\ttfamily \mbox{\hyperlink{tree_8h}{tree.\+h}}} et {\ttfamily \mbox{\hyperlink{tree_8c}{tree.\+c}}} contiendront les signatures et les définitions des fonctions pour manipuler l\textquotesingle{}arborescence sauvée en mémoire. Notamment, on y trouvera \+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} \mbox{\hyperlink{tree_8c_aa5a960c3f7fa398721c4c6bce5292798}{append\_subdir}}(\mbox{\hyperlink{struct__directory}{s\_directory}} *child, \mbox{\hyperlink{struct__directory}{s\_directory}} *parent);}
+\DoxyCodeLine{\textcolor{keywordtype}{int} \mbox{\hyperlink{tree_8c_ac5d7734bf46c8d1991cc73a2d84d1c7b}{append\_file}}(\mbox{\hyperlink{struct__file}{s\_file}} *child, \mbox{\hyperlink{struct__directory}{s\_directory}} *parent);}
+\DoxyCodeLine{\textcolor{keywordtype}{void} \mbox{\hyperlink{tree_8c_aba17d5ab64c3063d802020bd4dc288ec}{clear\_files}}(\mbox{\hyperlink{struct__directory}{s\_directory}} *parent);}
+\DoxyCodeLine{\textcolor{keywordtype}{void} \mbox{\hyperlink{tree_8c_a57e89494bf2cd866513e011780dc261c}{clear\_subdirs}}(\mbox{\hyperlink{struct__directory}{s\_directory}} *parent);}
+
+\end{DoxyCode}
+
+
+Les fonctions {\ttfamily append\+\_\+subdir} et {\ttfamily append\+\_\+file} vont respectivement ajouter un sous-\/répertoire ou un fichier pointés par {\ttfamily child} à la liste des sous répertoires ou des fichiers du noeud pointé par {\ttfamily parent}
+
+Les fonctions {\ttfamily clear\+\_\+files} et {\ttfamily clear\+\_\+subdirs} vont respectivement libérer la mémoire des listes des fichiers et des sous répertoires du noeud pointé par {\ttfamily parent}.
+
+Attention ! La fonction {\ttfamily clear\+\_\+subdirs} doit d\textquotesingle{}abord libérer récursivement le contenu des sous-\/répertoires avant de pouvoir les libérer.\hypertarget{index_autotoc_md13}{}\doxysubsubsection{MD5}\label{index_autotoc_md13}
+Les fichiers {\ttfamily \mbox{\hyperlink{md5sum_8h}{md5sum.\+h}}} et {\ttfamily \mbox{\hyperlink{md5sum_8c}{md5sum.\+c}}} contiendront respectivement les signatures et les définitions des fonctions relatives au calcul de la somme MD5 d\textquotesingle{}un fichier, notamment la fonction suivante \+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} \mbox{\hyperlink{md5sum_8c_a68b18b4c28047534e58f18fd86bcc3de}{compute\_md5}}(\textcolor{keywordtype}{char} *path, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} buffer[]);}
+
+\end{DoxyCode}
+ Cette fonction calcule la somme MD5 du fichier accessible par le chemin {\ttfamily path}, et en stocke la valeur dans le tableau de caractères non signés {\ttfamily buffer}.
+
+Vous pouvez utiliser d\textquotesingle{}autres fonctions appelées par celle-\/ci pour faciliter votre développement.\hypertarget{index_autotoc_md14}{}\doxysubsection{Méthode de travail}\label{index_autotoc_md14}
+Afin de limiter vos conflits de code (i.\+e. des modifications incompatibles sur des fichiers), il est conseillé que vous vous répartissiez les tâches sur des fonctionnalités différentes, en changeant périodiquement de rôle afin de permettre à chacun de s\textquotesingle{}approprier les notions et la technique relative à l\textquotesingle{}ensemble du projet.
+
+Il vous sera également nécessaire de planifier des synchronisations {\bfseries{au minimum toutes les deux semaines, de préférence chaque semaine}}. Ces points d\textquotesingle{}avancement feront l\textquotesingle{}objet de compte rendus qui seront à inclure au rapport du projet.\hypertarget{index_autotoc_md15}{}\doxysubsection{Bonus}\label{index_autotoc_md15}
+Quelques points de bonus sont réservés aux groupes dont la sauvegarde dans un fichier se fera, non plus en mode texte, mais dans une base de données SQLite. Vous pouvez consulter la \href{https://www.sqlite.org/cintro.html}{\texttt{ documentation de l\textquotesingle{}API SQLite pour C/\+C++}} pour plus d\textquotesingle{}informations.\hypertarget{index_autotoc_md16}{}\doxysubsection{Rendu}\label{index_autotoc_md16}
+Le document principal à remettre est le code du projet, sur git-\/info, accompagné du Makefile permettant sa compilation, et d\textquotesingle{}un README.\+md qui décrit les éventuelles bibliothèques à installer, ainsi que l\textquotesingle{}utilisation de l\textquotesingle{}application.
+
+Par ailleurs, un rapport succinct sera à remettre, en deux temps \+: à mi-\/projet (date à définir), les choix arrêtés par le groupe devront être définis et justifiés (choix ou non de l\textquotesingle{}intégration de SQLite, ajout de fonctions dans les différents modules du programme, etc.).
+
+Ce rapport sera ensuite enrichi du RETEX du projet une fois celui-\/ci terminé. Pour réaliser ce RETEX, vous prendrez à tour de rôle la direction de la rédaction d\textquotesingle{}un \char`\"{}compte rendu de mission\char`\"{}, dans lequel vous interrogerez vos camarades de projet sur les points qui vous paraissent nécessiter une amélioration et/ou un éclaircissement, ainsi que sur la question suivante \+: \+\_\+\char`\"{}\+En se basant sur le déroulement du projet, aujourd\textquotesingle{}hui que ferais-\/tu différemment ?\char`\"{}\+\_\+. Les compte rendus de tous les membres du groupes devront ensuite être synthétisés en RETEX et ajoutés au rapport pour produire le document final à rendre en fin de semestre.
+
+Il vous sera probablement également demandé de présenter ce rapport et le projet dans un exposé oral, soit en face à face, soit en visioconférence.\hypertarget{index_autotoc_md17}{}\doxysubsection{Annexes}\label{index_autotoc_md17}
+Dans ces annexes, quelques informations vous sont données sur l\textquotesingle{}utilisation des API non vues en cours, TD ou TP.\hypertarget{index_autotoc_md18}{}\doxysubsubsection{MD5}\label{index_autotoc_md18}
+La bibliothèque pour calculer des sommes MD5 est fournie avec Open\+SSL. Pour l\textquotesingle{}utiliser, il faut inclure {\ttfamily openssl/\+MD5.\+h} dans votre fichier source. Puis, vous devez lier la bibliothèque dynamique libcrypto à votre programme (option {\ttfamily -\/lcrypto} à l\textquotesingle{}édition des liens)
+
+Il est nécessaire d\textquotesingle{}ouvrir le fichier dont vous calculez la somme MD5 et de le lire par parties (à vous de choisir la taille des éléments que vous traitez) afin de permettre à MD5 de calculer la somme sur la taille complète du fichier.
+
+Quelques informations supplémentaires au sujet de MD5 vous seront données ultérieurement.\hypertarget{index_autotoc_md19}{}\doxysection{Réalisation par notre groupe}\label{index_autotoc_md19}
+Nous avons réalisé tous les objectifs demandés mis à part l\textquotesingle{}objectif optionnel consistant à écrire nos fichiers dans une base de donnée sqlite.\hypertarget{index_autotoc_md20}{}\doxysubsection{Fonctionnement du makefile}\label{index_autotoc_md20}
+Le make file est doté de plusieurs phony targets afin de simplifier son utilisation \+:
+
+
+\begin{DoxyItemize}
+\item clean \+: Permet de nettoyer les répertoires contenant les fichiers .o et les fichiers binaires.
+\item run \+: Permet de faire directement tourner le programme avec les options par défaut.
+\item run\+\_\+md5 \+: Permet de faire tourner le programme en calculant les sommes md5 mais avec les autres options par défaut.
+\item debug \+: Permet de lancer le débugage avec gdb directement après la compilation.
+\item help \+: Permet d\textquotesingle{}afficher le message d\textquotesingle{}help inspiré des pages de manuel linux.
+\item all \+: (par défaut) Permet de compiler l\textquotesingle{}ensemble des fichiers.
+\end{DoxyItemize}\hypertarget{index_autotoc_md21}{}\doxysubsection{Aide}\label{index_autotoc_md21}
+Nous avons réalisé une aide afin de rendre l\textquotesingle{}utilisation du programme plus claire pour l\textquotesingle{}utilisateur. Cette aide est la suivante \+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{NOM :}
+\DoxyCodeLine{    arborescence\_displayer [OPTIONS]}
+\DoxyCodeLine{DESCRIPTION :}
+\DoxyCodeLine{    This programm will let you display the file arborescence of any directory of your file system.}
+\DoxyCodeLine{}
+\DoxyCodeLine{OPTIONS : }
+\DoxyCodeLine{    -\/o, -\/-\/save-\/file [file\_name] :}
+\DoxyCodeLine{        The file where the arborescence's informations will be displayed. If you want to put the informations in the commandline, just write 'stdout'}
+\DoxyCodeLine{        By default the datas are saved in \string~/.filescanner/yyyy-\/MM-\/dd-\/hh:mm:ss.scan file.}
+\DoxyCodeLine{}
+\DoxyCodeLine{    -\/i, -\/-\/directory [dir\_name] :}
+\DoxyCodeLine{        The directory to scan. By default, the directory scanned will the current directory.}
+\DoxyCodeLine{}
+\DoxyCodeLine{    -\/s, -\/-\/evaluate\_md5 :}
+\DoxyCodeLine{        The md5sum will be calculated when it is possible.}
+\DoxyCodeLine{}
+\DoxyCodeLine{    -\/h, -\/-\/help :}
+\DoxyCodeLine{        Display this help message.}
+
+\end{DoxyCode}
+ 

@@ -1,0 +1,109 @@
+\hypertarget{tree_8h}{}\doxysection{include/tree.h File Reference}
+\label{tree_8h}\index{include/tree.h@{include/tree.h}}
+
+
+All the functions used to modify the s\+\_\+directory \& s\+\_\+file structure are here.  
+
+
+{\ttfamily \#include \char`\"{}structures.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{tree_8h_aa5a960c3f7fa398721c4c6bce5292798}{append\+\_\+subdir}} (\mbox{\hyperlink{structures_8h_a01f65533173671ccead98bc86ff8f004}{s\+\_\+directory}} $\ast$child, \mbox{\hyperlink{structures_8h_a01f65533173671ccead98bc86ff8f004}{s\+\_\+directory}} $\ast$parent)
+\begin{DoxyCompactList}\small\item\em insert a new directory on front of the \char`\"{}parent\char`\"{} list. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{tree_8h_ac5d7734bf46c8d1991cc73a2d84d1c7b}{append\+\_\+file}} (\mbox{\hyperlink{structures_8h_ae959bb43b3e29fdc649ae621a6607247}{s\+\_\+file}} $\ast$child, \mbox{\hyperlink{structures_8h_a01f65533173671ccead98bc86ff8f004}{s\+\_\+directory}} $\ast$parent)
+\begin{DoxyCompactList}\small\item\em insert a new file on front of the files\textquotesingle{} linked list contained in the parent directory. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{tree_8h_aba17d5ab64c3063d802020bd4dc288ec}{clear\+\_\+files}} (\mbox{\hyperlink{structures_8h_a01f65533173671ccead98bc86ff8f004}{s\+\_\+directory}} $\ast$parent)
+\begin{DoxyCompactList}\small\item\em clear the list of files contained in the parent directory. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{tree_8h_a57e89494bf2cd866513e011780dc261c}{clear\+\_\+subdirs}} (\mbox{\hyperlink{structures_8h_a01f65533173671ccead98bc86ff8f004}{s\+\_\+directory}} $\ast$parent)
+\begin{DoxyCompactList}\small\item\em clean recursively the entire content of the parent directory. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+All the functions used to modify the s\+\_\+directory \& s\+\_\+file structure are here. 
+
+\begin{DoxyAuthor}{Author}
+Blanchot Lukas, Viala Alexandre, Chaillard Léo, Lignon Thomas 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2021-\/06-\/12
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2021 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{tree_8h_ac5d7734bf46c8d1991cc73a2d84d1c7b}\label{tree_8h_ac5d7734bf46c8d1991cc73a2d84d1c7b}} 
+\index{tree.h@{tree.h}!append\_file@{append\_file}}
+\index{append\_file@{append\_file}!tree.h@{tree.h}}
+\doxysubsubsection{\texorpdfstring{append\_file()}{append\_file()}}
+{\footnotesize\ttfamily int append\+\_\+file (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structures_8h_ae959bb43b3e29fdc649ae621a6607247}{s\+\_\+file}} $\ast$}]{child,  }\item[{\mbox{\hyperlink{structures_8h_a01f65533173671ccead98bc86ff8f004}{s\+\_\+directory}} $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+
+insert a new file on front of the files\textquotesingle{} linked list contained in the parent directory. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em child} & file to be inserted as head. \\
+\hline
+{\em parent} & current directory in which to insert the child file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if the file can be properly inserted, 0 otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{tree_8h_aa5a960c3f7fa398721c4c6bce5292798}\label{tree_8h_aa5a960c3f7fa398721c4c6bce5292798}} 
+\index{tree.h@{tree.h}!append\_subdir@{append\_subdir}}
+\index{append\_subdir@{append\_subdir}!tree.h@{tree.h}}
+\doxysubsubsection{\texorpdfstring{append\_subdir()}{append\_subdir()}}
+{\footnotesize\ttfamily int append\+\_\+subdir (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structures_8h_a01f65533173671ccead98bc86ff8f004}{s\+\_\+directory}} $\ast$}]{child,  }\item[{\mbox{\hyperlink{structures_8h_a01f65533173671ccead98bc86ff8f004}{s\+\_\+directory}} $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+
+insert a new directory on front of the \char`\"{}parent\char`\"{} list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em child} & new directory to be inserted as head. \\
+\hline
+{\em parent} & current list of directories. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if the directory can be properly inserted, 0 otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{tree_8h_aba17d5ab64c3063d802020bd4dc288ec}\label{tree_8h_aba17d5ab64c3063d802020bd4dc288ec}} 
+\index{tree.h@{tree.h}!clear\_files@{clear\_files}}
+\index{clear\_files@{clear\_files}!tree.h@{tree.h}}
+\doxysubsubsection{\texorpdfstring{clear\_files()}{clear\_files()}}
+{\footnotesize\ttfamily void clear\+\_\+files (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structures_8h_a01f65533173671ccead98bc86ff8f004}{s\+\_\+directory}} $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+
+clear the list of files contained in the parent directory. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & directory containing the list of files to be cleaned \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{tree_8h_a57e89494bf2cd866513e011780dc261c}\label{tree_8h_a57e89494bf2cd866513e011780dc261c}} 
+\index{tree.h@{tree.h}!clear\_subdirs@{clear\_subdirs}}
+\index{clear\_subdirs@{clear\_subdirs}!tree.h@{tree.h}}
+\doxysubsubsection{\texorpdfstring{clear\_subdirs()}{clear\_subdirs()}}
+{\footnotesize\ttfamily void clear\+\_\+subdirs (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structures_8h_a01f65533173671ccead98bc86ff8f004}{s\+\_\+directory}} $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+
+clean recursively the entire content of the parent directory. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & directory to be cleaned. \\
+\hline
+\end{DoxyParams}

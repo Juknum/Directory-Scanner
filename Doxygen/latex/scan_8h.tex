@@ -1,0 +1,127 @@
+\hypertarget{scan_8h}{}\doxysection{include/scan.h File Reference}
+\label{scan_8h}\index{include/scan.h@{include/scan.h}}
+
+
+The functions used to scan the file in a certain file system are here.  
+
+
+{\ttfamily \#include \char`\"{}structures.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}tree.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}md5sum.\+h\char`\"{}}\newline
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{scan_8h_a39db6982619d623273fad8a383489309}\label{scan_8h_a39db6982619d623273fad8a383489309}} 
+enum {\bfseries Bool} \{ {\bfseries FALSE}
+, {\bfseries TRUE}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structures_8h_a01f65533173671ccead98bc86ff8f004}{s\+\_\+directory}} $\ast$ \mbox{\hyperlink{scan_8h_ac6fd3e9c3cb7d20bf628a993f456dcd3}{process\+\_\+dir}} (char $\ast$path, bool md5)
+\begin{DoxyCompactList}\small\item\em scan an entire directory and put the content of this directory in a s\+\_\+directory structure. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structures_8h_ae959bb43b3e29fdc649ae621a6607247}{s\+\_\+file}} $\ast$ \mbox{\hyperlink{scan_8h_aa17626a50f82025693b9a8801da44fed}{process\+\_\+file}} (char $\ast$path, bool md5)
+\begin{DoxyCompactList}\small\item\em scan a file and put his content in a s\+\_\+file strcture. \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{scan_8h_a1f89bbcf71bad3db9cabebbae63db00c}{cat\+Path}} (char $\ast$dir, char $\ast$file)
+\begin{DoxyCompactList}\small\item\em Concatenate in a dynamic allocated string the name of a dir and the name of a file. \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{scan_8h_a9544dece293d71a1883d4b194b23c6f7}{get\+Relative\+Path}} (char $\ast$path)
+\begin{DoxyCompactList}\small\item\em Get the relative path of a file or a directory according to its path (same behavior as basename). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The functions used to scan the file in a certain file system are here. 
+
+\begin{DoxyAuthor}{Author}
+Blanchot Lukas, Viala Alexandre, Chaillard Léo, Lignon Thomas 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2021-\/06-\/12
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2021 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{scan_8h_a1f89bbcf71bad3db9cabebbae63db00c}\label{scan_8h_a1f89bbcf71bad3db9cabebbae63db00c}} 
+\index{scan.h@{scan.h}!catPath@{catPath}}
+\index{catPath@{catPath}!scan.h@{scan.h}}
+\doxysubsubsection{\texorpdfstring{catPath()}{catPath()}}
+{\footnotesize\ttfamily char$\ast$ cat\+Path (\begin{DoxyParamCaption}\item[{char $\ast$}]{dir,  }\item[{char $\ast$}]{file }\end{DoxyParamCaption})}
+
+
+
+Concatenate in a dynamic allocated string the name of a dir and the name of a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dir} & -\/ char$\ast$, the complete path of the directory \\
+\hline
+{\em file} & -\/ char$\ast$, the basename of the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+char$\ast$, the complete name of the file. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{scan_8h_a9544dece293d71a1883d4b194b23c6f7}\label{scan_8h_a9544dece293d71a1883d4b194b23c6f7}} 
+\index{scan.h@{scan.h}!getRelativePath@{getRelativePath}}
+\index{getRelativePath@{getRelativePath}!scan.h@{scan.h}}
+\doxysubsubsection{\texorpdfstring{getRelativePath()}{getRelativePath()}}
+{\footnotesize\ttfamily char$\ast$ get\+Relative\+Path (\begin{DoxyParamCaption}\item[{char $\ast$}]{path }\end{DoxyParamCaption})}
+
+
+
+Get the relative path of a file or a directory according to its path (same behavior as basename). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & -\/ char$\ast$, the complete path of the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+char$\ast$, the basename of the the file. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{scan_8h_ac6fd3e9c3cb7d20bf628a993f456dcd3}\label{scan_8h_ac6fd3e9c3cb7d20bf628a993f456dcd3}} 
+\index{scan.h@{scan.h}!process\_dir@{process\_dir}}
+\index{process\_dir@{process\_dir}!scan.h@{scan.h}}
+\doxysubsubsection{\texorpdfstring{process\_dir()}{process\_dir()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structures_8h_a01f65533173671ccead98bc86ff8f004}{s\+\_\+directory}}$\ast$ process\+\_\+dir (\begin{DoxyParamCaption}\item[{char $\ast$}]{path,  }\item[{bool}]{md5 }\end{DoxyParamCaption})}
+
+
+
+scan an entire directory and put the content of this directory in a s\+\_\+directory structure. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & -\/ string, complete path of the directory to scan. \\
+\hline
+{\em md5} & -\/ bool, variable to know if the md5 must be calculated or not. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+s\+\_\+directory$\ast$, a linked list of s\+\_\+directory. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{scan_8h_aa17626a50f82025693b9a8801da44fed}\label{scan_8h_aa17626a50f82025693b9a8801da44fed}} 
+\index{scan.h@{scan.h}!process\_file@{process\_file}}
+\index{process\_file@{process\_file}!scan.h@{scan.h}}
+\doxysubsubsection{\texorpdfstring{process\_file()}{process\_file()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structures_8h_ae959bb43b3e29fdc649ae621a6607247}{s\+\_\+file}}$\ast$ process\+\_\+file (\begin{DoxyParamCaption}\item[{char $\ast$}]{path,  }\item[{bool}]{md5 }\end{DoxyParamCaption})}
+
+
+
+scan a file and put his content in a s\+\_\+file strcture. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & -\/ string, complete path of the file to scan. \\
+\hline
+{\em md5} & -\/ bool, variable to know if the md5 must be calculated or not. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+s\+\_\+file$\ast$, a linked list of s\+\_\+file. 
+\end{DoxyReturn}

@@ -1,0 +1,150 @@
+.TH "c_files/save.c" 3 "Tue Jun 15 2021" "Version 0.1" "Arborescence_Displayer" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+c_files/save.c \- All the functions linked to the save in a file is here\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include '\&.\&./include/save\&.h'\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBsave_to_file\fP (\fBs_directory\fP *root, char *path_to_target, bool md5)"
+.br
+.RI "Function to write the content of a s_directory (root)\&. "
+.ti -1c
+.RI "void \fBwrite_files\fP (\fBs_file\fP *files, FILE *fichier, int tabs, bool md5)"
+.br
+.RI "Recursive function to write the content of the files in a directory into the file fichier\&. "
+.ti -1c
+.RI "void \fBwrite_directories\fP (\fBs_directory\fP *directories, FILE *fichier, int tabs, bool md5)"
+.br
+.RI "Recursive function to write the content of a directory into the file fichier\&. "
+.ti -1c
+.RI "void \fBprint_tabs\fP (int tabs, FILE *fichier)"
+.br
+.RI "Function to write tabulations inside the file fichier\&. "
+.ti -1c
+.RI "void \fBprint_md5sum\fP (unsigned char buffer[], FILE *fichier)"
+.br
+.RI "Function to print the md5sum of a s_file which is not a s_directory\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+All the functions linked to the save in a file is here\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Blanchot Lukas, Viala Alexandre, Chaillard Léo, Lignon Thomas 
+.RE
+.PP
+\fBVersion\fP
+.RS 4
+0\&.1 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+2021-06-12
+.RE
+.PP
+\fBCopyright\fP
+.RS 4
+Copyright (c) 2021 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "void print_md5sum (unsigned char buffer[], FILE * fichier)"
+
+.PP
+Function to print the md5sum of a s_file which is not a s_directory\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIbuffer\fP - u_char*, the md5sum of a certain file\&. 
+.br
+\fIfichier\fP - FILE*, the file to write in the md5sum\&. 
+.RE
+.PP
+
+.SS "void print_tabs (int tabs, FILE * fichier)"
+
+.PP
+Function to write tabulations inside the file fichier\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fItabs\fP - int, number of tabulations to print\&. 
+.br
+\fIfichier\fP - FILE*, the file to write in the tabulations\&. 
+.RE
+.PP
+
+.SS "int save_to_file (\fBs_directory\fP * root, char * path_to_target, bool md5)"
+
+.PP
+Function to write the content of a s_directory (root)\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIroot\fP - s_directory, the content of a directory wrote inside the scan file\&. 
+.br
+\fIpath_to_target\fP - string, the file to write in\&. If the value is 'stdout', then it will write in the stdout\&. 
+.br
+\fImd5\fP - bool, variable to know if the md5 must be read or not\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int - EXIT_SUCCESS if the function ran correctly\&. 
+.RE
+.PP
+
+.SS "void write_directories (\fBs_directory\fP * directories, FILE * fichier, int tabs, bool md5)"
+
+.PP
+Recursive function to write the content of a directory into the file fichier\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIdirectories\fP - linked list of s_directory, the list of directories present in a certain directory\&. 
+.br
+\fIfichier\fP - FILE*, the file to write in the content of files\&. 
+.br
+\fItabs\fP - int, the number of tabulations to print befor the content of a file\&. 
+.br
+\fImd5\fP - bool, variable to know if the md5 must be written or not\&. 
+.RE
+.PP
+
+.SS "void write_files (\fBs_file\fP * files, FILE * fichier, int tabs, bool md5)"
+
+.PP
+Recursive function to write the content of the files in a directory into the file fichier\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIfiles\fP - linked list of s_file, the list of files present in a certain directory\&. 
+.br
+\fIfichier\fP - FILE*, the file to write in the content of files\&. 
+.br
+\fItabs\fP - int, the number of tabulations to print befor the content of a file\&. 
+.br
+\fImd5\fP - bool, variable to know if the md5 must be written or not\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Arborescence_Displayer from the source code\&.

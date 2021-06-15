@@ -1,0 +1,122 @@
+.TH "c_files/tree.c" 3 "Tue Jun 15 2021" "Version 0.1" "Arborescence_Displayer" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+c_files/tree.c \- All the functions used to modify the s_directory & s_file structure are here\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include '\&.\&./include/tree\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBappend_subdir\fP (\fBs_directory\fP *child, \fBs_directory\fP *parent)"
+.br
+.RI "insert a new directory on front of the 'parent' list\&. "
+.ti -1c
+.RI "int \fBappend_file\fP (\fBs_file\fP *child, \fBs_directory\fP *parent)"
+.br
+.RI "insert a new file on front of the files' linked list contained in the parent directory\&. "
+.ti -1c
+.RI "void \fBclear_files\fP (\fBs_directory\fP *parent)"
+.br
+.RI "clear the list of files contained in the parent directory\&. "
+.ti -1c
+.RI "void \fBclear_subdirs\fP (\fBs_directory\fP *parent)"
+.br
+.RI "clean recursively the entire content of the parent directory\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+All the functions used to modify the s_directory & s_file structure are here\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Blanchot Lukas, Viala Alexandre, Chaillard Léo, Lignon Thomas 
+.RE
+.PP
+\fBVersion\fP
+.RS 4
+0\&.1 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+2021-06-12
+.RE
+.PP
+\fBCopyright\fP
+.RS 4
+Copyright (c) 2021 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "int append_file (\fBs_file\fP * child, \fBs_directory\fP * parent)"
+
+.PP
+insert a new file on front of the files' linked list contained in the parent directory\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchild\fP file to be inserted as head\&. 
+.br
+\fIparent\fP current directory in which to insert the child file\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+1 if the file can be properly inserted, 0 otherwise\&. 
+.RE
+.PP
+
+.SS "int append_subdir (\fBs_directory\fP * child, \fBs_directory\fP * parent)"
+
+.PP
+insert a new directory on front of the 'parent' list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchild\fP new directory to be inserted as head\&. 
+.br
+\fIparent\fP current list of directories\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+1 if the directory can be properly inserted, 0 otherwise\&. 
+.RE
+.PP
+
+.SS "void clear_files (\fBs_directory\fP * parent)"
+
+.PP
+clear the list of files contained in the parent directory\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIparent\fP directory containing the list of files to be cleaned 
+.RE
+.PP
+
+.SS "void clear_subdirs (\fBs_directory\fP * parent)"
+
+.PP
+clean recursively the entire content of the parent directory\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIparent\fP directory to be cleaned\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Arborescence_Displayer from the source code\&.

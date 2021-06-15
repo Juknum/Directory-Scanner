@@ -1,0 +1,54 @@
+\hypertarget{md5sum_8h}{}\doxysection{include/md5sum.h File Reference}
+\label{md5sum_8h}\index{include/md5sum.h@{include/md5sum.h}}
+
+
+The functions used to compute the md5sum are here.  
+
+
+{\ttfamily \#include \char`\"{}structures.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$openssl/md5.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{md5sum_8h_a68b18b4c28047534e58f18fd86bcc3de}{compute\+\_\+md5}} (char $\ast$path, unsigned char buffer\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Function to compute the md5 sum of file. If the file is not accessible or if it is not a classic file, the md5sum will not be read. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The functions used to compute the md5sum are here. 
+
+\begin{DoxyAuthor}{Author}
+Blanchot Lukas, Viala Alexandre, Chaillard Léo, Lignon Thomas 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2021-\/06-\/12
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2021 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{md5sum_8h_a68b18b4c28047534e58f18fd86bcc3de}\label{md5sum_8h_a68b18b4c28047534e58f18fd86bcc3de}} 
+\index{md5sum.h@{md5sum.h}!compute\_md5@{compute\_md5}}
+\index{compute\_md5@{compute\_md5}!md5sum.h@{md5sum.h}}
+\doxysubsubsection{\texorpdfstring{compute\_md5()}{compute\_md5()}}
+{\footnotesize\ttfamily int compute\+\_\+md5 (\begin{DoxyParamCaption}\item[{char $\ast$}]{path,  }\item[{unsigned char}]{buffer\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Function to compute the md5 sum of file. If the file is not accessible or if it is not a classic file, the md5sum will not be read. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & -\/ string, the complete path of the file. \\
+\hline
+{\em buffer} & -\/ u\+\_\+char$\ast$, the place where the md5sum will be saved. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int -\/ EXIT\+\_\+\+SUCCESS if the md5sum has been calculated. EXIT\+\_\+\+FAILURE else. 
+\end{DoxyReturn}

@@ -1,0 +1,42 @@
+.TH "_directory" 3 "Tue Jun 15 2021" "Version 0.1" "Arborescence_Displayer" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+_directory \- Structur to stock the content of a directory\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <structures\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "char \fBname\fP [NAME_MAX+1]"
+.br
+.RI "The basename of the directory\&. "
+.ti -1c
+.RI "time_t \fBmod_time\fP"
+.br
+.RI "The last date of modification\&. "
+.ti -1c
+.RI "struct \fB_directory\fP * \fBsubdirs\fP"
+.br
+.RI "A pointer on an element of a linked list of s_directory\&. "
+.ti -1c
+.RI "\fBs_file\fP * \fBfiles\fP"
+.br
+.RI "A pointer on an element of a linked list of s_file\&. "
+.ti -1c
+.RI "struct \fB_directory\fP * \fBnext_dir\fP"
+.br
+.RI "A pointer on the next directory\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Structur to stock the content of a directory\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Arborescence_Displayer from the source code\&.
